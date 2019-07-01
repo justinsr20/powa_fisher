@@ -5,8 +5,7 @@ import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.thesmeg.bots.powafisher.branch.DropFish;
 import com.thesmeg.bots.powafisher.branch.IsNearFishSpot;
 
-//import path.to.your.DropFish
-//import path.to.your.IsNearFishSpot
+import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 
 /**
  * NOTES:
@@ -21,7 +20,7 @@ public class IsInventoryFull extends BranchTask {
 
     @Override
     public boolean validate() {
-        return false;
+        return Inventory.getEmptySlots() <= 27;
     }
 
     @Override
