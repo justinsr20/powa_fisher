@@ -10,6 +10,6 @@ public class Logout extends LeafTask {
 
     @Override
     public void execute() {
-
+//        stop("Could not find a fishing spot");
     }
 }

@@ -27,7 +27,9 @@ public class IsNearFishSpot extends BranchTask {
         } else {
             return false;
         }
+
     }
+
 
     @Override
     public TreeTask failureTask() {
