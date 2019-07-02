@@ -1,8 +1,8 @@
 <manifest>
     <main-class>com.thesmeg.bots.powafisher.PowaFisher</main-class>
-    <name>thesmeg Powerfisher</name>
-    <tag-line>Insert catchy tagline here (marketing oriented)</tag-line><!--Max of 50 chars-->
-    <description>Power chops all types of logs anywhere in RuneScape. (functionality oriented)</description><!--Max of 110 chars-->
+    <name>thesmeg Small Net Powerfisher</name>
+    <tag-line>Powerfishes with a Small Net</tag-line><!--Max of 50 chars-->
+    <description>Simply start bot with Small Net in inventory. Stand near any Small Net fishing spot</description><!--Max of 110 chars-->
     <version>1.0.0</version>
     <compatibility>
         <game>OSRS</game>
@@ -17,6 +17,6 @@
     <hidden>false</hidden> <!--If you need to hide it from the bot store for maintenance-->
     <access>public</access>
     <tags>
-        <tag>Shrimp</tag>
+        <tag>Shrimp, Anchovies</tag>
     </tags>
 </manifest>
