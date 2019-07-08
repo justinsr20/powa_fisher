@@ -12,13 +12,13 @@ public class DropFish extends LeafTask {
 
     @Override
     public void execute() {
-        SpriteItemQueryResults shrimp_to_drop = Inventory.newQuery().names("Raw shrimps").results();
-        SpriteItemQueryResults anchovies_to_drop = Inventory.newQuery().names("Anchovies").results();
-        if (shrimp_to_drop.size() > 0) {
-            shrimp_to_drop.first().interact("Drop");
+        SpriteItemQueryResults shrimpToDrop = Inventory.newQuery().names("Raw shrimps").results();
+        SpriteItemQueryResults anchoviesToDrop = Inventory.newQuery().names("Anchovies").results();
+        if (shrimpToDrop.size() > 0) {
+            shrimpToDrop.first().interact("Drop");
         }
-        if (anchovies_to_drop.size() > 0) {
-            anchovies_to_drop.first().interact("Drop");
+        if (anchoviesToDrop.size() > 0) {
+            anchoviesToDrop.first().interact("Drop");
         }
     }
 
