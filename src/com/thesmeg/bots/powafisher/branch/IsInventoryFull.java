@@ -7,8 +7,8 @@ import com.thesmeg.bots.powafisher.leaf.DropFish;
 
 public class IsInventoryFull extends BranchTask {
 
-    private DropFish dropfish = new DropFish();
-    private IsNearFishSpot isnearfishspot = new IsNearFishSpot();
+    private DropFish dropFish = new DropFish();
+    private IsNearFishSpot isNearFishSpot = new IsNearFishSpot();
 
     @Override
     public boolean validate() {
@@ -17,11 +17,11 @@ public class IsInventoryFull extends BranchTask {
 
     @Override
     public TreeTask failureTask() {
-        return isnearfishspot;
+        return isNearFishSpot;
     }
 
     @Override
     public TreeTask successTask() {
-        return dropfish;
+        return dropFish;
     }
 }

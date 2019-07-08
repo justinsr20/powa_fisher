@@ -14,8 +14,8 @@ import com.thesmeg.bots.powafisher.leaf.WaitUntilLoggedIn;
 
 public class IsLoggedIn extends BranchTask {
 
-    private IsInventoryFull isinventoryfull = new IsInventoryFull();
-    private WaitUntilLoggedIn waituntilloggedin = new WaitUntilLoggedIn();
+    private IsInventoryFull isInventoryFull = new IsInventoryFull();
+    private WaitUntilLoggedIn waitUntilLoggedIn = new WaitUntilLoggedIn();
 
     Player p;
 
@@ -30,11 +30,11 @@ public class IsLoggedIn extends BranchTask {
     }
 
     @Override
-    public TreeTask failureTask() { return waituntilloggedin; }
+    public TreeTask failureTask() { return waitUntilLoggedIn; }
 
     @Override
     public TreeTask successTask() {
-        return isinventoryfull;
+        return isInventoryFull;
     }
 
 }

@@ -17,12 +17,12 @@ public class IsNearFishSpot extends BranchTask {
     private Fish fish = new Fish();
     private Logout logout = new Logout();
 
-    private Npc fishing_spot;
+    private Npc fishingSpot;
 
     @Override
     public boolean validate() {
-        fishing_spot = Npcs.newQuery().names("Fishing spot").actions("Net").results().nearest();
-        if (fishing_spot != null) {
+        fishingSpot = Npcs.newQuery().names("Fishing spot").actions("Net").results().nearest();
+        if (fishingSpot != null) {
             return true;
         } else {
             return false;
