@@ -7,6 +7,6 @@ public class PowaFisher extends TreeBot {
 
     @Override
     public TreeTask createRootTask() {
-        return new IsInventoryFull();
+        return new IsLoggedIn();
     }
 }

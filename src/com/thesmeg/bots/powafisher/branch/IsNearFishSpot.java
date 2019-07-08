@@ -30,7 +30,6 @@ public class IsNearFishSpot extends BranchTask {
 
     }
 
-
     @Override
     public TreeTask failureTask() {
         return logout;
