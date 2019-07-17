@@ -4,7 +4,6 @@ import com.runemate.game.api.hybrid.entities.definitions.ItemDefinition;
 import com.runemate.game.api.hybrid.input.Keyboard;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.local.hud.interfaces.SpriteItem;
-import com.runemate.game.api.hybrid.queries.results.SpriteItemQueryResults;
 import com.runemate.game.api.script.framework.tree.LeafTask;
 
 import java.awt.event.KeyEvent;
@@ -29,5 +28,9 @@ public class DropFish extends LeafTask {
             }
         });
         Keyboard.releaseKey(KeyEvent.VK_SHIFT);
+        //TODO found bug where is last item in inventory is selected it tries to use it on fishing spot
+        if (Inventory.getSelectedItem() != null) {
+            Inventory.getSelectedItem().click();
+        }
     }
 }

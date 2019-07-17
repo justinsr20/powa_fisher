@@ -12,7 +12,7 @@ public class IsInventoryFull extends BranchTask {
 
     @Override
     public boolean validate() {
-        return Inventory.containsAnyExcept("Small fishing net");
+        return Inventory.isFull();
     }
 
     @Override

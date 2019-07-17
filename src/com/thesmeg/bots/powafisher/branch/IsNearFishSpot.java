@@ -2,6 +2,7 @@ package com.thesmeg.bots.powafisher.branch;
 
 
 import com.runemate.game.api.hybrid.entities.Npc;
+import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.region.Npcs;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
@@ -21,13 +22,14 @@ public class IsNearFishSpot extends BranchTask {
 
     @Override
     public boolean validate() {
-        fishingSpot = Npcs.newQuery().names("Fishing spot").actions("Net").results().nearest();
+        if (Inventory.contains("Small fishing net")) {
+            fishingSpot = Npcs.newQuery().names("Fishing spot").actions("Net").results().nearest();
+        }
         if (fishingSpot != null) {
             return true;
         } else {
             return false;
         }
-
     }
 
     @Override
