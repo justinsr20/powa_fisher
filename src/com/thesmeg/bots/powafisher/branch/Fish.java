@@ -22,13 +22,43 @@ public class Fish extends BranchTask {
     Player player;
     Npc fishingSpot;
 
+    public static String selectedFish;
+    private String fishingAction;
+    private String fishingSpotType;
+
     @Override
     public boolean validate() {
+        if (selectedFish == null) {
+            return true;
+        } else if (selectedFish.equals("Shrimp/Anchovies")) {
+            fishingAction = "Net";
+            fishingSpotType = "Fishing spot";
+        } else if (selectedFish.equals("Sardines/Herring")) {
+            fishingAction = "Bait";
+            fishingSpotType = "Fishing spot";
+        } else if (selectedFish.equals("Trout/Salmon")) {
+            fishingAction = "Lure";
+            fishingSpotType = "Rod Fishing spot";
+        } else if (selectedFish.equals("Pike")) {
+            fishingAction = "Bait";
+            fishingSpotType = "Rod Fishing spot";
+        } else if (selectedFish.equals("Tuna/Swordfish")) {
+            fishingAction = "Harpoon";
+            fishingSpotType = "Fishing spot";
+        } else if (selectedFish.equals("Lobster")) {
+            fishingAction = "Cage";
+            fishingSpotType = "Fishing spot";
+        }
+
         player = Players.getLocal();
-        fishingSpot = Npcs.newQuery().names("Fishing spot").actions("Net").results().nearest();
+        fishingSpot = Npcs.newQuery().names(fishingSpotType).actions(fishingAction).results().nearest();
 
         if (fishingSpot != null) {
-            if (fishingSpot.interact("Net")) {
+            //Found bug when fish is selected it tries to use it on fishing spot
+            if (Inventory.getSelectedItem() != null) {
+                Inventory.getSelectedItem().click();
+            }
+            if (fishingSpot.interact(fishingAction)) {
                 Execution.delayUntil(() -> Inventory.isFull(), () -> player.getAnimationId() != -1, 50, 1000, 2000);
             }
             return true;
