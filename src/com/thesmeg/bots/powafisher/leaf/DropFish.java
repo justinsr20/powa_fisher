@@ -17,20 +17,22 @@ public class DropFish extends LeafTask {
 
     @Override
     public void execute() {
-        List<SpriteItem> listOfItems = Inventory.getItems().asList();
+        if (Inventory.isFull()) {
+            List<SpriteItem> listOfItems = Inventory.getItems().asList();
 
-        //TODO make sure this setting is enabled otherwise bot will bug out
-        Keyboard.pressKey(KeyEvent.VK_SHIFT);
-        listOfItems.forEach(item -> {
-            ItemDefinition itemDefinition = item.getDefinition();
-            if (!itemDefinition.getName().equals("Small fishing net")) {
-                item.click();
+            //TODO make sure this setting is enabled otherwise bot will bug out
+            Keyboard.pressKey(KeyEvent.VK_SHIFT);
+            listOfItems.forEach(item -> {
+                ItemDefinition itemDefinition = item.getDefinition();
+                if (!itemDefinition.getName().equals("Small fishing net")) {
+                    item.click();
+                }
+            });
+            Keyboard.releaseKey(KeyEvent.VK_SHIFT);
+            //TODO found bug when is last item in inventory is selected it tries to use it on fishing spot
+            if (Inventory.getSelectedItem() != null) {
+                Inventory.getSelectedItem().click();
             }
-        });
-        Keyboard.releaseKey(KeyEvent.VK_SHIFT);
-        //TODO found bug where is last item in inventory is selected it tries to use it on fishing spot
-        if (Inventory.getSelectedItem() != null) {
-            Inventory.getSelectedItem().click();
         }
     }
 }
