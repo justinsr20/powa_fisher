@@ -1,7 +1,7 @@
 <manifest>
     <main-class>com.thesmeg.bots.powafisher.PowaFisher</main-class>
     <name>thesmeg Free To Play Powerfisher</name>
-    <tag-line>Powerfishes with a Small Net</tag-line><!--Max of 50 chars-->
+    <tag-line>Powerfishes anywhere in free to play</tag-line><!--Max of 50 chars-->
     <description>Simply start bot with correct fishing equipment in inventory next to the correct fishing spot.</description><!--Max of 110 chars-->
     <version>1.0.0</version>
     <compatibility>
