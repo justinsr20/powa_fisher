@@ -1,4 +1,4 @@
-package com.thesmeg.bots.outlaw.leaf;
+package com.thesmeg.bots.fleshcrawler.leaf;
 
 import com.runemate.game.api.hybrid.entities.Npc;
 import com.runemate.game.api.hybrid.entities.Player;
