@@ -12,6 +12,9 @@ import com.runemate.game.api.hybrid.region.GameObjects;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.framework.tree.LeafTask;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class WalkToFleshCrawler extends LeafTask {
 
 
@@ -40,34 +43,60 @@ public class WalkToFleshCrawler extends LeafTask {
     Coordinate firstRicetyDoor = new Coordinate(2045, 5240, 0);
     Coordinate secondRicetyDoor = new Coordinate(2045, 5237, 0);
 
+    List<String> securityAnswers = Arrays.asList("Click here to continue",
+            "No.",
+            "Secure my device and reset my password.",
+            "Politely tell them no and then use the 'Report Abuse' button.",
+            "No, you should never buy an account.",
+            "Don't give them my password.",
+            "No, you should never allow anyone to level your account",
+            "Only on the Old School RuneScape website.",
+            "Inform Jagex by emailing reportphishing@jagex.com.",
+            "Nobody.",
+            "Me.",
+            "The birthday of a famous person or event.",
+            "No way! You'll just take my gold for your own! Reported!",
+            "Don't share your information and report the player.",
+            "Decline offer and report that player.",
+            "No way! I'm reporting you to Jagex!",
+            "Set up 2 step authentication with my email provider.",
+            "Read the text and follow the advice given.",
+            "Don't click any links, forward the email to reportphishing@jagex.com.",
+            "Talk to any banker.",
+            "Don't tell them anything and click the 'Report Abuse' button.");
+
 //    Coordinate fleshcrawler = new Coordinate(2046, 5194, 0);
 
 
     @Override
     public void execute() {
 
-        if (Camera.getPitch() < 0.8) {
-            Camera.concurrentlyTurnTo(1.0);
-        }
-
         securityStrongholdEntrance = GameObjects.newQuery().names("Entrance").actions("Climb-down").results().nearest();
         portal = GameObjects.newQuery().names("Portal").actions("Use").results().nearest();
         ladder = GameObjects.newQuery().names("Ladder").actions("Climb-down").results().nearest();
         ricketyDoor = GameObjects.newQuery().names("Rickety door").actions("Open").results();
 
+        if (Camera.getPitch() < 0.8) {
+            Camera.concurrentlyTurnTo(1.0);
+        }
+
+
         if (roomThreeDoorTwoArea.contains(Players.getLocal())) {
             if (ricketyDoor != null) {
-                ricketyDoor.nearestTo(secondRicetyDoor).click();
-                getLogger().info("Attempting to walk through second Rickety door");
-
-                ChatDialog.getContinue().select();
-                System.out.println(ChatDialog.getText());
+                if (!ChatDialog.isOpen()) {
+                    getLogger().info("Attempting to walk through second Rickety door");
+                    ricketyDoor.nearestTo(secondRicetyDoor).click();
+                }
+                answerSecurityQuestion();
                 return;
             }
         } else if (roomThreeArea.contains(Players.getLocal())) {
             if (ricketyDoor != null) {
-                ricketyDoor.nearestTo(firstRicetyDoor).click();
-                getLogger().info("Attempting to walk through first Rickety door");
+                if (!ChatDialog.isOpen()) {
+                    getLogger().info("Attempting to walk through first Rickety door");
+                    ricketyDoor.nearestTo(firstRicetyDoor).click();
+                }
+                answerSecurityQuestion();
                 return;
             }
         } else if (roomTwoArea.contains(Players.getLocal())) {
@@ -93,6 +122,25 @@ public class WalkToFleshCrawler extends LeafTask {
             } else {
                 getLogger().warn("Could not generate webPath to Flesh Crawlers");
             }
+        }
+    }
+
+    private void answerSecurityQuestion() {
+        if (ChatDialog.isOpen()) {
+            System.out.println(ChatDialog.getTitle());
+            if (!ChatDialog.hasTitle("Select an Option")) {
+                ChatDialog.getContinue().select();
+            }
+            ChatDialog.getOptions().forEach(chatOption -> {
+                System.out.println("chatOption: " + chatOption);
+                securityAnswers.forEach(answer -> {
+                    if (chatOption.getText().equals(answer)) {
+                        System.out.println("answer: " + answer);
+                        chatOption.select();
+                    }
+                });
+            });
+
         }
     }
 }
