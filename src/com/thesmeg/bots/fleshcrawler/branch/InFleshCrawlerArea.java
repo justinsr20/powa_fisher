@@ -10,8 +10,8 @@ import com.thesmeg.bots.fleshcrawler.leaf.WalkToFleshCrawler;
 
 public class InFleshCrawlerArea extends BranchTask {
 
-    Coordinate bottomLeftFleshCrawler = new Coordinate(3113, 3469, 0);
-    Coordinate topRightFleshCrawler = new Coordinate(3128, 3480, 0);
+    Coordinate bottomLeftFleshCrawler = new Coordinate(2035, 5185, 0);
+    Coordinate topRightFleshCrawler = new Coordinate(2046, 5194, 0);
     Area fleshCrawlerArea = new Area.Rectangular(bottomLeftFleshCrawler, topRightFleshCrawler);
 
     @Override

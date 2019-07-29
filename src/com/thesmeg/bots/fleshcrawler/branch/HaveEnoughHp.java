@@ -3,7 +3,6 @@ package com.thesmeg.bots.fleshcrawler.branch;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Health;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
-import com.thesmeg.bots.fleshcrawler.leaf.EatFood;
 import com.thesmeg.bots.fleshcrawler.leaf.Fight;
 
 import java.util.Random;
@@ -15,9 +14,10 @@ public class HaveEnoughHp extends BranchTask {
     @Override
     public boolean validate() {
 
-        Integer randomHpCheck = random.nextInt(15) + 20;
-
-        if (Health.getCurrent() > randomHpCheck) {
+        Integer randomHpCheck = random.nextInt(65) + 35;
+        getLogger().info("randomHpCheck " + randomHpCheck);
+        if (Health.getCurrentPercent() < randomHpCheck) {
+            getLogger().info("Eating as health current " + Health.getCurrentPercent() + "% is below " + randomHpCheck + "%");
             return true;
         }
         return false;
@@ -30,7 +30,7 @@ public class HaveEnoughHp extends BranchTask {
 
     @Override
     public TreeTask failureTask() {
-        return new EatFood();
+        return new HaveFood();
     }
 
 

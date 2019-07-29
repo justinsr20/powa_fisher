@@ -1,11 +1,11 @@
 package com.thesmeg.bots.fleshcrawler.leaf;
 
-import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
+import com.runemate.game.api.rs3.local.hud.Powers;
 import com.runemate.game.api.script.framework.tree.LeafTask;
 
-public class EatFood extends LeafTask {
+public class TeleportToVarrock extends LeafTask {
     @Override
     public void execute() {
-        Inventory.getItems("Tuna").first().click();
+        Powers.Magic.VARROCK_TELEPORT.activate();
     }
 }

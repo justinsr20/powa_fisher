@@ -1,6 +1,7 @@
 package com.thesmeg.bots.fleshcrawler;
 
 import com.runemate.game.api.hybrid.entities.Player;
+import com.runemate.game.api.hybrid.local.Camera;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
@@ -17,6 +18,9 @@ public class IsLoggedIn extends BranchTask {
         p = Players.getLocal();
         if (p != null) {
             if (p.isVisible()) {
+                if (Camera.getPitch() < 0.8) {
+                    Camera.concurrentlyTurnTo(1.0);
+                }
                 return true;
             }
         }
