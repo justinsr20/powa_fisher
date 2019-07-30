@@ -9,6 +9,7 @@ import com.runemate.game.api.hybrid.location.navigation.web.WebPath;
 import com.runemate.game.api.hybrid.queries.results.LocatableEntityQueryResults;
 import com.runemate.game.api.hybrid.region.GameObjects;
 import com.runemate.game.api.hybrid.region.Players;
+import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
 
 import java.util.Arrays;
@@ -93,7 +94,8 @@ public class WalkToFleshCrawler extends LeafTask {
             "No, you should never allow anyone to level your account.",
             "Report the incident and do not click any links.",
             "Decline the offer and report that player.",
-            "Report the stream as a scam. Real Jagex streams have a 'verified' mark.");
+            "Report the stream as a scam. Real Jagex streams have a 'verified' mark.",
+            "Use the Account Recovery System.");
 
     @Override
     public void execute() {
@@ -203,9 +205,10 @@ public class WalkToFleshCrawler extends LeafTask {
         }
     }
 
-    //@todo this bugs sometimes as chat dialogue is not null but throws exception
     private void answerSecurityQuestion() {
         if (ChatDialog.isOpen()) {
+            //@todo this bugs sometimes as chat dialogue is not null but throws exception
+            Execution.delay(500,1500);
             if (!ChatDialog.hasTitle("Select an Option")) {
                 ChatDialog.getContinue().select();
             }

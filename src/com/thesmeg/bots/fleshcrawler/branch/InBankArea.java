@@ -10,16 +10,13 @@ import com.thesmeg.bots.fleshcrawler.leaf.WalkToBank;
 
 public class InBankArea extends BranchTask {
 
-    Coordinate bottomLeftBank = new Coordinate(3180, 3433, 0);
-    Coordinate topRightBank = new Coordinate(3185, 3447, 0);
-    Area bankArea = new Area.Rectangular(bottomLeftBank, topRightBank);
+    private Coordinate bottomLeftBank = new Coordinate(3180, 3433, 0);
+    private Coordinate topRightBank = new Coordinate(3185, 3447, 0);
+    private Area bankArea = new Area.Rectangular(bottomLeftBank, topRightBank);
 
     @Override
     public boolean validate() {
-        if (bankArea.contains(Players.getLocal())) {
-            return true;
-        }
-        return false;
+        return bankArea.contains(Players.getLocal());
     }
 
     @Override

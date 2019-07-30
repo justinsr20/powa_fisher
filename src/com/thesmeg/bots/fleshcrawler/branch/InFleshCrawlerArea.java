@@ -10,16 +10,13 @@ import com.thesmeg.bots.fleshcrawler.leaf.WalkToFleshCrawler;
 
 public class InFleshCrawlerArea extends BranchTask {
 
-    Coordinate bottomLeftFleshCrawler = new Coordinate(2035, 5185, 0);
-    Coordinate topRightFleshCrawler = new Coordinate(2046, 5194, 0);
-    Area fleshCrawlerArea = new Area.Rectangular(bottomLeftFleshCrawler, topRightFleshCrawler);
+    private Coordinate bottomLeftFleshCrawler = new Coordinate(2035, 5185, 0);
+    private Coordinate topRightFleshCrawler = new Coordinate(2046, 5194, 0);
+    private Area fleshCrawlerArea = new Area.Rectangular(bottomLeftFleshCrawler, topRightFleshCrawler);
 
     @Override
     public boolean validate() {
-        if (fleshCrawlerArea.contains(Players.getLocal())) {
-            return true;
-        }
-        return false;
+        return fleshCrawlerArea.contains(Players.getLocal());
     }
 
     @Override
