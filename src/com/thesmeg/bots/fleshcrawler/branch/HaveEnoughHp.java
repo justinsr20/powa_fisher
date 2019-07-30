@@ -14,10 +14,9 @@ public class HaveEnoughHp extends BranchTask {
     @Override
     public boolean validate() {
 
-        Integer randomHpCheck = random.nextInt(65) + 35;
-        getLogger().info("randomHpCheck " + randomHpCheck);
-        if (Health.getCurrentPercent() < randomHpCheck) {
-            getLogger().info("Eating as health current " + Health.getCurrentPercent() + "% is below " + randomHpCheck + "%");
+        Integer randomHpCheck = random.nextInt(40) + 30;
+        getLogger().info("Current health " + Health.getCurrentPercent() + "% randomHpCheck " + randomHpCheck + "%");
+        if (Health.getCurrentPercent() > randomHpCheck) {
             return true;
         }
         return false;

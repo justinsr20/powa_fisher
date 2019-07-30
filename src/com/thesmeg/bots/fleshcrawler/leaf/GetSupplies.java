@@ -14,6 +14,7 @@ public class GetSupplies extends LeafTask {
         if (!Bank.isOpen()) {
             Bank.open();
         } else if (Bank.isOpen()) {
+            Bank.depositInventory();
             if (Inventory.getQuantity(foodName) != foodAmount) {
                 Bank.withdraw(foodName, foodAmount);
             }
