@@ -1,12 +1,9 @@
 package com.thesmeg.bots.fleshcrawler.leaf;
 
-import com.runemate.game.api.hybrid.entities.GameObject;
 import com.runemate.game.api.hybrid.local.hud.interfaces.ChatDialog;
-import com.runemate.game.api.hybrid.location.Area;
 import com.runemate.game.api.hybrid.location.Coordinate;
 import com.runemate.game.api.hybrid.location.navigation.Traversal;
 import com.runemate.game.api.hybrid.location.navigation.web.WebPath;
-import com.runemate.game.api.hybrid.queries.results.LocatableEntityQueryResults;
 import com.runemate.game.api.hybrid.region.GameObjects;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.Execution;
@@ -17,51 +14,15 @@ import java.util.List;
 
 public class WalkToFleshCrawler extends LeafTask {
 
-    private Coordinate bottomLeftFleshCrawler = new Coordinate(2035, 5185, 0);
-    private Coordinate topRightFleshCrawler = new Coordinate(2046, 5194, 0);
-    private Area fleshCrawlerArea = new Area.Rectangular(bottomLeftFleshCrawler, topRightFleshCrawler);
-
-
-    private Coordinate bottomLeftRoomOne = new Coordinate(1857, 5239, 0);
-    private Coordinate topRightRoomOne = new Coordinate(1865, 5245, 0);
-    private Area roomOneArea = new Area.Rectangular(bottomLeftRoomOne, topRightRoomOne);
-
-    private Coordinate bottomLeftRoomTwo = new Coordinate(1902, 5216, 0);
-    private Coordinate topRightRoomTwo = new Coordinate(1915, 5227, 0);
-    private Area roomTwoArea = new Area.Rectangular(bottomLeftRoomTwo, topRightRoomTwo);
-
-    private Coordinate bottomLeftRoomThree = new Coordinate(2040, 5240, 0);
-    private Coordinate topRightRoomThree = new Coordinate(2046, 5246, 0);
-    private Area roomThreeArea = new Area.Rectangular(bottomLeftRoomThree, topRightRoomThree);
-
-    private Coordinate bottomLeftRoomThreeDoorTwo = new Coordinate(2044, 5237, 0);
-    private Coordinate topRightRoomThreeDoorTwo = new Coordinate(2045, 5239, 0);
-    private Area roomThreeDoorTwoArea = new Area.Rectangular(bottomLeftRoomThreeDoorTwo, topRightRoomThreeDoorTwo);
-
-    private Area roomThreeDoorThreeAreaPtOne = new Area.Rectangular(new Coordinate(2037, 5209, 0), new Coordinate(2046, 5236, 0));
-    private Area roomThreeDoorThreeAreaPtTwo = new Area.Rectangular(new Coordinate(2036, 5204, 0), new Coordinate(2043, 5214, 0));
-
-    private Area roomThreeDoorFourArea = new Area.Rectangular(new Coordinate(2036, 5201, 0), new Coordinate(2037, 5203, 0));
-
-    private Area roomThreeDoorFiveAreaPtOne = new Area.Rectangular(new Coordinate(2036, 5199, 0), new Coordinate(2040, 5200, 0));
-    private Area roomThreeDoorFiveAreaPtTwo = new Area.Rectangular(new Coordinate(2040, 5198, 0), new Coordinate(2046, 5208, 0));
-
-    private Area roomThreeDoorSixArea = new Area.Rectangular(new Coordinate(2045, 5195, 0), new Coordinate(2046, 5197, 0));
-
-
-    private Coordinate securityStrongholdEntranceDestination = new Coordinate(3081, 3421, 0);
-    private Coordinate fifthRicketyDoorDestination = new Coordinate(2045, 5199, 0);
-    private GameObject securityStrongholdEntrance;
-    private GameObject portal;
-    private GameObject ladder;
-    private LocatableEntityQueryResults<GameObject> ricketyDoor;
-
-    private Coordinate firstRicketyDoor = new Coordinate(2045, 5240, 0);
-    private Coordinate secondRicketyDoor = new Coordinate(2045, 5237, 0);
+    private Coordinate securityStrongholdEntrance = new Coordinate(3081, 3420, 0);
+    private Coordinate firstPortal = new Coordinate(1863, 5238, 0);
+    private Coordinate firstLadder = new Coordinate(1902, 5222, 0);
+    private Coordinate firstRicketyDoor = new Coordinate(2045, 5240, 0); //@todo randomize these to be either door
+    private Coordinate secondRicketyDoor = new Coordinate(2044, 5237, 0);
     private Coordinate thirdRicketyDoor = new Coordinate(2037, 5204, 0);
-    private Coordinate fourthRicketyDoor = new Coordinate(2038, 5201, 0);
-    private Coordinate fifthRicketyDoor = new Coordinate(2046, 5197, 0);
-    private Coordinate sixthRicketyDoor = new Coordinate(2046, 5195, 0);
+    private Coordinate fourthRicketyDoor = new Coordinate(2036, 5201, 0);
+    private Coordinate fifthRicketyDoor = new Coordinate(2046, 5198, 0);
+    private Coordinate sixthRicketyDoor = new Coordinate(2045, 5195, 0);
 
     private List<String> securityAnswers = Arrays.asList(
             "No.",
@@ -99,116 +60,102 @@ public class WalkToFleshCrawler extends LeafTask {
 
     @Override
     public void execute() {
-
-        securityStrongholdEntrance = GameObjects.newQuery().names("Entrance").actions("Climb-down").results().nearest();
-        portal = GameObjects.newQuery().names("Portal").actions("Use").results().nearest();
-        ladder = GameObjects.newQuery().names("Ladder").actions("Climb-down").results().nearest();
-        ricketyDoor = GameObjects.newQuery().names("Rickety door").actions("Open").results();
-
-        getLogger().info("Current position: " + Players.getLocal().getPosition());
-
         //@todo need to close warning dialogue box that comes up on first trip
-        //@todo need to fix this walking its quite buggy
-        if (!Players.getLocal().isMoving()) {
-            if (roomThreeDoorSixArea.contains(Players.getLocal())) {
-                if (ricketyDoor != null) {
-                    if (!ChatDialog.isOpen()) {
-                        getLogger().info("Attempting to walk through sixth Rickety door");
-                        ricketyDoor.nearestTo(sixthRicketyDoor).click();
-                    }
+        if (sixthRicketyDoor.isReachable()) {
+            if (sixthRicketyDoor.isVisible()) {
+                if (!Players.getLocal().isMoving()) {
                     answerSecurityQuestion();
-                    return;
+                    GameObjects.newQuery().names("Rickety door").results().nearestTo(sixthRicketyDoor).click();
                 }
-            } else if (roomThreeDoorFiveAreaPtOne.contains(Players.getLocal()) || roomThreeDoorFiveAreaPtTwo.contains(Players.getLocal())) {
-                WebPath webPath = Traversal.getDefaultWeb().getPathBuilder().buildTo(fifthRicketyDoorDestination);
-                if (webPath != null) {
-                    getLogger().info("Using webpath to fifth door");
-                    webPath.step();
-                } else {
-                    getLogger().warn("Could not generate webPath to fifth Rickety Door");
-                }
-                if (ricketyDoor != null) {
-                    if (!ChatDialog.isOpen()) {
-                        getLogger().info("Attempting to walk through fifth Rickety door");
-                        ricketyDoor.nearestTo(fifthRicketyDoor).click();
-                    }
-                    answerSecurityQuestion();
-                    return;
-                }
-            } else if (roomThreeDoorFourArea.contains(Players.getLocal())) {
-                if (ricketyDoor != null) {
-                    if (!ChatDialog.isOpen()) {
-                        getLogger().info("Attempting to walk through fourth Rickety door");
-                        ricketyDoor.nearestTo(fourthRicketyDoor).click();
-                    }
-                    answerSecurityQuestion();
-                    return;
-                }
-            } else if (roomThreeDoorThreeAreaPtOne.contains(Players.getLocal()) || roomThreeDoorThreeAreaPtTwo.contains(Players.getLocal())) {
-                WebPath webPath = Traversal.getDefaultWeb().getPathBuilder().buildTo(thirdRicketyDoor);
-                if (webPath != null) {
-                    webPath.step();
-                } else {
-                    getLogger().warn("Could not generate webPath to third Rickety Door");
-                }
-                if (ricketyDoor != null && ricketyDoor.nearestTo(thirdRicketyDoor).isVisible()) {
-                    if (!ChatDialog.isOpen()) {
-                        getLogger().info("Attempting to walk through third Rickety door");
-                        ricketyDoor.nearestTo(thirdRicketyDoor).click();
-                    }
-                    answerSecurityQuestion();
-                    return;
-                }
-            } else if (roomThreeDoorTwoArea.contains(Players.getLocal())) {
-                if (ricketyDoor != null) {
-                    if (!ChatDialog.isOpen()) {
-                        getLogger().info("Attempting to walk through second Rickety door");
-                        ricketyDoor.nearestTo(secondRicketyDoor).click();
-                    }
-                    answerSecurityQuestion();
-                    return;
-                }
-            } else if (roomThreeArea.contains(Players.getLocal())) {
-                if (ricketyDoor != null) {
-                    if (!ChatDialog.isOpen()) {
-                        getLogger().info("Attempting to walk through first Rickety door");
-                        ricketyDoor.nearestTo(firstRicketyDoor).click();
-                    }
-                    answerSecurityQuestion();
-                    return;
-                }
-            } else if (roomTwoArea.contains(Players.getLocal())) {
-                if (ladder != null) {
-                    getLogger().info("Attempting to climb down ladder room two");
-                    ladder.click();
-                    return;
-                }
-            } else if (roomOneArea.contains(Players.getLocal())) {
-                if (portal != null) {
-                    getLogger().info("Attempting to enter portal room one");
-                    portal.click();
-                    return;
-                }
-            } else if (securityStrongholdEntrance != null && securityStrongholdEntrance.isVisible()) {
-                getLogger().info("Attempting to enter Stronghold of Security");
-                securityStrongholdEntrance.click();
                 return;
-            } else if (!fleshCrawlerArea.contains(Players.getLocal())) {
-                WebPath webPath = Traversal.getDefaultWeb().getPathBuilder().buildTo(securityStrongholdEntranceDestination);
-                if (webPath != null) {
-                    getLogger().info("Using webpath to flesh crawlers");
-                    webPath.step();
-                } else {
-                    getLogger().warn("Could not generate webPath to Flesh Crawlers entrance");
-                }
+            } else {
+                webPathToDestination(sixthRicketyDoor, "Security Stronghold sixth Rickety Door");
             }
+        } else if (fifthRicketyDoor.isReachable()) {
+            if (fifthRicketyDoor.isVisible()) {
+                if (!Players.getLocal().isMoving()) {
+                    answerSecurityQuestion();
+                    GameObjects.newQuery().names("Rickety door").results().nearestTo(fifthRicketyDoor).click();
+                }
+                return;
+            } else {
+                webPathToDestination(fifthRicketyDoor, "Security Stronghold fifth Rickety Door");
+            }
+        } else if (fourthRicketyDoor.isReachable()) {
+            if (fourthRicketyDoor.isVisible()) {
+                if (!Players.getLocal().isMoving()) {
+                    answerSecurityQuestion();
+                    GameObjects.newQuery().names("Rickety door").results().nearestTo(fourthRicketyDoor).click();
+                }
+                return;
+            } else {
+                webPathToDestination(fourthRicketyDoor, "Security Stronghold fourth Rickety Door");
+            }
+        } else if (thirdRicketyDoor.isReachable()) {
+            if (thirdRicketyDoor.isVisible()) {
+                if (!Players.getLocal().isMoving()) {
+                    answerSecurityQuestion();
+                    GameObjects.newQuery().names("Rickety door").results().nearestTo(thirdRicketyDoor).click();
+                }
+                return;
+            } else {
+                webPathToDestination(thirdRicketyDoor, "Security Stronghold third Rickety Door");
+            }
+        } else if (secondRicketyDoor.isReachable()) {
+            if (secondRicketyDoor.isVisible()) {
+                if (!Players.getLocal().isMoving()) {
+                    answerSecurityQuestion();
+                    GameObjects.newQuery().names("Rickety door").results().nearestTo(secondRicketyDoor).click();
+                }
+                return;
+            } else {
+                webPathToDestination(secondRicketyDoor, "Security Stronghold second Rickety Door");
+            }
+        } else if (firstRicketyDoor.isReachable()) {
+            if (firstRicketyDoor.isVisible()) {
+                if (!Players.getLocal().isMoving()) {
+                    answerSecurityQuestion();
+                    GameObjects.newQuery().names("Rickety door").results().nearestTo(firstRicketyDoor).click();
+                }
+                return;
+            } else {
+                webPathToDestination(firstRicketyDoor, "Security Stronghold first Rickety Door");
+            }
+        } else if (firstLadder.isReachable()) {
+            if (firstLadder.isVisible()) {
+                if (!Players.getLocal().isMoving()) {
+                    firstLadder.click();
+                }
+                return;
+            } else {
+                webPathToDestination(firstLadder, "Security Stronghold second room ladder");
+            }
+        } else if (firstPortal.isReachable()) {
+            if (firstPortal.isVisible()) {
+                if (!Players.getLocal().isMoving()) {
+                    firstPortal.click();
+                }
+                return;
+            } else {
+                webPathToDestination(firstPortal, "Security Stronghold first room portal");
+            }
+        } else if (securityStrongholdEntrance.isReachable()) {
+            if (securityStrongholdEntrance.isVisible()) {
+                if (!Players.getLocal().isMoving()) {
+                    securityStrongholdEntrance.click();
+                }
+                return;
+            }
+        } else {
+            webPathToDestination(securityStrongholdEntrance, "Security Stronghold entrance");
         }
     }
+
 
     private void answerSecurityQuestion() {
         if (ChatDialog.isOpen()) {
             //@todo this bugs sometimes as chat dialogue is not null but throws exception
-            Execution.delay(500,1500);
+            Execution.delay(500, 1500);
             if (!ChatDialog.hasTitle("Select an Option")) {
                 ChatDialog.getContinue().select();
             }
@@ -220,7 +167,16 @@ public class WalkToFleshCrawler extends LeafTask {
                     }
                 });
             });
+        }
+    }
 
+    private void webPathToDestination(Coordinate destination, String nameOfDestination) {
+        WebPath webPath = Traversal.getDefaultWeb().getPathBuilder().buildTo(destination);
+        if (webPath != null) {
+            getLogger().info("Using webPath to " + nameOfDestination);
+            webPath.step();
+        } else {
+            getLogger().warn("Could not generate webPath to " + nameOfDestination);
         }
     }
 }
