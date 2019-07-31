@@ -28,7 +28,8 @@ public class Fight extends LeafTask {
             if (nearestFleshCrawler.interact("Attack")) {
                 getLogger().info("Attacked Flesh Crawler");
                 // Don't really need to delay here but it does help slow things down a little
-                Execution.delayUntil(() -> Players.getLocal().getTarget() == null, () -> Players.getLocal().getTarget() != null, 50, 1000, 3000);
+                Execution.delay(0, 2500);
+//                Execution.delayUntil(() -> Players.getLocal().getTarget() == null, () -> Players.getLocal().getTarget() != null, 50, 1000, 3000);
             }
         }
     }

@@ -56,7 +56,8 @@ public class WalkToFleshCrawler extends LeafTask {
             "Report the incident and do not click any links.",
             "Decline the offer and report that player.",
             "Report the stream as a scam. Real Jagex streams have a 'verified' mark.",
-            "Use the Account Recovery System.");
+            "Use the Account Recovery System.",
+            "Don't type in my password backwards and report the player.");
 
     @Override
     public void execute() {
@@ -65,7 +66,10 @@ public class WalkToFleshCrawler extends LeafTask {
             if (sixthRicketyDoor.isVisible()) {
                 if (!Players.getLocal().isMoving()) {
                     answerSecurityQuestion();
-                    GameObjects.newQuery().names("Rickety door").results().nearestTo(sixthRicketyDoor).click();
+                    if (!ChatDialog.isOpen()) {
+                        GameObjects.newQuery().names("Rickety door").results().nearestTo(sixthRicketyDoor).click();
+                    }
+
                 }
                 return;
             } else {
@@ -75,7 +79,9 @@ public class WalkToFleshCrawler extends LeafTask {
             if (fifthRicketyDoor.isVisible()) {
                 if (!Players.getLocal().isMoving()) {
                     answerSecurityQuestion();
-                    GameObjects.newQuery().names("Rickety door").results().nearestTo(fifthRicketyDoor).click();
+                    if (!ChatDialog.isOpen()) {
+                        GameObjects.newQuery().names("Rickety door").results().nearestTo(fifthRicketyDoor).click();
+                    }
                 }
                 return;
             } else {
@@ -85,7 +91,9 @@ public class WalkToFleshCrawler extends LeafTask {
             if (fourthRicketyDoor.isVisible()) {
                 if (!Players.getLocal().isMoving()) {
                     answerSecurityQuestion();
-                    GameObjects.newQuery().names("Rickety door").results().nearestTo(fourthRicketyDoor).click();
+                    if (!ChatDialog.isOpen()) {
+                        GameObjects.newQuery().names("Rickety door").results().nearestTo(fourthRicketyDoor).click();
+                    }
                 }
                 return;
             } else {
@@ -95,7 +103,9 @@ public class WalkToFleshCrawler extends LeafTask {
             if (thirdRicketyDoor.isVisible()) {
                 if (!Players.getLocal().isMoving()) {
                     answerSecurityQuestion();
-                    GameObjects.newQuery().names("Rickety door").results().nearestTo(thirdRicketyDoor).click();
+                    if (!ChatDialog.isOpen()) {
+                        GameObjects.newQuery().names("Rickety door").results().nearestTo(thirdRicketyDoor).click();
+                    }
                 }
                 return;
             } else {
@@ -105,7 +115,9 @@ public class WalkToFleshCrawler extends LeafTask {
             if (secondRicketyDoor.isVisible()) {
                 if (!Players.getLocal().isMoving()) {
                     answerSecurityQuestion();
-                    GameObjects.newQuery().names("Rickety door").results().nearestTo(secondRicketyDoor).click();
+                    if (!ChatDialog.isOpen()) {
+                        GameObjects.newQuery().names("Rickety door").results().nearestTo(secondRicketyDoor).click();
+                    }
                 }
                 return;
             } else {
@@ -115,7 +127,9 @@ public class WalkToFleshCrawler extends LeafTask {
             if (firstRicketyDoor.isVisible()) {
                 if (!Players.getLocal().isMoving()) {
                     answerSecurityQuestion();
-                    GameObjects.newQuery().names("Rickety door").results().nearestTo(firstRicketyDoor).click();
+                    if (!ChatDialog.isOpen()) {
+                        GameObjects.newQuery().names("Rickety door").results().nearestTo(firstRicketyDoor).click();
+                    }
                 }
                 return;
             } else {
@@ -139,13 +153,11 @@ public class WalkToFleshCrawler extends LeafTask {
             } else {
                 webPathToDestination(firstPortal, "Security Stronghold first room portal");
             }
-        } else if (securityStrongholdEntrance.isReachable()) {
-            if (securityStrongholdEntrance.isVisible()) {
-                if (!Players.getLocal().isMoving()) {
-                    securityStrongholdEntrance.click();
-                }
-                return;
+        } else if (securityStrongholdEntrance.isVisible()) {
+            if (!Players.getLocal().isMoving()) {
+                securityStrongholdEntrance.click();
             }
+            return;
         } else {
             webPathToDestination(securityStrongholdEntrance, "Security Stronghold entrance");
         }
@@ -153,20 +165,24 @@ public class WalkToFleshCrawler extends LeafTask {
 
 
     private void answerSecurityQuestion() {
-        if (ChatDialog.isOpen()) {
-            //@todo this bugs sometimes as chat dialogue is not null but throws exception
-            Execution.delay(500, 1500);
-            if (!ChatDialog.hasTitle("Select an Option")) {
-                ChatDialog.getContinue().select();
-            }
-            ChatDialog.getOptions().forEach(chatOption -> {
-                System.out.println("chatOption: " + chatOption.getText());
-                securityAnswers.forEach(answer -> {
-                    if (chatOption.getText().equals(answer)) {
-                        chatOption.select();
-                    }
+        try {
+            if (ChatDialog.isOpen()) {
+                if (!ChatDialog.hasTitle("Select an Option")) {
+                    ChatDialog.getContinue().select();
+                }
+                ChatDialog.getOptions().forEach(chatOption -> {
+                    System.out.println("chatOption: " + chatOption.getText());
+                    securityAnswers.forEach(answer -> {
+                        if (chatOption.getText().equals(answer)) {
+                            //@todo this bugs sometimes as chat dialogue is not null but throws exception
+                            Execution.delay(0, 2000);
+                            chatOption.select();
+                        }
+                    });
                 });
-            });
+            }
+        } catch (NullPointerException e) {
+            getLogger().warn("Answering security questions threw a null pointer");
         }
     }
 
