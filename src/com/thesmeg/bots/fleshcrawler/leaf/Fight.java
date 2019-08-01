@@ -20,25 +20,14 @@ public class Fight extends LeafTask {
         if (Inventory.getSelectedItem() != null) {
             Inventory.getSelectedItem().click();
         }
-//        if (baseXp == null) {
-//            baseXp = Skill.valueOf("STRENGTH").getExperience();
-//        }
-//        Integer xpGained = (Skill.STRENGTH.getExperience() - baseXp);
-//        getLogger().info("XP gained: " + xpGained);
+
+        //@todo implement whats targeting me
+//        LocatableEntityQueryResults<Npc> fleshCrawler1TargetingMe = Npcs.newQuery().targeting(Players.getLocal()).results();
 
         LocatableEntityQueryResults<Npc> nearestFleshCrawler = Npcs.newQuery().names("Flesh Crawler").results().sortByDistance();
-        //@todo implement whats targeting me
-        LocatableEntityQueryResults<Npc> fleshCrawler1TargetingMe = Npcs.newQuery().targeting(Players.getLocal()).results();
-        try {
-            getLogger().info("NPC-> Animation " + Players.getLocal().getTarget().getAnimationId());
-////            getLogger().info("Player-> Animation " + Players.getLocal().getAnimationId());
-
-        } catch (NullPointerException e) {
-
-        }
         for (Npc fleshCrawler : nearestFleshCrawler) {
             if (Players.getLocal().getTarget() == null && !Players.getLocal().isMoving()) {
-                if (fleshCrawler.getTarget() == null) {
+                if (fleshCrawler.getTarget() == null && fleshCrawler.getAnimationId() != 1184 && fleshCrawler.getAnimationId() != 1186) {
                     if (fleshCrawler.interact("Attack")) {
                         getLogger().info("Attacked Flesh Crawler");
                         Execution.delayUntil(() -> Players.getLocal().getAnimationId() == 1156,

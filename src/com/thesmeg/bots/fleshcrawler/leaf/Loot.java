@@ -22,7 +22,7 @@ public class Loot extends LeafTask {
         //@todo create pickup method for stackables
         for (String itemName : itemsToLoot) {
             GroundItem itemToClick = new GroundItemQueryBuilder().names(itemName).within(inFleshCrawlerArea.fleshCrawlerArea).results().nearest();
-            if (itemToClick != null && Players.getLocal().getAnimationId() == -1) {
+            if (itemToClick != null && Players.getLocal().getTarget() == null) {
                 itemToClick.interact("Take");
             }
         }

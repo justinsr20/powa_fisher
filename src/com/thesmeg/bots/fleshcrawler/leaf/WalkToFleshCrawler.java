@@ -67,8 +67,9 @@ public class WalkToFleshCrawler extends LeafTask {
             if (sixthRicketyDoor.isVisible()) {
                 if (!Players.getLocal().isMoving()) {
                     answerSecurityQuestion();
-                    if (!ChatDialog.isOpen()) {
+                    if (!ChatDialog.isOpen() && Players.getLocal().getAnimationId() != 4282) {
                         GameObjects.newQuery().names("Rickety door").results().nearestTo(sixthRicketyDoor).click();
+                        Execution.delayUntil(() -> Players.getLocal().getAnimationId() == 4282, () -> Players.getLocal().getAnimationId() != -1, 50, 1000, 2000);
                     }
 
                 }
@@ -80,8 +81,9 @@ public class WalkToFleshCrawler extends LeafTask {
             if (fifthRicketyDoor.isVisible()) {
                 if (!Players.getLocal().isMoving()) {
                     answerSecurityQuestion();
-                    if (!ChatDialog.isOpen()) {
+                    if (!ChatDialog.isOpen() && Players.getLocal().getAnimationId() != 4282) {
                         GameObjects.newQuery().names("Rickety door").results().nearestTo(fifthRicketyDoor).click();
+                        Execution.delayUntil(() -> Players.getLocal().getAnimationId() == 4282, () -> Players.getLocal().getAnimationId() != -1, 50, 1000, 2000);
                     }
                 }
                 return;
@@ -92,8 +94,9 @@ public class WalkToFleshCrawler extends LeafTask {
             if (fourthRicketyDoor.isVisible()) {
                 if (!Players.getLocal().isMoving()) {
                     answerSecurityQuestion();
-                    if (!ChatDialog.isOpen()) {
+                    if (!ChatDialog.isOpen() && Players.getLocal().getAnimationId() != 4282) {
                         GameObjects.newQuery().names("Rickety door").results().nearestTo(fourthRicketyDoor).click();
+                        Execution.delayUntil(() -> Players.getLocal().getAnimationId() == 4282, () -> Players.getLocal().getAnimationId() != -1, 50, 1000, 2000);
                     }
                 }
                 return;
@@ -104,8 +107,9 @@ public class WalkToFleshCrawler extends LeafTask {
             if (thirdRicketyDoor.isVisible()) {
                 if (!Players.getLocal().isMoving()) {
                     answerSecurityQuestion();
-                    if (!ChatDialog.isOpen()) {
+                    if (!ChatDialog.isOpen() && Players.getLocal().getAnimationId() != 4282) {
                         GameObjects.newQuery().names("Rickety door").results().nearestTo(thirdRicketyDoor).click();
+                        Execution.delayUntil(() -> Players.getLocal().getAnimationId() == 4282, () -> Players.getLocal().getAnimationId() != -1, 50, 1000, 2000);
                     }
                 }
                 return;
@@ -116,8 +120,9 @@ public class WalkToFleshCrawler extends LeafTask {
             if (secondRicketyDoor.isVisible()) {
                 if (!Players.getLocal().isMoving()) {
                     answerSecurityQuestion();
-                    if (!ChatDialog.isOpen()) {
+                    if (!ChatDialog.isOpen() && Players.getLocal().getAnimationId() != 4282) {
                         GameObjects.newQuery().names("Rickety door").results().nearestTo(secondRicketyDoor).click();
+                        Execution.delayUntil(() -> Players.getLocal().getAnimationId() == 4282, () -> Players.getLocal().getAnimationId() != -1, 50, 1000, 2000);
                     }
                 }
                 return;
@@ -128,8 +133,9 @@ public class WalkToFleshCrawler extends LeafTask {
             if (firstRicketyDoor.isVisible()) {
                 if (!Players.getLocal().isMoving()) {
                     answerSecurityQuestion();
-                    if (!ChatDialog.isOpen()) {
+                    if (!ChatDialog.isOpen() && Players.getLocal().getAnimationId() != 4282) {
                         GameObjects.newQuery().names("Rickety door").results().nearestTo(firstRicketyDoor).click();
+                        Execution.delayUntil(() -> Players.getLocal().getAnimationId() == 4282, () -> Players.getLocal().getAnimationId() != -1, 50, 1000, 2000);
                     }
                 }
                 return;
