@@ -12,7 +12,7 @@ public class InFleshCrawlerArea extends BranchTask {
 
     private Coordinate bottomLeftFleshCrawler = new Coordinate(2035, 5185, 0);
     private Coordinate topRightFleshCrawler = new Coordinate(2046, 5194, 0);
-    private Area fleshCrawlerArea = new Area.Rectangular(bottomLeftFleshCrawler, topRightFleshCrawler);
+    public Area fleshCrawlerArea = new Area.Rectangular(bottomLeftFleshCrawler, topRightFleshCrawler);
 
     @Override
     public boolean validate() {

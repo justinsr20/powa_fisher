@@ -57,7 +57,8 @@ public class WalkToFleshCrawler extends LeafTask {
             "Decline the offer and report that player.",
             "Report the stream as a scam. Real Jagex streams have a 'verified' mark.",
             "Use the Account Recovery System.",
-            "Don't type in my password backwards and report the player.");
+            "Don't type in my password backwards and report the player.",
+            "Report the player for phishing.");
 
     @Override
     public void execute() {

@@ -32,9 +32,9 @@ public class GetSupplies extends LeafTask {
                     Bank.depositInventory();
                 }
             }
-            requiredItems().forEach((foodName, foodAmount) -> {
-                if (Inventory.getQuantity(foodName) != foodAmount) {
-                    Bank.withdraw(foodName, foodAmount);
+            requiredItems().forEach((item, itemAmount) -> {
+                if (Inventory.getQuantity(item) != itemAmount) {
+                    Bank.withdraw(item, itemAmount);
                 }
             });
         }

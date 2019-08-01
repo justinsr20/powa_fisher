@@ -1,6 +1,6 @@
 package com.thesmeg.bots.fleshcrawler.branch;
 
-import com.runemate.game.api.hybrid.local.hud.interfaces.Health;
+import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.thesmeg.bots.fleshcrawler.leaf.Fight;
@@ -8,16 +8,13 @@ import com.thesmeg.bots.fleshcrawler.leaf.Loot;
 
 import java.util.Random;
 
-public class HaveEnoughHp extends BranchTask {
-
-    Random random = new Random();
+public class LootAvailable extends BranchTask {
+//    Loot loot = new Loot();
+    private Random random = new Random();
 
     @Override
     public boolean validate() {
-
-        Integer randomHpCheck = random.nextInt(40) + 30;
-//        getLogger().info("Current health " + Health.getCurrentPercent() + "% randomHpCheck " + randomHpCheck + "%");
-        if (Health.getCurrentPercent() > randomHpCheck) {
+        if (!Inventory.isFull() && (random.nextInt(4) == 2)) {
             return true;
         }
         return false;
@@ -25,13 +22,11 @@ public class HaveEnoughHp extends BranchTask {
 
     @Override
     public TreeTask successTask() {
-        return new LootAvailable();
+        return new Loot();
     }
 
     @Override
     public TreeTask failureTask() {
-        return new HaveFood();
+        return new Fight();
     }
-
-
 }
