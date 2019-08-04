@@ -15,7 +15,7 @@ public class Loot extends LeafTask {
     InFleshCrawlerArea inFleshCrawlerArea = new InFleshCrawlerArea();
     List<String> itemsToLoot = Arrays.asList("Shield left half", "Dragon spear", "Rune spear", "Tooth half of key",
             "Loop half of key", "Uncut diamond", "Uncut ruby", "Rune javelin", "Uncut emerald",
-            "Nature talisman", "Uncut sapphire", "Iron ore", "Coins", "Body rune");
+            "Nature talisman", "Uncut sapphire", "Iron ore", "Coins", "Body rune", "Iron arrow");
 
     @Override
     public void execute() {
@@ -33,12 +33,17 @@ public class Loot extends LeafTask {
             if (Inventory.contains("Coins") && Inventory.contains("Body rune")) {
                 GroundItem coins = new GroundItemQueryBuilder().names("Coins").within(inFleshCrawlerArea.fleshCrawlerArea).results().nearest();
                 GroundItem bodyRune = new GroundItemQueryBuilder().names("Body rune").within(inFleshCrawlerArea.fleshCrawlerArea).results().nearest();
+                GroundItem ironArrow = new GroundItemQueryBuilder().names("Body rune").within(inFleshCrawlerArea.fleshCrawlerArea).results().nearest();
                 if (coins != null) {
                     coins.click();
                     Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, 1000, 2000);
                 }
                 if (bodyRune != null) {
                     bodyRune.click();
+                    Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, 1000, 2000);
+                }
+                if (ironArrow != null) {
+                    ironArrow.click();
                     Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, 1000, 2000);
                 }
             }
