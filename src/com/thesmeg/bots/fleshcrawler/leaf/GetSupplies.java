@@ -28,6 +28,8 @@ public class GetSupplies extends LeafTask {
         //@todo need to cater for when to many of required item withdrawn
         if (Bank.isOpen()) {
             for (SpriteItem item : Inventory.getItems().asList()) {
+                getLogger().info(item);
+                getLogger().info(requiredItems().keySet().contains(item.getDefinition().getName()));
                 if (!requiredItems().keySet().contains(item.getDefinition().getName())) {
                     Bank.depositInventory();
                 }

@@ -1,6 +1,5 @@
 package com.thesmeg.bots.fleshcrawler.branch;
 
-import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.thesmeg.bots.fleshcrawler.leaf.Fight;
@@ -14,7 +13,7 @@ public class LootAvailable extends BranchTask {
 
     @Override
     public boolean validate() {
-        if (!Inventory.isFull() && (random.nextInt(4) == 2)) {
+        if (random.nextInt(1) == 0) {
             return true;
         }
         return false;

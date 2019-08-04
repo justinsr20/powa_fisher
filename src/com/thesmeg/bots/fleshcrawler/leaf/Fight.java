@@ -26,8 +26,9 @@ public class Fight extends LeafTask {
 
         LocatableEntityQueryResults<Npc> nearestFleshCrawler = Npcs.newQuery().names("Flesh Crawler").results().sortByDistance();
         for (Npc fleshCrawler : nearestFleshCrawler) {
-            if (Players.getLocal().getTarget() == null && !Players.getLocal().isMoving()) {
-                if (fleshCrawler.getTarget() == null && fleshCrawler.getAnimationId() != 1184 && fleshCrawler.getAnimationId() != 1186) {
+            if (Players.getLocal().getTarget() == null && !Players.getLocal().isMoving() && Players.getLocal().getAnimationId() != 390) {
+                if (fleshCrawler.getTarget() == null && fleshCrawler.getAnimationId() != 1184 && fleshCrawler.getAnimationId() != 1186
+                        && fleshCrawler.getAnimationId() != 1190) {
                     if (fleshCrawler.interact("Attack")) {
                         getLogger().info("Attacked Flesh Crawler");
                         Execution.delayUntil(() -> Players.getLocal().getAnimationId() == 1156,

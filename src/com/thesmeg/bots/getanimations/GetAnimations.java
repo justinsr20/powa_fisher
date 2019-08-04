@@ -8,7 +8,7 @@ public class GetAnimations extends LoopingBot {
     public void onLoop() {
         try {
             getLogger().info("NPC-> Animation " + Players.getLocal().getTarget().getAnimationId());
-//            getLogger().info("Player-> Animation " + Players.getLocal().getAnimationId());
+            getLogger().info("Player-> Animation " + Players.getLocal().getAnimationId());
         } catch (NullPointerException e) {
 
         }
