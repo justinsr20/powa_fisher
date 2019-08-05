@@ -17,8 +17,8 @@ public class Fight extends LeafTask {
     @Override
     public void execute() {
         //@todo randomize and player sense
-        if(Traversal.getRunEnergy() > 20){
-            if(!Traversal.isRunEnabled()){
+        if (Traversal.getRunEnergy() > 20) {
+            if (!Traversal.isRunEnabled()) {
                 Traversal.toggleRun();
             }
         }
@@ -40,14 +40,16 @@ public class Fight extends LeafTask {
         //@todo Attack by farthest when using range
         LocatableEntityQueryResults<Npc> nearestFleshCrawler = Npcs.newQuery().names("Flesh Crawler").results().sortByDistance();
         for (Npc flesh : nearestFleshCrawler) {
-            if (flesh.getTarget() != null && flesh.getTarget().equals(Players.getLocal())) {
-                if (Players.getLocal().getTarget() != null && Players.getLocal().getTarget().equals(flesh)) {
-                    break;
-                } else {
-                    flesh.interact("Attack");
-                    break;
+            if (flesh.getTarget() != null) {
+                if (flesh.getTarget().equals(Players.getLocal())) {
+                    if (Players.getLocal().getTarget() != null && Players.getLocal().getTarget().equals(flesh)) {
+                        break;
+                    } else {
+                        flesh.interact("Attack");
+                        break;
+                    }
                 }
-            } else if (flesh.getTarget() == null && Players.getLocal().getTarget() == null) {
+            } else if (Players.getLocal().getTarget() == null) {
                 getLogger().info("Attacking Flesh Crawler");
                 if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
                     flesh.interact("Attack");
