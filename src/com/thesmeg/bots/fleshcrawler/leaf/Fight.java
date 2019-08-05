@@ -33,6 +33,7 @@ public class Fight extends LeafTask {
                         getLogger().info("Attacked Flesh Crawler");
                         Execution.delayUntil(() -> Players.getLocal().getAnimationId() == 1156,
                                 () -> Players.getLocal().getTarget() != null, 50, 1000, 2000);
+                        break;
                     }
                 }
             }
