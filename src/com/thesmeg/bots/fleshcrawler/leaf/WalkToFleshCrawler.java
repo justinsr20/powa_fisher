@@ -9,8 +9,9 @@ import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class WalkToFleshCrawler extends LeafTask {
 
@@ -23,6 +24,20 @@ public class WalkToFleshCrawler extends LeafTask {
     private Coordinate fourthRicketyDoor = new Coordinate(2036, 5201, 0);
     private Coordinate fifthRicketyDoor = new Coordinate(2046, 5198, 0);
     private Coordinate sixthRicketyDoor = new Coordinate(2045, 5195, 0);
+
+    private Map<Coordinate, String> pathToFleshCrawlers() {
+        return Collections.unmodifiableMap(Stream.of(
+                new AbstractMap.SimpleEntry<>(sixthRicketyDoor, "Rickety door"),
+                new AbstractMap.SimpleEntry<>(fifthRicketyDoor, "Rickety door"),
+                new AbstractMap.SimpleEntry<>(fourthRicketyDoor, "Rickety door"),
+                new AbstractMap.SimpleEntry<>(thirdRicketyDoor, "Rickety door"),
+                new AbstractMap.SimpleEntry<>(secondRicketyDoor, "Rickety door"),
+                new AbstractMap.SimpleEntry<>(firstRicketyDoor, "Rickety door"),
+                new AbstractMap.SimpleEntry<>(firstLadder, "Ladder"),
+                new AbstractMap.SimpleEntry<>(firstPortal, "Portal"),
+                new AbstractMap.SimpleEntry<>(securityStrongholdEntrance, "Entrance")
+        ).collect(Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue())));
+    }
 
     private List<String> securityAnswers = Arrays.asList(
             "No.",
@@ -63,113 +78,25 @@ public class WalkToFleshCrawler extends LeafTask {
     @Override
     public void execute() {
         //@todo need to close warning dialogue box that comes up on first trip
-        if (sixthRicketyDoor.isReachable()) {
-            if (sixthRicketyDoor.isVisible()) {
-                if (!Players.getLocal().isMoving()) {
+        boolean walkingToEntrance = true;
+        for (Map.Entry<Coordinate, String> destination : pathToFleshCrawlers().entrySet()) {
+            if (destination.getKey().isReachable()) {
+                if (destination.getKey().isVisible()) {
                     answerSecurityQuestion();
-                    if (!ChatDialog.isOpen() && Players.getLocal().getAnimationId() != 4282) {
-                        GameObjects.newQuery().names("Rickety door").results().nearestTo(sixthRicketyDoor).click();
-                        Execution.delayUntil(() -> Players.getLocal().getAnimationId() == 4282, () -> Players.getLocal().getAnimationId() != -1, 50, 1000, 2000);
+                    if (!Players.getLocal().isMoving() && Players.getLocal().getAnimationId() != 4282 && !ChatDialog.isOpen()) {
+                        GameObjects.newQuery().names(destination.getValue()).results().nearestTo(destination.getKey()).click();
                     }
-
+                } else if (!destination.getKey().isVisible()) {
+                    webPathToDestination(destination.getKey(), destination.getValue());
                 }
-                return;
-            } else {
-                webPathToDestination(sixthRicketyDoor, "Security Stronghold sixth Rickety Door");
+                walkingToEntrance = false;
+                break;
             }
-        } else if (fifthRicketyDoor.isReachable()) {
-            if (fifthRicketyDoor.isVisible()) {
-                if (!Players.getLocal().isMoving()) {
-                    answerSecurityQuestion();
-                    if (!ChatDialog.isOpen() && Players.getLocal().getAnimationId() != 4282) {
-                        GameObjects.newQuery().names("Rickety door").results().nearestTo(fifthRicketyDoor).click();
-                        Execution.delayUntil(() -> Players.getLocal().getAnimationId() == 4282, () -> Players.getLocal().getAnimationId() != -1, 50, 1000, 2000);
-                    }
-                }
-                return;
-            } else {
-                webPathToDestination(fifthRicketyDoor, "Security Stronghold fifth Rickety Door");
-            }
-        } else if (fourthRicketyDoor.isReachable()) {
-            if (fourthRicketyDoor.isVisible()) {
-                if (!Players.getLocal().isMoving()) {
-                    answerSecurityQuestion();
-                    if (!ChatDialog.isOpen() && Players.getLocal().getAnimationId() != 4282) {
-                        GameObjects.newQuery().names("Rickety door").results().nearestTo(fourthRicketyDoor).click();
-                        Execution.delayUntil(() -> Players.getLocal().getAnimationId() == 4282, () -> Players.getLocal().getAnimationId() != -1, 50, 1000, 2000);
-                    }
-                }
-                return;
-            } else {
-                webPathToDestination(fourthRicketyDoor, "Security Stronghold fourth Rickety Door");
-            }
-        } else if (thirdRicketyDoor.isReachable()) {
-            if (thirdRicketyDoor.isVisible()) {
-                if (!Players.getLocal().isMoving()) {
-                    answerSecurityQuestion();
-                    if (!ChatDialog.isOpen() && Players.getLocal().getAnimationId() != 4282) {
-                        GameObjects.newQuery().names("Rickety door").results().nearestTo(thirdRicketyDoor).click();
-                        Execution.delayUntil(() -> Players.getLocal().getAnimationId() == 4282, () -> Players.getLocal().getAnimationId() != -1, 50, 1000, 2000);
-                    }
-                }
-                return;
-            } else {
-                webPathToDestination(thirdRicketyDoor, "Security Stronghold third Rickety Door");
-            }
-        } else if (secondRicketyDoor.isReachable()) {
-            if (secondRicketyDoor.isVisible()) {
-                if (!Players.getLocal().isMoving()) {
-                    answerSecurityQuestion();
-                    if (!ChatDialog.isOpen() && Players.getLocal().getAnimationId() != 4282) {
-                        GameObjects.newQuery().names("Rickety door").results().nearestTo(secondRicketyDoor).click();
-                        Execution.delayUntil(() -> Players.getLocal().getAnimationId() == 4282, () -> Players.getLocal().getAnimationId() != -1, 50, 1000, 2000);
-                    }
-                }
-                return;
-            } else {
-                webPathToDestination(secondRicketyDoor, "Security Stronghold second Rickety Door");
-            }
-        } else if (firstRicketyDoor.isReachable()) {
-            if (firstRicketyDoor.isVisible()) {
-                if (!Players.getLocal().isMoving()) {
-                    answerSecurityQuestion();
-                    if (!ChatDialog.isOpen() && Players.getLocal().getAnimationId() != 4282) {
-                        GameObjects.newQuery().names("Rickety door").results().nearestTo(firstRicketyDoor).click();
-                        Execution.delayUntil(() -> Players.getLocal().getAnimationId() == 4282, () -> Players.getLocal().getAnimationId() != -1, 50, 1000, 2000);
-                    }
-                }
-                return;
-            } else {
-                webPathToDestination(firstRicketyDoor, "Security Stronghold first Rickety Door");
-            }
-        } else if (firstLadder.isReachable()) {
-            if (firstLadder.isVisible()) {
-                if (!Players.getLocal().isMoving()) {
-                    firstLadder.click();
-                }
-                return;
-            } else {
-                webPathToDestination(firstLadder, "Security Stronghold second room ladder");
-            }
-        } else if (firstPortal.isReachable()) {
-            if (firstPortal.isVisible()) {
-                if (!Players.getLocal().isMoving()) {
-                    firstPortal.click();
-                }
-                return;
-            } else {
-                webPathToDestination(firstPortal, "Security Stronghold first room portal");
-            }
-        } else if (securityStrongholdEntrance.isVisible()) {
-            if (!Players.getLocal().isMoving()) {
-                securityStrongholdEntrance.click();
-            }
-            return;
-        } else {
+        }
+        if (walkingToEntrance) {
             webPathToDestination(securityStrongholdEntrance, "Security Stronghold entrance");
         }
     }
-
 
     private void answerSecurityQuestion() {
         try {
@@ -181,7 +108,7 @@ public class WalkToFleshCrawler extends LeafTask {
                     System.out.println("chatOption: " + chatOption.getText());
                     securityAnswers.forEach(answer -> {
                         if (chatOption.getText().equals(answer)) {
-                            //@todo this bugs sometimes as chat dialogue is not null but throws exception
+                            //@todo make this a player sense var
                             Execution.delay(0, 2000);
                             chatOption.select();
                         }

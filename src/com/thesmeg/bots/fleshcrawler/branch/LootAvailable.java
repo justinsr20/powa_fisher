@@ -17,6 +17,7 @@ public class LootAvailable extends BranchTask {
 
     @Override
     public boolean validate() {
+
         LocatableEntityQueryResults<GroundItem> itemsOnGround = GroundItems.getLoadedWithin(inFleshCrawlerArea.fleshCrawlerArea);
         for (GroundItem item : itemsOnGround) {
             if (item.getPosition() != null && item.getPosition().isReachable()) {
@@ -24,6 +25,7 @@ public class LootAvailable extends BranchTask {
                     getLogger().info("Stackable items found on ground, attempting to loot");
                     return true;
                 } else if (!Inventory.isFull()) {
+                    //todo need to make sure its something we want to loot
                     getLogger().info("Unstackable items found on ground, attempting to loot");
                     return true;
                 }
