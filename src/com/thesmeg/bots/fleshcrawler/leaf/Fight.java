@@ -39,23 +39,27 @@ public class Fight extends LeafTask {
 
         //@todo Attack by farthest when using range
         LocatableEntityQueryResults<Npc> nearestFleshCrawler = Npcs.newQuery().names("Flesh Crawler").results().sortByDistance();
-        for (Npc flesh : nearestFleshCrawler) {
-            if (flesh.getTarget() != null) {
-                if (flesh.getTarget().equals(Players.getLocal())) {
-                    if (Players.getLocal().getTarget() != null && Players.getLocal().getTarget().equals(flesh)) {
-                        break;
-                    } else {
+        try {
+            for (Npc flesh : nearestFleshCrawler) {
+                if (flesh.getTarget() != null) {
+                    if (flesh.getTarget().equals(Players.getLocal())) {
+                        if (Players.getLocal().getTarget() != null && Players.getLocal().getTarget().equals(flesh)) {
+                            break;
+                        } else {
+                            flesh.interact("Attack");
+                            break;
+                        }
+                    }
+                } else if (Players.getLocal().getTarget() == null) {
+                    getLogger().info("Attacking Flesh Crawler");
+                    if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
                         flesh.interact("Attack");
                         break;
                     }
                 }
-            } else if (Players.getLocal().getTarget() == null) {
-                getLogger().info("Attacking Flesh Crawler");
-                if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
-                    flesh.interact("Attack");
-                    break;
-                }
             }
+        } catch (NullPointerException e) {
+            getLogger().warn("Threw null pointer trying to attack");
         }
     }
 }

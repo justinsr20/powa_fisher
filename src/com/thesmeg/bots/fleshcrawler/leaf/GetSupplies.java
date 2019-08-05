@@ -13,7 +13,7 @@ public class GetSupplies extends LeafTask {
 
     private static Map<String, Integer> requiredItems() {
         return Collections.unmodifiableMap(Stream.of(
-                new AbstractMap.SimpleEntry<>("Tuna", 25),
+                new AbstractMap.SimpleEntry<>("Pike", 25),
                 new AbstractMap.SimpleEntry<>("Fire rune", 1),
                 new AbstractMap.SimpleEntry<>("Air rune", 3),
                 new AbstractMap.SimpleEntry<>("Law rune", 1)
@@ -28,7 +28,8 @@ public class GetSupplies extends LeafTask {
             if (Inventory.contains("Iron arrow")) {
                 Inventory.getItems("Iron arrow").first().click();
             }
-        } else if (!Bank.isOpen()) {
+        }
+        if (!Bank.isOpen()) {
             Bank.open();
         }
         //@todo need to cater for when to many of required item withdrawn

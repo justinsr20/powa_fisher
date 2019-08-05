@@ -8,7 +8,7 @@ import com.thesmeg.bots.fleshcrawler.leaf.TeleportToVarrock;
 
 public class HaveFood extends BranchTask {
 
-    String foodName = "Tuna";
+    String foodName = "Pike";
 
     @Override
     public boolean validate() {

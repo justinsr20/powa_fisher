@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HaveSupplies extends BranchTask {
-    private List<String> requiredItems = Arrays.asList("Tuna", "Fire rune", "Law rune", "Air rune");
+    private List<String> requiredItems = Arrays.asList("Pike", "Fire rune", "Law rune", "Air rune");
 
     @Override
     public boolean validate() {
