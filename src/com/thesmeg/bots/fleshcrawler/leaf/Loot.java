@@ -19,32 +19,16 @@ public class Loot extends LeafTask {
 
     @Override
     public void execute() {
-        //@todo create pickup method for stackables
         if (Players.getLocal().getTarget() == null && !Players.getLocal().isMoving()) {
             for (String itemName : itemsToLoot) {
                 GroundItem itemToClick = new GroundItemQueryBuilder().names(itemName).within(inFleshCrawlerArea.fleshCrawlerArea).results().nearest();
                 if (itemToClick != null) {
-                    if (!Inventory.isFull()) {
+                    if (Inventory.getQuantity(itemName) > 1) {
                         itemToClick.interact("Take");
-                        Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, 1000, 2000);
+                    } else if (!Inventory.isFull()) {
+                        itemToClick.interact("Take");
                     }
-                }
-            }
-            if (Inventory.contains("Coins") || Inventory.contains("Body rune") || Inventory.contains("Iron arrow")) {
-                GroundItem coins = new GroundItemQueryBuilder().names("Coins").within(inFleshCrawlerArea.fleshCrawlerArea).results().nearest();
-                GroundItem bodyRune = new GroundItemQueryBuilder().names("Body rune").within(inFleshCrawlerArea.fleshCrawlerArea).results().nearest();
-                GroundItem ironArrow = new GroundItemQueryBuilder().names("Body rune").within(inFleshCrawlerArea.fleshCrawlerArea).results().nearest();
-                if (coins != null) {
-                    coins.interact("Take");
-                    Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, 1000, 2000);
-                }
-                if (bodyRune != null) {
-                    bodyRune.interact("Take");
-                    Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, 1000, 2000);
-                }
-                if (ironArrow != null) {
-                    ironArrow.interact("Take");
-                    Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, 1000, 2000);
+                    Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, 500, 1500);
                 }
             }
         }
