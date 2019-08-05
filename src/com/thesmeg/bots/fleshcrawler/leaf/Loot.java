@@ -23,9 +23,13 @@ public class Loot extends LeafTask {
                 GroundItem itemToClick = new GroundItemQueryBuilder().names(itemName).within(inFleshCrawlerArea.fleshCrawlerArea).results().nearest();
                 if (itemToClick != null) {
                     if (itemToClick.getQuantity() > 1 && Inventory.contains(itemToClick.getDefinition().getName())) {
-                        itemToClick.interact("Take");
+                        if (itemToClick.interact("Take")) {
+                            break;
+                        }
                     } else if (!Inventory.isFull()) {
-                        itemToClick.interact("Take");
+                        if (itemToClick.interact("Take")) {
+                            break;
+                        }
                     }
                 }
             }
