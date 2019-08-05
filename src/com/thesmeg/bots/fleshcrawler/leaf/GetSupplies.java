@@ -20,8 +20,16 @@ public class GetSupplies extends LeafTask {
         ).collect(Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue())));
     }
 
+    Boolean useRanged = true;
+
     @Override
     public void execute() {
+        if (useRanged) {
+            if (Inventory.contains("Iron arrow")) {
+                Inventory.getItems("Iron arrow").first().click();
+            }
+        }
+
         if (!Bank.isOpen()) {
             Bank.open();
         }

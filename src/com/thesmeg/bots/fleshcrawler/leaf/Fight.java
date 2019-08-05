@@ -1,18 +1,18 @@
 package com.thesmeg.bots.fleshcrawler.leaf;
 
+import com.runemate.game.api.hybrid.Environment;
 import com.runemate.game.api.hybrid.entities.Npc;
-import com.runemate.game.api.hybrid.entities.Player;
-import com.runemate.game.api.hybrid.local.Skill;
+import com.runemate.game.api.hybrid.local.hud.interfaces.Equipment;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.queries.results.LocatableEntityQueryResults;
 import com.runemate.game.api.hybrid.region.Npcs;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
-import com.thesmeg.bots.fleshcrawler.branch.InFleshCrawlerArea;
 
 public class Fight extends LeafTask {
-    private static Integer baseXp;
+
+    Boolean useRanged = true;
 
     @Override
     public void execute() {
@@ -21,9 +21,17 @@ public class Fight extends LeafTask {
             Inventory.getSelectedItem().click();
         }
 
-        //@todo implement whats targeting me
-//        LocatableEntityQueryResults<Npc> fleshCrawler1TargetingMe = Npcs.newQuery().targeting(Players.getLocal()).results();
+        if (useRanged) {
+            if (Equipment.getItems("Iron arrow").isEmpty()) {
+                if (Inventory.contains("Iron arrow")) {
+                    Inventory.getItems("Iron arrow").first().click();
+                } else {
+                    Environment.getBot().stop("Run out of arrows");
+                }
+            }
+        }
 
+        //@todo filter on things targeting me & attack by farthest when using range
         LocatableEntityQueryResults<Npc> nearestFleshCrawler = Npcs.newQuery().names("Flesh Crawler").results().sortByDistance();
         for (Npc fleshCrawler : nearestFleshCrawler) {
             if (Players.getLocal().getTarget() == null && !Players.getLocal().isMoving() && Players.getLocal().getAnimationId() != 390) {

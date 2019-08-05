@@ -19,7 +19,7 @@ public class Loot extends LeafTask {
 
     @Override
     public void execute() {
-        if (Players.getLocal().getTarget() == null && !Players.getLocal().isMoving()) {
+        if (!Players.getLocal().isMoving()) {
             for (String itemName : itemsToLoot) {
                 GroundItem itemToClick = new GroundItemQueryBuilder().names(itemName).within(inFleshCrawlerArea.fleshCrawlerArea).results().nearest();
                 if (itemToClick != null) {
@@ -28,7 +28,6 @@ public class Loot extends LeafTask {
                     } else if (!Inventory.isFull()) {
                         itemToClick.interact("Take");
                     }
-                    Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, 500, 1500);
                 }
             }
         }
