@@ -28,9 +28,7 @@ public class GetSupplies extends LeafTask {
             if (Inventory.contains("Iron arrow")) {
                 Inventory.getItems("Iron arrow").first().click();
             }
-        }
-
-        if (!Bank.isOpen()) {
+        } else if (!Bank.isOpen()) {
             Bank.open();
         }
         //@todo need to cater for when to many of required item withdrawn
