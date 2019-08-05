@@ -53,8 +53,8 @@ public class Fight extends LeafTask {
                 getLogger().info("Attacking Flesh Crawler");
                 if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
                     flesh.interact("Attack");
+                    break;
                 }
-                break;
             }
         }
     }
