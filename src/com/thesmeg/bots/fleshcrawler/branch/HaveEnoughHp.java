@@ -16,7 +16,6 @@ public class HaveEnoughHp extends BranchTask {
     public boolean validate() {
 
         Integer randomHpCheck = random.nextInt(40) + 30;
-//        getLogger().info("Current health " + Health.getCurrentPercent() + "% randomHpCheck " + randomHpCheck + "%");
         if (Health.getCurrentPercent() > randomHpCheck) {
             return true;
         }

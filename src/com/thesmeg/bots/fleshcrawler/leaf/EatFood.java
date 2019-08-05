@@ -10,6 +10,7 @@ public class EatFood extends LeafTask {
         if (Inventory.getSelectedItem() != null) {
             Inventory.getSelectedItem().click();
         }
+        getLogger().info("Low health, attempting to eat");
         Inventory.getItems("Tuna").first().click();
     }
 }

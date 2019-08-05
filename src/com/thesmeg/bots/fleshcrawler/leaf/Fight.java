@@ -26,7 +26,7 @@ public class Fight extends LeafTask {
                 if (Inventory.contains("Iron arrow")) {
                     Inventory.getItems("Iron arrow").first().click();
                 } else {
-                    Environment.getBot().stop("Run out of arrows");
+                    Environment.getBot().stop("Ran out of arrows");
                 }
             }
         }

@@ -7,7 +7,7 @@ import com.runemate.game.api.script.framework.tree.LeafTask;
 
 public class WalkToBank extends LeafTask {
 
-    Coordinate destination = new Coordinate(3185,3436,0);
+    private Coordinate destination = new Coordinate(3185,3436,0);
 
     @Override
     public void execute() {
