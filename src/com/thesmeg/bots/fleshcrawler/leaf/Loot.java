@@ -4,7 +4,6 @@ import com.runemate.game.api.hybrid.entities.GroundItem;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.queries.GroundItemQueryBuilder;
 import com.runemate.game.api.hybrid.region.Players;
-import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
 import com.thesmeg.bots.fleshcrawler.branch.InFleshCrawlerArea;
 
@@ -23,7 +22,7 @@ public class Loot extends LeafTask {
             for (String itemName : itemsToLoot) {
                 GroundItem itemToClick = new GroundItemQueryBuilder().names(itemName).within(inFleshCrawlerArea.fleshCrawlerArea).results().nearest();
                 if (itemToClick != null) {
-                    if (Inventory.getQuantity(itemName) > 1) {
+                    if (itemToClick.getQuantity() > 1 && Inventory.contains(itemToClick.getDefinition().getName())) {
                         itemToClick.interact("Take");
                     } else if (!Inventory.isFull()) {
                         itemToClick.interact("Take");

@@ -4,10 +4,10 @@ import com.runemate.game.api.hybrid.Environment;
 import com.runemate.game.api.hybrid.entities.Npc;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Equipment;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
+import com.runemate.game.api.hybrid.location.navigation.Traversal;
 import com.runemate.game.api.hybrid.queries.results.LocatableEntityQueryResults;
 import com.runemate.game.api.hybrid.region.Npcs;
 import com.runemate.game.api.hybrid.region.Players;
-import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
 
 public class Fight extends LeafTask {
@@ -16,6 +16,12 @@ public class Fight extends LeafTask {
 
     @Override
     public void execute() {
+        //@todo randomize and player sense
+        if(Traversal.getRunEnergy() > 20){
+            if(!Traversal.isRunEnabled()){
+                Traversal.toggleRun();
+            }
+        }
         //When inventory item accidentally selected
         if (Inventory.getSelectedItem() != null) {
             Inventory.getSelectedItem().click();
@@ -31,21 +37,23 @@ public class Fight extends LeafTask {
             }
         }
 
-        //@todo filter on things targeting me & attack by farthest when using range
+        //@todo Attack by farthest when using range
         LocatableEntityQueryResults<Npc> nearestFleshCrawler = Npcs.newQuery().names("Flesh Crawler").results().sortByDistance();
-        for (Npc fleshCrawler : nearestFleshCrawler) {
-            if (Players.getLocal().getTarget() == null && !Players.getLocal().isMoving() && Players.getLocal().getAnimationId() != 390) {
-                if (fleshCrawler.getTarget() == null && fleshCrawler.getAnimationId() != 1184 && fleshCrawler.getAnimationId() != 1186
-                        && fleshCrawler.getAnimationId() != 1190) {
-                    if (fleshCrawler.interact("Attack")) {
-                        getLogger().info("Attacked Flesh Crawler");
-                        Execution.delayUntil(() -> Players.getLocal().getAnimationId() == 1156,
-                                () -> Players.getLocal().getTarget() != null, 50, 1000, 2000);
-                        break;
-                    }
+        for (Npc flesh : nearestFleshCrawler) {
+            if (flesh.getTarget() != null && flesh.getTarget().equals(Players.getLocal())) {
+                if (Players.getLocal().getTarget() != null && Players.getLocal().getTarget().equals(flesh)) {
+                    break;
+                } else {
+                    flesh.interact("Attack");
+                    break;
                 }
+            } else if (flesh.getTarget() == null && Players.getLocal().getTarget() == null) {
+                getLogger().info("Attacking Flesh Crawler");
+                if (flesh.getAnimationId() != 1190) {
+                    flesh.interact("Attack");
+                }
+                break;
             }
         }
-
     }
 }
