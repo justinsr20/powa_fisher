@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 public class GetSupplies extends LeafTask {
 
-    private static Map<String, Integer> requiredItems() {
+    public final Map<String, Integer> requiredItems() {
         return Collections.unmodifiableMap(Stream.of(
                 new AbstractMap.SimpleEntry<>("Pike", 25),
                 new AbstractMap.SimpleEntry<>("Fire rune", 1),
@@ -29,23 +29,30 @@ public class GetSupplies extends LeafTask {
                 Inventory.getItems("Iron arrow").first().click();
             }
         }
-        if (!Bank.isOpen()) {
+
+        if (!Bank.isOpen() && !Inventory.contains("Iron arrow")) {
             Bank.open();
         }
         //@todo need to cater for when to many of required item withdrawn
         if (Bank.isOpen()) {
+            // deposit loot
             for (SpriteItem item : Inventory.getItems().asList()) {
-                getLogger().info(item);
-                getLogger().info(requiredItems().keySet().contains(item.getDefinition().getName()));
                 if (!requiredItems().keySet().contains(item.getDefinition().getName())) {
                     Bank.depositInventory();
                 }
             }
+            //withdraw items
             requiredItems().forEach((item, itemAmount) -> {
-                if (Inventory.getQuantity(item) != itemAmount) {
+                if (Inventory.getItems(item).size() != itemAmount) {
                     Bank.withdraw(item, itemAmount);
                 }
             });
+            // deposit if items overdrawn
+            for (SpriteItem item : Inventory.getItems().asList()) {
+                if (Inventory.getItems(item.getDefinition().getName()).size() != requiredItems().get(item.getDefinition().getName())) {
+                    Bank.depositInventory();
+                }
+            }
         }
         if (Inventory.isFull()) {
             Bank.close();
