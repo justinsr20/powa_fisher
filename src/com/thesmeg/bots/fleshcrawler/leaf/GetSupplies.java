@@ -43,16 +43,18 @@ public class GetSupplies extends LeafTask {
             }
             //withdraw items
             requiredItems().forEach((item, itemAmount) -> {
-                if (Inventory.getItems(item).size() != itemAmount) {
+                if (Inventory.getQuantity(item) != itemAmount) {
                     Bank.withdraw(item, itemAmount);
                 }
             });
             // deposit if items overdrawn
-            for (SpriteItem item : Inventory.getItems().asList()) {
-                if (Inventory.getItems(item.getDefinition().getName()).size() != requiredItems().get(item.getDefinition().getName())) {
+            requiredItems().forEach((item, itemAmount) -> {
+                if (Inventory.getItems(item).size() == 0) {
+                    return;
+                } else if (Inventory.getQuantity(item) != itemAmount) {
                     Bank.depositInventory();
                 }
-            }
+            });
         }
         if (Inventory.isFull()) {
             Bank.close();
