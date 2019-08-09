@@ -33,13 +33,12 @@ public class GetSupplies extends LeafTask {
         if (!Bank.isOpen() && !Inventory.contains("Iron arrow")) {
             Bank.open();
         }
-        //@todo need to cater for when to many of required item withdrawn
         if (Bank.isOpen()) {
             // deposit loot
-            for (SpriteItem item : Inventory.getItems().asList()) {
-                if (!requiredItems().keySet().contains(item.getDefinition().getName())) {
-                    Bank.depositInventory();
-                }
+            Optional<SpriteItem> deposit = Inventory.getItems().stream()
+                    .filter(item -> !requiredItems().keySet().contains(item.getDefinition().getName())).findFirst();
+            if(deposit.isPresent()){
+                Bank.depositInventory();
             }
             //withdraw items
             requiredItems().forEach((item, itemAmount) -> {

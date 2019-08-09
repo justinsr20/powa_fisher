@@ -18,21 +18,24 @@ public class Loot extends LeafTask {
 
     @Override
     public void execute() {
-        if (!Players.getLocal().isMoving()) {
-            for (String itemName : itemsToLoot) {
-                GroundItem itemToClick = new GroundItemQueryBuilder().names(itemName).within(inFleshCrawlerArea.fleshCrawlerArea).results().nearest();
-                if (itemToClick != null) {
-                    if (itemToClick.getQuantity() > 1 && Inventory.contains(itemToClick.getDefinition().getName())) {
-                        if (itemToClick.interact("Take")) {
-                            break;
-                        }
-                    } else if (!Inventory.isFull()) {
-                        if (itemToClick.interact("Take")) {
-                            break;
+        try {
+            if (!Players.getLocal().isMoving()) {
+                for (String itemName : itemsToLoot) {
+                    GroundItem itemToClick = new GroundItemQueryBuilder().names(itemName).within(inFleshCrawlerArea.fleshCrawlerArea).results().nearest();
+                    if (itemToClick != null) {
+                        if (itemToClick.getQuantity() > 1 && Inventory.contains(itemToClick.getDefinition().getName())) {
+                            if (itemToClick.interact("Take")) {
+                                break;
+                            }
+                        } else if (!Inventory.isFull()) {
+                            if (itemToClick.interact("Take")) {
+                                break;
+                            }
                         }
                     }
                 }
             }
+        } catch (NullPointerException ignored) {
         }
     }
 }

@@ -80,17 +80,21 @@ public class WalkToFleshCrawler extends LeafTask {
         //@todo need to close warning dialogue box that comes up on first trip
         boolean walkingToEntrance = true;
         for (Map.Entry<Coordinate, String> destination : pathToFleshCrawlers().entrySet()) {
-            if (destination.getKey().isReachable()) {
-                if (destination.getKey().isVisible()) {
-                    answerSecurityQuestion();
-                    if (!Players.getLocal().isMoving() && Players.getLocal().getAnimationId() != 4282 && !ChatDialog.isOpen()) {
-                        GameObjects.newQuery().names(destination.getValue()).results().nearestTo(destination.getKey()).click();
+            try {
+                if (destination.getKey().isReachable()) {
+                    if (destination.getKey().isVisible()) {
+                        answerSecurityQuestion();
+                        if (!Players.getLocal().isMoving() && Players.getLocal().getAnimationId() != 4282 && !ChatDialog.isOpen()) {
+                            GameObjects.newQuery().names(destination.getValue()).results().nearestTo(destination.getKey()).click();
+                        }
+                    } else if (!destination.getKey().isVisible()) {
+                        webPathToDestination(destination.getKey(), destination.getValue());
                     }
-                } else if (!destination.getKey().isVisible()) {
-                    webPathToDestination(destination.getKey(), destination.getValue());
+                    walkingToEntrance = false;
+                    break;
                 }
-                walkingToEntrance = false;
-                break;
+            }catch (NullPointerException e){
+                getLogger().warn("NullPointerException thrown during walk");
             }
         }
         if (walkingToEntrance) {
