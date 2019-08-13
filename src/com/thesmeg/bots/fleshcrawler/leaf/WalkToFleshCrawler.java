@@ -1,6 +1,6 @@
 package com.thesmeg.bots.fleshcrawler.leaf;
 
-import com.runemate.game.api.hybrid.local.hud.interfaces.ChatDialog;
+import com.runemate.game.api.hybrid.local.hud.interfaces.*;
 import com.runemate.game.api.hybrid.location.Coordinate;
 import com.runemate.game.api.hybrid.location.navigation.Traversal;
 import com.runemate.game.api.hybrid.location.navigation.web.WebPath;
@@ -77,15 +77,20 @@ public class WalkToFleshCrawler extends LeafTask {
 
     @Override
     public void execute() {
-        //@todo need to close warning dialogue box that comes up on first trip
+        warningInterface();
         boolean walkingToEntrance = true;
         for (Map.Entry<Coordinate, String> destination : pathToFleshCrawlers().entrySet()) {
             try {
                 if (destination.getKey().isReachable()) {
                     if (destination.getKey().isVisible()) {
                         answerSecurityQuestion();
-                        if (!Players.getLocal().isMoving() && Players.getLocal().getAnimationId() != 4282 && !ChatDialog.isOpen()) {
+                        if (!Players.getLocal().isMoving() && Players.getLocal().getAnimationId() != 4283 && Players.getLocal().getAnimationId() != 4282 && !ChatDialog.isOpen()) {
                             GameObjects.newQuery().names(destination.getValue()).results().nearestTo(destination.getKey()).click();
+                            if (destination.getValue().equals("Rickety door")) {
+                                Execution.delayUntil(() -> !destination.getKey().isReachable(), () -> Players.getLocal().isMoving(), 50, 500, 1500);
+                            } else {
+                                Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, 500, 1500);
+                            }
                         }
                     } else if (!destination.getKey().isVisible()) {
                         webPathToDestination(destination.getKey(), destination.getValue());
@@ -93,7 +98,7 @@ public class WalkToFleshCrawler extends LeafTask {
                     walkingToEntrance = false;
                     break;
                 }
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 getLogger().warn("NullPointerException thrown during walk");
             }
         }
@@ -131,6 +136,19 @@ public class WalkToFleshCrawler extends LeafTask {
             webPath.step();
         } else {
             getLogger().warn("Could not generate webPath to " + nameOfDestination);
+        }
+    }
+
+    private void warningInterface() {
+        InterfaceContainer warningInterface = InterfaceContainers.getAt(579);
+        if (warningInterface != null) {
+            if (warningInterface.getComponent(20).isVisible()) {
+                //@todo implement don't show warning again checkbox
+                getLogger().info(warningInterface.getComponent(20).getActions());
+            }
+            if (warningInterface.getComponent(17).isVisible()) {
+                warningInterface.getComponent(17).click();
+            }
         }
     }
 }

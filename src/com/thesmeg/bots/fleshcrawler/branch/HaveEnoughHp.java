@@ -10,12 +10,12 @@ import java.util.Random;
 
 public class HaveEnoughHp extends BranchTask {
 
-    Random random = new Random();
+    private Random random = new Random();
 
     @Override
     public boolean validate() {
 
-        Integer randomHpCheck = random.nextInt(40) + 30;
+        int randomHpCheck = random.nextInt(40) + 30;
         if (Health.getCurrentPercent() > randomHpCheck) {
             return true;
         }
