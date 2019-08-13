@@ -1,6 +1,8 @@
 package com.thesmeg.bots.fleshcrawler.leaf;
 
-import com.runemate.game.api.hybrid.local.hud.interfaces.*;
+import com.runemate.game.api.hybrid.local.hud.interfaces.ChatDialog;
+import com.runemate.game.api.hybrid.local.hud.interfaces.InterfaceContainer;
+import com.runemate.game.api.hybrid.local.hud.interfaces.InterfaceContainers;
 import com.runemate.game.api.hybrid.location.Coordinate;
 import com.runemate.game.api.hybrid.location.navigation.Traversal;
 import com.runemate.game.api.hybrid.location.navigation.web.WebPath;

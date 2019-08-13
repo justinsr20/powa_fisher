@@ -7,14 +7,14 @@ import com.runemate.game.api.script.framework.tree.LeafTask;
 
 public class WalkToOutlaw extends LeafTask {
 
-    Coordinate destination = new Coordinate(3119,3474,0);
+    Coordinate destination = new Coordinate(3119, 3474, 0);
 
     @Override
     public void execute() {
         WebPath webPath = Traversal.getDefaultWeb().getPathBuilder().buildTo(destination);
-        if(webPath != null){
+        if (webPath != null) {
             webPath.step();
-        }else {
+        } else {
             getLogger().warn("Could not generate webPath");
         }
     }

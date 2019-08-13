@@ -5,7 +5,6 @@ import com.runemate.game.api.hybrid.location.Coordinate;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
-import com.thesmeg.bots.outlaw.leaf.Fight;
 import com.thesmeg.bots.outlaw.leaf.WalkToOutlaw;
 
 public class InOutlawArea extends BranchTask {
@@ -16,7 +15,7 @@ public class InOutlawArea extends BranchTask {
 
     @Override
     public boolean validate() {
-        if(outlawArea.contains(Players.getLocal())){
+        if (outlawArea.contains(Players.getLocal())) {
             return true;
         }
         return false;

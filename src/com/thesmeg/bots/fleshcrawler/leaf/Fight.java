@@ -1,7 +1,6 @@
 package com.thesmeg.bots.fleshcrawler.leaf;
 
 import com.runemate.game.api.hybrid.Environment;
-import com.runemate.game.api.hybrid.entities.Actor;
 import com.runemate.game.api.hybrid.entities.Npc;
 import com.runemate.game.api.hybrid.entities.Player;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Equipment;

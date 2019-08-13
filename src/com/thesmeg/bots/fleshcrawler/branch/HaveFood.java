@@ -12,11 +12,12 @@ public class HaveFood extends BranchTask {
 
     @Override
     public boolean validate() {
-        if(Inventory.contains(foodName)){
+        if (Inventory.contains(foodName)) {
             return true;
         }
         return false;
     }
+
     @Override
     public TreeTask successTask() {
         return new EatFood();

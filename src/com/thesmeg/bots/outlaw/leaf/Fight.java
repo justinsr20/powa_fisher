@@ -19,7 +19,7 @@ public class Fight extends LeafTask {
 
     @Override
     public void execute() {
-        if (baseXp == null){
+        if (baseXp == null) {
             baseXp = Skill.STRENGTH.getExperience();
         }
         System.out.println("Base xp: " + baseXp);

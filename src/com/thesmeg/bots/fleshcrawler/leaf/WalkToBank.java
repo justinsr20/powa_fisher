@@ -8,12 +8,12 @@ import com.runemate.game.api.script.framework.tree.LeafTask;
 
 public class WalkToBank extends LeafTask {
 
-    private Coordinate destination = new Coordinate(3185,3436,0);
+    private Coordinate destination = new Coordinate(3185, 3436, 0);
 
     @Override
     public void execute() {
         //Bugs out when spell is selected and tries to teleport
-        if(Magic.getSelected() != null){
+        if (Magic.getSelected() != null) {
             Magic.getSelected().deactivate();
         }
         WebPath webPath = Traversal.getDefaultWeb().getPathBuilder().buildTo(destination);
