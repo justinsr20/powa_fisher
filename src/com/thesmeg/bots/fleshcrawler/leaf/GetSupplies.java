@@ -28,11 +28,13 @@ public class GetSupplies extends LeafTask {
         if (useRanged) {
             if (Inventory.contains("Iron arrow")) {
                 Inventory.getItems("Iron arrow").first().click();
+                return;
             }
         }
 
         if (!Bank.isOpen() && !Inventory.contains("Iron arrow")) {
             Bank.open();
+            return;
         }
         if (Bank.isOpen()) {
             // deposit loot
@@ -42,6 +44,7 @@ public class GetSupplies extends LeafTask {
             if (deposit != null) {
                 getLogger().info("Depositing loot");
                 Bank.depositInventory();
+                return;
             }
             //withdraw items
             requiredItems().forEach((item, itemAmount) -> {
@@ -51,13 +54,13 @@ public class GetSupplies extends LeafTask {
                     Execution.delayUntil(() -> Inventory.contains(item), () -> false, 50, 500, 1500);
                 }
             });
+            //@todo not make this a for loop as Bank.depositInventory gets called each loop
             // deposit if items overdrawn
             requiredItems().forEach((item, itemAmount) -> {
-                if (Inventory.getItems(item).size() == 0) {
-                    return;
-                } else if (Inventory.getQuantity(item) != itemAmount) {
-                    Bank.depositInventory();
+                if (Inventory.getItems(item).size() != 0 && Inventory.getQuantity(item) != itemAmount) {
                     getLogger().info("Depositing overdrawn item " + item);
+                    Bank.depositInventory();
+                    Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, 1000, 2000);
                 }
             });
         }

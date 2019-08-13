@@ -19,7 +19,7 @@ public class LootAvailable extends BranchTask {
         LocatableEntityQueryResults<GroundItem> itemsOnGround = GroundItems.getLoadedWithin(inFleshCrawlerArea.fleshCrawlerArea);
         for (GroundItem item : itemsOnGround) {
             if (loot.itemsToLoot.contains(item.getDefinition().getName())) {
-                if (item.getPosition() != null && item.getPosition().isReachable() && Players.getLocal().getTarget() == null) {
+                if (item.getPosition() != null && item.getPosition().isReachable()) {
                     if (Inventory.contains(item.getDefinition().getName()) && item.getQuantity() > 1) {
                         getLogger().info("Stackable items found on ground, attempting to loot");
                         return true;
