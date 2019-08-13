@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <tabs>
+    <Tab closable="false" text="Fight">
+         <content>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="foodName" layoutX="33.0" layoutY="29.0" promptText="Food Name" />
+                  <CheckBox layoutX="33.0" layoutY="75.0" mnemonicParsing="false" text="Use Range" />
+                  <Button fx:id="btnStart" layoutX="33.0" layoutY="265.0" mnemonicParsing="false" text="Start" />
+               </children>
+            </AnchorPane>
+         </content></Tab>
+    <Tab closable="false" text="Loot">
+         <content>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <CheckBox layoutX="28.0" layoutY="24.0" mnemonicParsing="false" selected="true" text="Coins" />
+                  <CheckBox layoutX="28.0" layoutY="54.0" mnemonicParsing="false" selected="true" text="Body rune" />
+               </children>
+            </AnchorPane>
+         </content></Tab>
+  </tabs>
+</TabPane>

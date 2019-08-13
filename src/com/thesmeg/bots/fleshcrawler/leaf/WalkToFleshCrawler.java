@@ -88,11 +88,6 @@ public class WalkToFleshCrawler extends LeafTask {
                         answerSecurityQuestion();
                         if (!Players.getLocal().isMoving() && Players.getLocal().getAnimationId() != 4283 && Players.getLocal().getAnimationId() != 4282 && !ChatDialog.isOpen()) {
                             GameObjects.newQuery().names(destination.getValue()).results().nearestTo(destination.getKey()).click();
-                            if (destination.getValue().equals("Rickety door")) {
-                                Execution.delayUntil(() -> !destination.getKey().isReachable(), () -> Players.getLocal().isMoving(), 50, 500, 1500);
-                            } else {
-                                Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, 500, 1500);
-                            }
                         }
                     } else if (!destination.getKey().isVisible()) {
                         webPathToDestination(destination.getKey(), destination.getValue());
