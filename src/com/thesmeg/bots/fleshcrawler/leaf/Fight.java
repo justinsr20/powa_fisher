@@ -42,30 +42,22 @@ public class Fight extends LeafTask {
         //@todo Attack by farthest when using range
         LocatableEntityQueryResults<Npc> nearestFleshCrawler = Npcs.newQuery().names("Flesh Crawler").results().sortByDistance();
         Player p = Players.getLocal();
-        boolean inCombat = false;
         for (Npc flesh : nearestFleshCrawler) {
-            if (inCombat == false) {
-                if (flesh != null && p != null) {
-                    if (flesh.getTarget() != null) {
-                        if (p.getTarget() != null && p.getTarget().equals(flesh)) {
-                            getLogger().info("In combat");
-                            inCombat = true;
-                            break;
-                        } else if (flesh.getTarget().equals(p)) {
-                            getLogger().info("Attacking Flesh Crawler targeting me");
-                            if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
-                                flesh.interact("Attack");
-                                inCombat = true;
-                                break;
-                            }
-                        }
-                    } else if (p.getTarget() == null) {
-                        if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
-                            getLogger().info("Attacking closest Flesh Crawler");
-                            flesh.interact("Attack");
-                            inCombat = true;
-                            break;
-                        }
+            if (flesh != null && p != null) {
+                if (flesh.getTarget() != null && p.getTarget() != null && p.getTarget().equals(flesh) && flesh.getTarget().equals(p)) {
+                    getLogger().info("In combat");
+                    return;
+                } else if (flesh.getTarget() != null && flesh.getTarget().equals(p)) {
+                    getLogger().info("Attacking Flesh Crawler targeting me");
+                    if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
+                        flesh.interact("Attack");
+                        return;
+                    }
+                } else if (p.getTarget() == null) {
+                    if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
+                        getLogger().info("Attacking closest Flesh Crawler");
+                        flesh.interact("Attack");
+                        return;
                     }
                 }
             }

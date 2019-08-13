@@ -21,10 +21,10 @@ public class LootAvailable extends BranchTask {
             if (loot.itemsToLoot.contains(item.getDefinition().getName())) {
                 if (item.getPosition() != null && item.getPosition().isReachable()) {
                     if (Inventory.contains(item.getDefinition().getName()) && item.getQuantity() > 1) {
-                        getLogger().info("Stackable items found on ground, attempting to loot");
+//                        getLogger().info("Stackable item " + item + " found on ground, attempting to loot");
                         return true;
                     } else if (!Inventory.isFull()) {
-                        getLogger().info("Unstackable items found on ground, attempting to loot");
+//                        getLogger().info("Unstackable item " + item + " found on ground, attempting to loot");
                         return true;
                     }
                 }
