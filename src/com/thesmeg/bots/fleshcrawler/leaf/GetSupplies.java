@@ -3,6 +3,7 @@ package com.thesmeg.bots.fleshcrawler.leaf;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Bank;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.local.hud.interfaces.SpriteItem;
+import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
 
 import java.util.*;
@@ -35,15 +36,19 @@ public class GetSupplies extends LeafTask {
         }
         if (Bank.isOpen()) {
             // deposit loot
-            Optional<SpriteItem> deposit = Inventory.getItems().stream()
-                    .filter(item -> !requiredItems().keySet().contains(item.getDefinition().getName())).findFirst();
-            if(deposit.isPresent()){
+            SpriteItem deposit = Inventory.getItems().stream()
+                    .filter(item -> !requiredItems().keySet().contains(item.getDefinition().getName())).findFirst().orElse(null);
+            getLogger().info("deposit " + deposit);
+            if (deposit != null) {
+                getLogger().info("Depositing loot");
                 Bank.depositInventory();
             }
             //withdraw items
             requiredItems().forEach((item, itemAmount) -> {
                 if (Inventory.getQuantity(item) != itemAmount) {
+                    getLogger().info("Withdrawing " + item);
                     Bank.withdraw(item, itemAmount);
+                    Execution.delayUntil(() -> Inventory.contains(item), () -> false, 50, 500, 1500);
                 }
             });
             // deposit if items overdrawn
@@ -52,6 +57,7 @@ public class GetSupplies extends LeafTask {
                     return;
                 } else if (Inventory.getQuantity(item) != itemAmount) {
                     Bank.depositInventory();
+                    getLogger().info("Depositing overdrawn item " + item);
                 }
             });
         }

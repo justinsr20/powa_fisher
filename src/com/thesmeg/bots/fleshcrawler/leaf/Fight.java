@@ -1,7 +1,9 @@
 package com.thesmeg.bots.fleshcrawler.leaf;
 
 import com.runemate.game.api.hybrid.Environment;
+import com.runemate.game.api.hybrid.entities.Actor;
 import com.runemate.game.api.hybrid.entities.Npc;
+import com.runemate.game.api.hybrid.entities.Player;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Equipment;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.location.navigation.Traversal;
@@ -39,27 +41,41 @@ public class Fight extends LeafTask {
 
         //@todo Attack by farthest when using range
         LocatableEntityQueryResults<Npc> nearestFleshCrawler = Npcs.newQuery().names("Flesh Crawler").results().sortByDistance();
+        Player p = Players.getLocal();
+        boolean inCombat = false;
         try {
             for (Npc flesh : nearestFleshCrawler) {
-                if (flesh.getTarget() != null) {
-                    if (flesh.getTarget().equals(Players.getLocal())) {
-                        if (Players.getLocal().getTarget() != null && Players.getLocal().getTarget().equals(flesh)) {
-                            break;
-                        } else {
-                            flesh.interact("Attack");
-                            break;
+                if (inCombat == false) {
+                    if (flesh != null && p != null) {
+                        if (flesh.getTarget() != null) {
+                            if (p.getTarget() != null) {
+                                getLogger().info("In combat");
+                                inCombat = true;
+                                break;
+                            } else if (flesh.getTarget().equals(p)) {
+                                getLogger().info("Attacking Flesh Crawler targeting me");
+                                if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
+                                    flesh.interact("Attack");
+                                    inCombat = true;
+                                    break;
+                                }
+                            }
+                        } else if (p.getTarget() == null) {
+                            getLogger().info("Attacking closest Flesh Crawler");
+                            if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
+                                flesh.interact("Attack");
+                                inCombat = true;
+                                break;
+                            }
                         }
-                    }
-                } else if (Players.getLocal().getTarget() == null) {
-                    getLogger().info("Attacking Flesh Crawler");
-                    if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
-                        flesh.interact("Attack");
-                        break;
                     }
                 }
             }
-        } catch (NullPointerException e) {
+        } catch (
+                NullPointerException e) {
             getLogger().warn("Threw null pointer trying to attack");
+            e.printStackTrace();
         }
     }
 }
+
