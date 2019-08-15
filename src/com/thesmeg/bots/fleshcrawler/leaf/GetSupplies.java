@@ -30,13 +30,11 @@ public class GetSupplies extends LeafTask {
         ).collect(Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue())));
     }
 
-    Boolean useRanged = true;
-
     @Override
     public void execute() {
-        if (useRanged) {
-            if (Inventory.contains("Iron arrow")) {
-                Inventory.getItems("Iron arrow").first().click();
+        if (fleshCrawler.useRange) {
+            if (Inventory.contains(fleshCrawler.getAmmunitionName())) {
+                Inventory.getItems(fleshCrawler.getAmmunitionName()).first().click();
             }
         }
 

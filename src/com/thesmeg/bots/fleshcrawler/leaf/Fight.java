@@ -20,8 +20,6 @@ public class Fight extends LeafTask {
         this.fleshCrawler = fleshCrawler;
     }
 
-    Boolean useRanged = true;
-
     @Override
     public void execute() {
         //@todo randomize and player sense
@@ -35,7 +33,7 @@ public class Fight extends LeafTask {
             Inventory.getSelectedItem().click();
         }
 
-        if (useRanged) {
+        if (fleshCrawler.useRange) {
             if (Equipment.getItems("Iron arrow").isEmpty()) {
                 if (Inventory.contains("Iron arrow")) {
                     Inventory.getItems("Iron arrow").first().click();
