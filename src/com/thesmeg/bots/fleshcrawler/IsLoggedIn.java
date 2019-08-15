@@ -5,18 +5,21 @@ import com.runemate.game.api.hybrid.local.Camera;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
-import com.thesmeg.bots.fleshcrawler.branch.HaveSupplies;
-import com.thesmeg.bots.fleshcrawler.leaf.WaitUntilLoggedIn;
 
 
 public class IsLoggedIn extends BranchTask {
+    private FleshCrawler fleshCrawler;
+
+    IsLoggedIn(FleshCrawler fleshCrawler) {
+        this.fleshCrawler = fleshCrawler;
+    }
 
     Player p;
 
     @Override
     public boolean validate() {
         p = Players.getLocal();
-        if (p != null) {
+        if (p != null && fleshCrawler.foodToEat != null) {
             if (p.isVisible()) {
                 if (Camera.getPitch() < 0.8) {
                     Camera.concurrentlyTurnTo(1.0);
@@ -29,12 +32,12 @@ public class IsLoggedIn extends BranchTask {
 
     @Override
     public TreeTask failureTask() {
-        return new WaitUntilLoggedIn();
+        return fleshCrawler.waitUntilLoggedIn;
     }
 
 
     @Override
     public TreeTask successTask() {
-        return new HaveSupplies();
+        return fleshCrawler.haveSupplies;
     }
 }

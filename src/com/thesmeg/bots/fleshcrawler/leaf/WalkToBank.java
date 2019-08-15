@@ -5,8 +5,14 @@ import com.runemate.game.api.hybrid.location.navigation.Traversal;
 import com.runemate.game.api.hybrid.location.navigation.web.WebPath;
 import com.runemate.game.api.osrs.local.hud.interfaces.Magic;
 import com.runemate.game.api.script.framework.tree.LeafTask;
+import com.thesmeg.bots.fleshcrawler.FleshCrawler;
 
 public class WalkToBank extends LeafTask {
+    private FleshCrawler fleshCrawler;
+
+    public WalkToBank(FleshCrawler fleshCrawler) {
+        this.fleshCrawler = fleshCrawler;
+    }
 
     private Coordinate destination = new Coordinate(3185, 3436, 0);
 

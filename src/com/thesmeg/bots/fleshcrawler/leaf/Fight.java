@@ -10,8 +10,15 @@ import com.runemate.game.api.hybrid.queries.results.LocatableEntityQueryResults;
 import com.runemate.game.api.hybrid.region.Npcs;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.framework.tree.LeafTask;
+import com.thesmeg.bots.fleshcrawler.FleshCrawler;
 
 public class Fight extends LeafTask {
+
+    private FleshCrawler fleshCrawler;
+
+    public Fight(FleshCrawler fleshCrawler) {
+        this.fleshCrawler = fleshCrawler;
+    }
 
     Boolean useRanged = true;
 

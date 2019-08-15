@@ -10,12 +10,19 @@ import com.runemate.game.api.hybrid.region.GameObjects;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
+import com.thesmeg.bots.fleshcrawler.FleshCrawler;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class WalkToFleshCrawler extends LeafTask {
+
+    private FleshCrawler fleshCrawler;
+
+    public WalkToFleshCrawler(FleshCrawler fleshCrawler) {
+        this.fleshCrawler = fleshCrawler;
+    }
 
     private Coordinate securityStrongholdEntrance = new Coordinate(3081, 3420, 0);
     private Coordinate firstPortal = new Coordinate(1863, 5238, 0);

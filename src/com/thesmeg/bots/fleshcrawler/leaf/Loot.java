@@ -6,23 +6,21 @@ import com.runemate.game.api.hybrid.queries.GroundItemQueryBuilder;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
-import com.thesmeg.bots.fleshcrawler.branch.InFleshCrawlerArea;
-
-import java.util.Arrays;
-import java.util.List;
+import com.thesmeg.bots.fleshcrawler.FleshCrawler;
 
 public class Loot extends LeafTask {
-    InFleshCrawlerArea inFleshCrawlerArea = new InFleshCrawlerArea();
-    public List<String> itemsToLoot = Arrays.asList("Shield left half", "Dragon spear", "Rune spear", "Tooth half of key",
-            "Loop half of key", "Uncut diamond", "Uncut ruby", "Rune javelin", "Uncut emerald",
-            "Nature talisman", "Uncut sapphire", "Iron ore", "Coins", "Body rune", "Iron arrow");
+    private FleshCrawler fleshCrawler;
+
+    public Loot(FleshCrawler fleshCrawler) {
+        this.fleshCrawler = fleshCrawler;
+    }
 
     @Override
     public void execute() {
         try {
             if (!Players.getLocal().isMoving() && Players.getLocal().getTarget() == null) {
-                for (String itemName : itemsToLoot) {
-                    GroundItem itemToClick = new GroundItemQueryBuilder().names(itemName).within(inFleshCrawlerArea.fleshCrawlerArea).results().nearest();
+                for (String itemName : fleshCrawler.itemsToLoot) {
+                    GroundItem itemToClick = new GroundItemQueryBuilder().names(itemName).within(fleshCrawler.fleshCrawlerArea).results().nearest();
                     if (itemToClick != null) {
                         if (itemToClick.getQuantity() > 1 && Inventory.contains(itemToClick.getDefinition().getName())) {
                             if (itemToClick.interact("Take")) {

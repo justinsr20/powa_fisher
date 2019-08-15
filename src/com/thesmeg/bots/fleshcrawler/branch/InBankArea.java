@@ -5,10 +5,15 @@ import com.runemate.game.api.hybrid.location.Coordinate;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
-import com.thesmeg.bots.fleshcrawler.leaf.GetSupplies;
-import com.thesmeg.bots.fleshcrawler.leaf.WalkToBank;
+import com.thesmeg.bots.fleshcrawler.FleshCrawler;
 
 public class InBankArea extends BranchTask {
+
+    private FleshCrawler fleshCrawler;
+
+    public InBankArea(FleshCrawler fleshCrawler) {
+        this.fleshCrawler = fleshCrawler;
+    }
 
     private Coordinate bottomLeftBank = new Coordinate(3180, 3433, 0);
     private Coordinate topRightBank = new Coordinate(3185, 3447, 0);
@@ -21,11 +26,11 @@ public class InBankArea extends BranchTask {
 
     @Override
     public TreeTask successTask() {
-        return new GetSupplies();
+        return fleshCrawler.getSupplies;
     }
 
     @Override
     public TreeTask failureTask() {
-        return new WalkToBank();
+        return fleshCrawler.walkToBank;
     }
 }

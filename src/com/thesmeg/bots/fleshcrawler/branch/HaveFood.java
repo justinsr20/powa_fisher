@@ -3,10 +3,15 @@ package com.thesmeg.bots.fleshcrawler.branch;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
-import com.thesmeg.bots.fleshcrawler.leaf.EatFood;
-import com.thesmeg.bots.fleshcrawler.leaf.TeleportToVarrock;
+import com.thesmeg.bots.fleshcrawler.FleshCrawler;
 
 public class HaveFood extends BranchTask {
+
+    private FleshCrawler fleshCrawler;
+
+    public HaveFood(FleshCrawler fleshCrawler) {
+        this.fleshCrawler = fleshCrawler;
+    }
 
     String foodName = "Pike";
 
@@ -20,11 +25,11 @@ public class HaveFood extends BranchTask {
 
     @Override
     public TreeTask successTask() {
-        return new EatFood();
+        return fleshCrawler.eatFood;
     }
 
     @Override
     public TreeTask failureTask() {
-        return new TeleportToVarrock();
+        return fleshCrawler.teleportToVarrock;
     }
 }
