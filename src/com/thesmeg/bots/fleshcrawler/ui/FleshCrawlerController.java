@@ -1,13 +1,16 @@
 package com.thesmeg.bots.fleshcrawler.ui;
 
 import com.thesmeg.bots.fleshcrawler.FleshCrawler;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,6 +36,9 @@ public class FleshCrawlerController implements Initializable {
     @FXML
     private TextField ammunitionName;
 
+    @FXML
+    private AnchorPane lootAnchorPane;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         btnStart.setOnAction(getbtnStartAction());
@@ -41,17 +47,27 @@ public class FleshCrawlerController implements Initializable {
 
     private EventHandler<ActionEvent> getbtnStartAction() {
         return event -> {
-            System.out.println("start button");
             this.fleshCrawler.setFoodToEat(foodName.getText());
             this.fleshCrawler.setUseRange(useRange.isSelected());
             this.fleshCrawler.setAmmunitionName(ammunitionName.getText());
+            this.fleshCrawler.itemsToLoot.clear();
 
+            ObservableList<Node> children = lootAnchorPane.getChildren();
+            for (Node child : children) {
+                CheckBox checkBoxChild = (CheckBox) child;
+                if (checkBoxChild.isSelected()) {
+                    fleshCrawler.itemsToLoot.add(checkBoxChild.getText());
+                }
+            }
+            if (useRange.isSelected()) {
+                fleshCrawler.itemsToLoot.add(ammunitionName.getText());
+            }
         };
     }
 
     private EventHandler<ActionEvent> getcheckBoxAction() {
         return event -> {
-            if(!useRange.isSelected()){
+            if (!useRange.isSelected()) {
                 ammunitionName.setText(null);
             }
             ammunitionName.visibleProperty().bind(useRange.selectedProperty());

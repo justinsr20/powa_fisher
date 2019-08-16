@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<TabPane id="fleshCrawlerTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <tabs>
         <Tab closable="false" text="Fight">
             <content>
@@ -13,19 +13,18 @@
                     <children>
                         <TextField fx:id="foodName" layoutX="33.0" layoutY="29.0" promptText="Food Name" />
                         <CheckBox fx:id="useRange" layoutX="33.0" layoutY="75.0" mnemonicParsing="false" text="Use Range" />
-                        <Button fx:id="btnStart" layoutX="33.0" layoutY="265.0" mnemonicParsing="false" text="Set Configuration" />
+                        <Button fx:id="btnStart" layoutX="33.0" layoutY="265.0" mnemonicParsing="false" text="Set Configuration (can be set when bot is running)" />
                         <TextField fx:id="ammunitionName" layoutX="33.0" layoutY="105.0" promptText="Ammunition Name" visible="false" />
-                  <TextField editable="false" layoutX="151.0" layoutY="265.0" prefHeight="25.0" prefWidth="209.0" text="Can be changed while bot is running" />
                     </children>
                 </AnchorPane>
             </content>
         </Tab>
         <Tab closable="false" text="Loot">
             <content>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                <AnchorPane fx:id="lootAnchorPane" prefHeight="200.0" prefWidth="200.0">
                     <children>
-                        <CheckBox layoutX="28.0" layoutY="24.0" mnemonicParsing="false" selected="true" text="Coins" />
-                        <CheckBox layoutX="28.0" layoutY="54.0" mnemonicParsing="false" selected="true" text="Body rune" />
+                        <CheckBox id="Coins" layoutX="28.0" layoutY="24.0" mnemonicParsing="false" selected="true" text="Coins" />
+                        <CheckBox id="Body rune" layoutX="28.0" layoutY="54.0" mnemonicParsing="false" selected="true" text="Body rune" />
                     </children>
                 </AnchorPane>
             </content>
