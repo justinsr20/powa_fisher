@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -37,7 +38,7 @@ public class FleshCrawlerController implements Initializable {
     private TextField ammunitionName;
 
     @FXML
-    private AnchorPane lootAnchorPane;
+    GridPane lootGridPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -52,11 +53,13 @@ public class FleshCrawlerController implements Initializable {
             this.fleshCrawler.setAmmunitionName(ammunitionName.getText());
             this.fleshCrawler.itemsToLoot.clear();
 
-            ObservableList<Node> children = lootAnchorPane.getChildren();
+            ObservableList<Node> children = lootGridPane.getChildren();
             for (Node child : children) {
-                CheckBox checkBoxChild = (CheckBox) child;
-                if (checkBoxChild.isSelected()) {
-                    fleshCrawler.itemsToLoot.add(checkBoxChild.getText());
+                if (child instanceof CheckBox) {
+                    CheckBox checkBoxChild = (CheckBox) child;
+                    if (checkBoxChild.isSelected()) {
+                        fleshCrawler.itemsToLoot.add(checkBoxChild.getText());
+                    }
                 }
             }
             if (useRange.isSelected()) {

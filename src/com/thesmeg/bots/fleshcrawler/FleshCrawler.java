@@ -15,10 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class FleshCrawler extends TreeBot implements EmbeddableUI {
 
@@ -48,9 +45,6 @@ public class FleshCrawler extends TreeBot implements EmbeddableUI {
     private Coordinate topRightFleshCrawler = new Coordinate(2046, 5194, 0);
     public Area fleshCrawlerArea = new Area.Rectangular(bottomLeftFleshCrawler, topRightFleshCrawler);
 
-    //    public List<String> itemsToLoot = Arrays.asList("Shield left half", "Dragon spear", "Rune spear", "Tooth half of key",
-//            "Loop half of key", "Uncut diamond", "Uncut ruby", "Rune javelin", "Uncut emerald",
-//            "Nature talisman", "Uncut sapphire", "Iron ore", "Coins", "Body rune", "Iron arrow");
     public ArrayList<String> itemsToLoot = new ArrayList<>();
 
     public FleshCrawler() {
@@ -81,13 +75,16 @@ public class FleshCrawler extends TreeBot implements EmbeddableUI {
     public void setFoodToEat(String foodToEat) {
         this.foodToEat = foodToEat;
     }
-    public void setUseRange(Boolean useRange){
+
+    public void setUseRange(Boolean useRange) {
         this.useRange = useRange;
     }
-    public void setAmmunitionName(String ammunitionName){
+
+    public void setAmmunitionName(String ammunitionName) {
         this.ammunitionName = ammunitionName;
     }
-    public String getAmmunitionName(){
+
+    public String getAmmunitionName() {
         return ammunitionName;
     }
 }
