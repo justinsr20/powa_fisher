@@ -43,7 +43,6 @@ public class Fight extends LeafTask {
             }
         }
 
-        //@todo Attack by farthest when using range
         LocatableEntityQueryResults<Npc> nearestFleshCrawler = Npcs.newQuery().names("Flesh Crawler").results().sortByDistance();
         Player p = Players.getLocal();
         for (Npc flesh : nearestFleshCrawler) {
