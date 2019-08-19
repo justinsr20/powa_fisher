@@ -5,9 +5,6 @@ import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.thesmeg.bots.fleshcrawler.FleshCrawler;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class HaveSupplies extends BranchTask {
     private FleshCrawler fleshCrawler;
 
@@ -15,11 +12,9 @@ public class HaveSupplies extends BranchTask {
         this.fleshCrawler = fleshCrawler;
     }
 
-    private List<String> requiredItems = Arrays.asList("Pike", "Fire rune", "Law rune", "Air rune");
-
     @Override
     public boolean validate() {
-        for (String item : requiredItems) {
+        for (String item : fleshCrawler.requiredItems) {
             if (!Inventory.contains(item)) {
                 return false;
             }

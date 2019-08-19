@@ -10,7 +10,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
@@ -49,6 +48,7 @@ public class FleshCrawlerController implements Initializable {
     private EventHandler<ActionEvent> getbtnStartAction() {
         return event -> {
             this.fleshCrawler.setFoodToEat(foodName.getText());
+            this.fleshCrawler.requiredItems.set(0, foodName.getText());
             this.fleshCrawler.setUseRange(useRange.isSelected());
             this.fleshCrawler.setAmmunitionName(ammunitionName.getText());
             this.fleshCrawler.itemsToLoot.clear();

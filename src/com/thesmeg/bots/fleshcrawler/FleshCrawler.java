@@ -16,6 +16,8 @@ import javafx.scene.Node;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class FleshCrawler extends TreeBot implements EmbeddableUI {
 
@@ -44,8 +46,9 @@ public class FleshCrawler extends TreeBot implements EmbeddableUI {
     private Coordinate bottomLeftFleshCrawler = new Coordinate(2035, 5185, 0);
     private Coordinate topRightFleshCrawler = new Coordinate(2046, 5194, 0);
     public Area fleshCrawlerArea = new Area.Rectangular(bottomLeftFleshCrawler, topRightFleshCrawler);
-
     public ArrayList<String> itemsToLoot = new ArrayList<>();
+    //@todo fix this list so it doesn't have ""
+    public List<String> requiredItems = Arrays.asList("", "Fire rune", "Law rune", "Air rune");
 
     public FleshCrawler() {
         setEmbeddableUI(this);
@@ -74,6 +77,10 @@ public class FleshCrawler extends TreeBot implements EmbeddableUI {
 
     public void setFoodToEat(String foodToEat) {
         this.foodToEat = foodToEat;
+    }
+
+    public String getFoodToEat() {
+        return foodToEat;
     }
 
     public void setUseRange(Boolean useRange) {

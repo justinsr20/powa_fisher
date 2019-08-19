@@ -13,11 +13,9 @@ public class HaveFood extends BranchTask {
         this.fleshCrawler = fleshCrawler;
     }
 
-    String foodName = "Pike";
-
     @Override
     public boolean validate() {
-        if (Inventory.contains(foodName)) {
+        if (Inventory.contains(fleshCrawler.getFoodToEat())) {
             return true;
         }
         return false;
