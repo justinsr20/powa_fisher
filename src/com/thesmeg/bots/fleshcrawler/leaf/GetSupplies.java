@@ -7,10 +7,7 @@ import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
 import com.thesmeg.bots.fleshcrawler.FleshCrawler;
 
-import java.util.AbstractMap;
-import java.util.Collections;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GetSupplies extends LeafTask {
@@ -21,15 +18,6 @@ public class GetSupplies extends LeafTask {
         this.fleshCrawler = fleshCrawler;
     }
 
-    public final Map<String, Integer> requiredItems() {
-        return Collections.unmodifiableMap(Stream.of(
-                new AbstractMap.SimpleEntry<>("Pike", 25),
-                new AbstractMap.SimpleEntry<>("Fire rune", 1),
-                new AbstractMap.SimpleEntry<>("Air rune", 3),
-                new AbstractMap.SimpleEntry<>("Law rune", 1)
-        ).collect(Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue())));
-    }
-
     @Override
     public void execute() {
         if (fleshCrawler.useRange) {
@@ -38,35 +26,38 @@ public class GetSupplies extends LeafTask {
             }
         }
 
-        if (!Bank.isOpen() && !Inventory.contains("Iron arrow")) {
+        if (!Bank.isOpen() && !Inventory.contains(fleshCrawler.getAmmunitionName())) {
             Bank.open();
         }
         if (Bank.isOpen()) {
             // deposit loot
-            SpriteItem deposit = Inventory.getItems().stream()
-                    .filter(item -> !requiredItems().keySet().contains(item.getDefinition().getName())).findFirst().orElse(null);
-            getLogger().info("deposit " + deposit);
-            if (deposit != null) {
+            Stream<SpriteItem> itemsToDeposit = Inventory.getItems().stream()
+                    .filter(item -> !fleshCrawler.requiredItems.keySet().contains(item.getDefinition().getName()));
+
+            if (itemsToDeposit.count() >= 1) {
                 getLogger().info("Depositing loot");
                 Bank.depositInventory();
+                Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, 1000, 2000);
             }
+
             //withdraw items
-            requiredItems().forEach((item, itemAmount) -> {
+            fleshCrawler.requiredItems.forEach((item, itemAmount) -> {
                 if (Inventory.getQuantity(item) != itemAmount) {
                     getLogger().info("Withdrawing " + item);
                     Bank.withdraw(item, itemAmount);
                     Execution.delayUntil(() -> Inventory.contains(item), () -> false, 50, 500, 1500);
                 }
             });
-            //@todo not make this a for loop as Bank.depositInventory gets called each loop
+
             // deposit if items overdrawn
-            requiredItems().forEach((item, itemAmount) -> {
-                if (Inventory.getItems(item).size() != 0 && Inventory.getQuantity(item) != itemAmount) {
-                    getLogger().info("Depositing overdrawn item " + item);
+            for (Map.Entry<String, Integer> item : fleshCrawler.requiredItems.entrySet()) {
+                if (Inventory.getItems(item.getValue()).size() != 0 && Inventory.getQuantity(item.getKey()) != item.getValue()) {
+                    getLogger().info("Depositing overdrawn item " + item.getKey());
                     Bank.depositInventory();
                     Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, 1000, 2000);
+                    return;
                 }
-            });
+            }
         }
         if (Inventory.isFull()) {
             Bank.close();

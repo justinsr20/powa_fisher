@@ -18,7 +18,7 @@ public class HaveEnoughHp extends BranchTask {
 
     @Override
     public boolean validate() {
-
+        //@todo player sense this
         int randomHpCheck = random.nextInt(40) + 30;
         if (Health.getCurrentPercent() > randomHpCheck) {
             return true;

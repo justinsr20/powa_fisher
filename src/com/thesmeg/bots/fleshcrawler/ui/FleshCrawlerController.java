@@ -48,7 +48,7 @@ public class FleshCrawlerController implements Initializable {
     private EventHandler<ActionEvent> getbtnStartAction() {
         return event -> {
             this.fleshCrawler.setFoodToEat(foodName.getText());
-            this.fleshCrawler.requiredItems.add(foodName.getText());
+            this.fleshCrawler.requiredItems.put(foodName.getText(), 25);
             this.fleshCrawler.setUseRange(useRange.isSelected());
             this.fleshCrawler.setAmmunitionName(ammunitionName.getText());
             this.fleshCrawler.itemsToLoot.clear();

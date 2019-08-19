@@ -21,6 +21,7 @@ public class IsLoggedIn extends BranchTask {
         p = Players.getLocal();
         if (p != null && fleshCrawler.foodToEat != null) {
             if (p.isVisible()) {
+                //@todo player sense this
                 if (Camera.getPitch() < 0.8) {
                     Camera.concurrentlyTurnTo(1.0);
                 }

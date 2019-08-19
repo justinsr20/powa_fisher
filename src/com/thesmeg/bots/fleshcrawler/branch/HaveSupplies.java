@@ -5,6 +5,8 @@ import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.thesmeg.bots.fleshcrawler.FleshCrawler;
 
+import java.util.Map;
+
 public class HaveSupplies extends BranchTask {
     private FleshCrawler fleshCrawler;
 
@@ -14,8 +16,8 @@ public class HaveSupplies extends BranchTask {
 
     @Override
     public boolean validate() {
-        for (String item : fleshCrawler.requiredItems) {
-            if (!Inventory.contains(item)) {
+        for (Map.Entry<String, Integer> item : fleshCrawler.requiredItems.entrySet()) {
+            if (!Inventory.contains(item.getKey())) {
                 return false;
             }
         }

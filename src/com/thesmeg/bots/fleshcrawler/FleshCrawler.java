@@ -16,7 +16,8 @@ import javafx.scene.Node;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FleshCrawler extends TreeBot implements EmbeddableUI {
 
@@ -36,21 +37,23 @@ public class FleshCrawler extends TreeBot implements EmbeddableUI {
     public WalkToBank walkToBank = new WalkToBank(this);
     public WalkToFleshCrawler walkToFleshCrawler = new WalkToFleshCrawler(this);
 
-
-    private ObjectProperty<Node> botInterfaceProperty;
-
-    public String foodToEat = null;
+    String foodToEat = null;
     public boolean useRange = false;
-    public String ammunitionName = null;
+    private String ammunitionName = null;
     private Coordinate bottomLeftFleshCrawler = new Coordinate(2035, 5185, 0);
     private Coordinate topRightFleshCrawler = new Coordinate(2046, 5194, 0);
     public Area fleshCrawlerArea = new Area.Rectangular(bottomLeftFleshCrawler, topRightFleshCrawler);
+    private Coordinate bottomLeftBank = new Coordinate(3180, 3433, 0);
+    private Coordinate topRightBank = new Coordinate(3185, 3447, 0);
+    public Area bankArea = new Area.Rectangular(bottomLeftBank, topRightBank);
     public ArrayList<String> itemsToLoot = new ArrayList<>();
-    public List<String> requiredItems = new ArrayList<String>() {{
-        add("Fire rune");
-        add("Law rune");
-        add("Air rune");
+    public Map<String, Integer> requiredItems = new HashMap<String, Integer>() {{
+        put("Fire rune", 1);
+        put("Air rune", 3);
+        put("Law rune", 1);
     }};
+
+    private ObjectProperty<Node> botInterfaceProperty;
 
     public FleshCrawler() {
         setEmbeddableUI(this);

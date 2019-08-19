@@ -34,9 +34,9 @@ public class Fight extends LeafTask {
         }
 
         if (fleshCrawler.useRange) {
-            if (Equipment.getItems("Iron arrow").isEmpty()) {
-                if (Inventory.contains("Iron arrow")) {
-                    Inventory.getItems("Iron arrow").first().click();
+            if (Equipment.getItems(fleshCrawler.getAmmunitionName()).isEmpty()) {
+                if (Inventory.contains(fleshCrawler.getAmmunitionName())) {
+                    Inventory.getItems(fleshCrawler.getAmmunitionName()).first().click();
                 } else {
                     Environment.getBot().stop("Ran out of arrows");
                 }
