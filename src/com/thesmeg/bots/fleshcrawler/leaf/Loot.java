@@ -26,12 +26,12 @@ public class Loot extends LeafTask {
                         if (item.getQuantity() > 1 && Inventory.contains(item.getDefinition().getName())) {
                             if (item.interact("Take")) {
                                 Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, 1000, 2000);
-                                break;
+                                return;
                             }
                         } else if (!Inventory.isFull()) {
                             if (item.interact("Take")) {
                                 Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, 1000, 2000);
-                                break;
+                                return;
                             }
                         }
                     }
