@@ -37,18 +37,22 @@ public class GetSupplies extends LeafTask {
                     .filter(item -> !fleshCrawler.requiredItems.keySet().contains(item.getDefinition().getName()));
             if (itemsToDeposit.count() >= 1) {
                 getLogger().info("Depositing loot");
-                Bank.depositInventory();
-                Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, 1000, 2000);
-                return;
+                if (Bank.depositInventory()) {
+                    Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, 1000, 2000);
+                } else {
+                    return;
+                }
             }
 
             //withdraw items
             for (Map.Entry<String, Integer> item : fleshCrawler.requiredItems.entrySet()) {
                 if (Inventory.getQuantity(item.getKey()) != item.getValue()) {
                     getLogger().info("Withdrawing " + item);
-                    Bank.withdraw(item.getKey(), item.getValue());
-                    Execution.delayUntil(() -> Inventory.contains(item.getKey()), () -> false, 50, 500, 1500);
-                    return;
+                    if (Bank.withdraw(item.getKey(), item.getValue())) {
+                        Execution.delayUntil(() -> Inventory.contains(item.getKey()), () -> false, 50, 500, 1500);
+                    } else {
+                        return;
+                    }
                 }
             }
 
@@ -56,13 +60,12 @@ public class GetSupplies extends LeafTask {
             for (Map.Entry<String, Integer> item : fleshCrawler.requiredItems.entrySet()) {
                 if (Inventory.getItems(item.getValue()).size() != 0 && Inventory.getQuantity(item.getKey()) != item.getValue()) {
                     getLogger().info("Depositing overdrawn item " + item.getKey());
-                    Bank.depositInventory();
-                    Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, 1000, 2000);
-                    return;
+                    if (Bank.depositInventory()) {
+                        Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, 1000, 2000);
+                        return;
+                    }
                 }
             }
-        }
-        if (Inventory.isFull()) {
             Bank.close();
         }
     }
