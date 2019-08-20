@@ -9,6 +9,7 @@ import com.runemate.game.api.hybrid.location.navigation.Traversal;
 import com.runemate.game.api.hybrid.queries.results.LocatableEntityQueryResults;
 import com.runemate.game.api.hybrid.region.Npcs;
 import com.runemate.game.api.hybrid.region.Players;
+import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
 import com.thesmeg.bots.fleshcrawler.FleshCrawler;
 
@@ -54,12 +55,14 @@ public class Fight extends LeafTask {
                     getLogger().info("Attacking Flesh Crawler targeting me");
                     if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
                         flesh.interact("Attack");
+                        Execution.delayUntil(()->p.getTarget() != null,()-> false, 50,500,1000);
                         return;
                     }
                 } else if (p.getTarget() == null) {
                     if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
                         getLogger().info("Attacking closest Flesh Crawler");
                         flesh.interact("Attack");
+                        Execution.delayUntil(()->p.getTarget() != null,()-> false, 50,500,1000);
                         return;
                     }
                 }

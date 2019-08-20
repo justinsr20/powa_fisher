@@ -23,31 +23,34 @@ public class GetSupplies extends LeafTask {
         if (fleshCrawler.useRange) {
             if (Inventory.contains(fleshCrawler.getAmmunitionName())) {
                 Inventory.getItems(fleshCrawler.getAmmunitionName()).first().click();
+                return;
             }
         }
 
         if (!Bank.isOpen() && !Inventory.contains(fleshCrawler.getAmmunitionName())) {
             Bank.open();
+            return;
         }
         if (Bank.isOpen()) {
             // deposit loot
             Stream<SpriteItem> itemsToDeposit = Inventory.getItems().stream()
                     .filter(item -> !fleshCrawler.requiredItems.keySet().contains(item.getDefinition().getName()));
-
             if (itemsToDeposit.count() >= 1) {
                 getLogger().info("Depositing loot");
                 Bank.depositInventory();
                 Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, 1000, 2000);
+                return;
             }
 
             //withdraw items
-            fleshCrawler.requiredItems.forEach((item, itemAmount) -> {
-                if (Inventory.getQuantity(item) != itemAmount) {
+            for (Map.Entry<String, Integer> item : fleshCrawler.requiredItems.entrySet()) {
+                if (Inventory.getQuantity(item.getKey()) != item.getValue()) {
                     getLogger().info("Withdrawing " + item);
-                    Bank.withdraw(item, itemAmount);
-                    Execution.delayUntil(() -> Inventory.contains(item), () -> false, 50, 500, 1500);
+                    Bank.withdraw(item.getKey(), item.getValue());
+                    Execution.delayUntil(() -> Inventory.contains(item.getKey()), () -> false, 50, 500, 1500);
+                    return;
                 }
-            });
+            }
 
             // deposit if items overdrawn
             for (Map.Entry<String, Integer> item : fleshCrawler.requiredItems.entrySet()) {
