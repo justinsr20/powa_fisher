@@ -47,13 +47,19 @@ public class FleshCrawlerController implements Initializable {
 
     private EventHandler<ActionEvent> getbtnStartAction() {
         return event -> {
+            if (fleshCrawler.getFoodToEat() != null) {
+                fleshCrawler.requiredItems.remove(fleshCrawler.getFoodToEat());
+            }
+            this.fleshCrawler.itemsToLoot.clear();
+
             this.fleshCrawler.setFoodToEat(foodName.getText());
-            //@todo remove this food if player changes it
             this.fleshCrawler.requiredItems.put(foodName.getText(), 25);
             this.fleshCrawler.setUseRange(useRange.isSelected());
             this.fleshCrawler.setAmmunitionName(ammunitionName.getText());
-            this.fleshCrawler.itemsToLoot.clear();
 
+            if (useRange.isSelected()) {
+                fleshCrawler.itemsToLoot.add(ammunitionName.getText());
+            }
             ObservableList<Node> children = lootGridPane.getChildren();
             for (Node child : children) {
                 if (child instanceof CheckBox) {
@@ -62,9 +68,6 @@ public class FleshCrawlerController implements Initializable {
                         fleshCrawler.itemsToLoot.add(checkBoxChild.getText());
                     }
                 }
-            }
-            if (useRange.isSelected()) {
-                fleshCrawler.itemsToLoot.add(ammunitionName.getText());
             }
         };
     }
