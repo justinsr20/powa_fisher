@@ -149,8 +149,8 @@ public class WalkToFleshCrawler extends LeafTask {
         InterfaceContainer warningInterface = InterfaceContainers.getAt(579);
         if (warningInterface != null) {
             if (warningInterface.getComponent(20).isVisible()) {
-                //@todo implement don't show warning again checkbox
-                getLogger().info(warningInterface.getComponent(20).getActions());
+                getLogger().info(warningInterface.getComponent(20).click());
+                Execution.delay(1000,3000);
             }
             if (warningInterface.getComponent(17).isVisible()) {
                 warningInterface.getComponent(17).click();
