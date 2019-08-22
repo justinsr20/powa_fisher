@@ -14,7 +14,7 @@ public class WalkToBank extends LeafTask {
         this.fleshCrawler = fleshCrawler;
     }
 
-    private Coordinate destination = new Coordinate(3185, 3436, 0);
+    private Coordinate destination = new Coordinate(3183, 3437, 0);
 
     @Override
     public void execute() {
@@ -22,8 +22,9 @@ public class WalkToBank extends LeafTask {
         if (Magic.getSelected() != null) {
             Magic.getSelected().deactivate();
         }
-        WebPath webPath = Traversal.getDefaultWeb().getPathBuilder().buildTo(destination);
+        WebPath webPath = Traversal.getDefaultWeb().getPathBuilder().buildTo(destination.randomize(3, 3));
         if (webPath != null) {
+            getLogger().info("Using webPath to Varrock Bank");
             webPath.step();
         } else {
             getLogger().warn("Could not generate webPath to bank");

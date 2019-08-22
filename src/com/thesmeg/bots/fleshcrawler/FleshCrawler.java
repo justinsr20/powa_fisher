@@ -60,6 +60,11 @@ public class FleshCrawler extends TreeBot implements EmbeddableUI {
     }
 
     @Override
+    public void onStart(String... strings) {
+        CustomPlayerSense.initializeKeys();
+    }
+
+    @Override
     public TreeTask createRootTask() {
         return new IsLoggedIn(this);
     }

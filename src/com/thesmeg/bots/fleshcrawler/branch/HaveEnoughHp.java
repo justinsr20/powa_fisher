@@ -1,11 +1,11 @@
 package com.thesmeg.bots.fleshcrawler.branch;
 
 import com.runemate.game.api.hybrid.local.hud.interfaces.Health;
+import com.runemate.game.api.hybrid.util.calculations.Random;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.thesmeg.bots.fleshcrawler.CustomPlayerSense;
 import com.thesmeg.bots.fleshcrawler.FleshCrawler;
-
-import java.util.Random;
 
 public class HaveEnoughHp extends BranchTask {
     private FleshCrawler fleshCrawler;
@@ -14,12 +14,10 @@ public class HaveEnoughHp extends BranchTask {
         this.fleshCrawler = fleshCrawler;
     }
 
-    private Random random = new Random();
-
     @Override
     public boolean validate() {
-        //@todo player sense this
-        int randomHpCheck = random.nextInt(40) + 30;
+        final int minHp = CustomPlayerSense.Key.MIN_HP.getAsInteger();
+        int randomHpCheck = Random.nextInt(minHp, 80);
         if (Health.getCurrentPercent() > randomHpCheck) {
             return true;
         }

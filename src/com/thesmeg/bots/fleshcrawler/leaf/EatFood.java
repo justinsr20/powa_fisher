@@ -1,7 +1,9 @@
 package com.thesmeg.bots.fleshcrawler.leaf;
 
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
+import com.runemate.game.api.hybrid.local.hud.interfaces.SpriteItem;
 import com.runemate.game.api.script.framework.tree.LeafTask;
+import com.thesmeg.bots.fleshcrawler.CustomPlayerSense;
 import com.thesmeg.bots.fleshcrawler.FleshCrawler;
 
 public class EatFood extends LeafTask {
@@ -18,6 +20,11 @@ public class EatFood extends LeafTask {
             Inventory.getSelectedItem().click();
         }
         getLogger().info("Low health, attempting to eat");
-        Inventory.getItems(fleshCrawler.getFoodToEat()).first().click();
+        SpriteItem foodToClick = Inventory.getItems(fleshCrawler.getFoodToEat()).first();
+        final int clicks = CustomPlayerSense.Key.SPAM_CLICK_COUNT.getAsInteger();
+        for (int i = 0; i < clicks && foodToClick.isValid(); i++) {
+            foodToClick.click();
+        }
+
     }
 }

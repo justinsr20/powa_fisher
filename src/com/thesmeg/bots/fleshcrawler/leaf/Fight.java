@@ -9,8 +9,10 @@ import com.runemate.game.api.hybrid.location.navigation.Traversal;
 import com.runemate.game.api.hybrid.queries.results.LocatableEntityQueryResults;
 import com.runemate.game.api.hybrid.region.Npcs;
 import com.runemate.game.api.hybrid.region.Players;
+import com.runemate.game.api.hybrid.util.calculations.Random;
 import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
+import com.thesmeg.bots.fleshcrawler.CustomPlayerSense;
 import com.thesmeg.bots.fleshcrawler.FleshCrawler;
 
 public class Fight extends LeafTask {
@@ -23,8 +25,8 @@ public class Fight extends LeafTask {
 
     @Override
     public void execute() {
-        //@todo randomize and player sense
-        if (Traversal.getRunEnergy() > 20) {
+        final int minRunEnergy = CustomPlayerSense.Key.MIN_RUN_ENERGY.getAsInteger();
+        if (Traversal.getRunEnergy() > Random.nextInt(minRunEnergy)) {
             if (!Traversal.isRunEnabled()) {
                 Traversal.toggleRun();
             }
@@ -44,6 +46,7 @@ public class Fight extends LeafTask {
             }
         }
 
+        final int clicks = CustomPlayerSense.Key.SPAM_CLICK_COUNT.getAsInteger();
         LocatableEntityQueryResults<Npc> nearestFleshCrawler = Npcs.newQuery().names("Flesh Crawler").results().sortByDistance();
         Player p = Players.getLocal();
         try {
@@ -55,15 +58,19 @@ public class Fight extends LeafTask {
                     } else if (flesh.getTarget() != null && flesh.getTarget().equals(p)) {
                         getLogger().info("Attacking Flesh Crawler targeting me");
                         if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
-                            flesh.interact("Attack");
-                            Execution.delayUntil(() -> p.getTarget() != null, () -> false, 50, 500, 1000);
+                            for (int i = 0; i < clicks; i++) {
+                                flesh.click();
+                            }
+                            Execution.delayUntil(() -> p.getTarget().equals(flesh), () -> false, 50, 500, 1500);
                             return;
                         }
                     } else if (p.getTarget() == null) {
                         if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
                             getLogger().info("Attacking closest Flesh Crawler");
-                            flesh.interact("Attack");
-                            Execution.delayUntil(() -> p.getTarget() != null, () -> false, 50, 500, 1000);
+                            for (int i = 0; i < clicks; i++) {
+                                flesh.click();
+                            }
+                            Execution.delayUntil(() -> p.getTarget().equals(flesh), () -> false, 50, 500, 1500);
                             return;
                         }
                     }

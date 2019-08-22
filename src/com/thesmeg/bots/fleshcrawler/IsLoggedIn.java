@@ -3,6 +3,7 @@ package com.thesmeg.bots.fleshcrawler;
 import com.runemate.game.api.hybrid.entities.Player;
 import com.runemate.game.api.hybrid.local.Camera;
 import com.runemate.game.api.hybrid.region.Players;
+import com.runemate.game.api.hybrid.util.calculations.Random;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
 
@@ -14,16 +15,16 @@ public class IsLoggedIn extends BranchTask {
         this.fleshCrawler = fleshCrawler;
     }
 
-    Player p;
+    private final double cameraPitch = Random.nextDouble(0.5, 1.0);
+    private final int cameraYaw = Random.nextInt(0, 360);
 
     @Override
     public boolean validate() {
-        p = Players.getLocal();
+        Player p = Players.getLocal();
         if (p != null && fleshCrawler.foodToEat != null) {
             if (p.isVisible()) {
-                //@todo player sense this
-                if (Camera.getPitch() < 0.8) {
-                    Camera.concurrentlyTurnTo(1.0);
+                if (Camera.getPitch() < 0.1) {
+                    Camera.concurrentlyTurnTo(cameraYaw, cameraPitch);
                 }
                 return true;
             }

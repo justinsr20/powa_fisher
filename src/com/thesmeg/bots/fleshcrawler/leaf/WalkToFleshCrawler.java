@@ -10,11 +10,13 @@ import com.runemate.game.api.hybrid.region.GameObjects;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
+import com.thesmeg.bots.fleshcrawler.CustomPlayerSense;
 import com.thesmeg.bots.fleshcrawler.FleshCrawler;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class WalkToFleshCrawler extends LeafTask {
 
@@ -27,26 +29,26 @@ public class WalkToFleshCrawler extends LeafTask {
     private Coordinate securityStrongholdEntrance = new Coordinate(3081, 3420, 0);
     private Coordinate firstPortal = new Coordinate(1863, 5238, 0);
     private Coordinate firstLadder = new Coordinate(1902, 5222, 0);
-    private Coordinate firstRicketyDoor = new Coordinate(2045, 5240, 0); //@todo randomize these to be either door
+    private Coordinate firstRicketyDoor = new Coordinate(2045, 5240, 0);
     private Coordinate secondRicketyDoor = new Coordinate(2044, 5237, 0);
     private Coordinate thirdRicketyDoor = new Coordinate(2037, 5204, 0);
     private Coordinate fourthRicketyDoor = new Coordinate(2036, 5201, 0);
     private Coordinate fifthRicketyDoor = new Coordinate(2046, 5198, 0);
     private Coordinate sixthRicketyDoor = new Coordinate(2045, 5195, 0);
 
-    private Map<Coordinate, String> pathToFleshCrawlers() {
-        return Collections.unmodifiableMap(Stream.of(
-                new AbstractMap.SimpleEntry<>(sixthRicketyDoor, "Rickety door"),
-                new AbstractMap.SimpleEntry<>(fifthRicketyDoor, "Rickety door"),
-                new AbstractMap.SimpleEntry<>(fourthRicketyDoor, "Rickety door"),
-                new AbstractMap.SimpleEntry<>(thirdRicketyDoor, "Rickety door"),
-                new AbstractMap.SimpleEntry<>(secondRicketyDoor, "Rickety door"),
-                new AbstractMap.SimpleEntry<>(firstRicketyDoor, "Rickety door"),
-                new AbstractMap.SimpleEntry<>(firstLadder, "Ladder"),
-                new AbstractMap.SimpleEntry<>(firstPortal, "Portal"),
-                new AbstractMap.SimpleEntry<>(securityStrongholdEntrance, "Entrance")
-        ).collect(Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue())));
-    }
+    private Map<Coordinate, List<String>> pathToFleshCrawlers = new HashMap<Coordinate, List<String>>() {
+        {
+            put(sixthRicketyDoor, Arrays.asList("Rickety door", "Open"));
+            put(fifthRicketyDoor, Arrays.asList("Rickety door", "Open"));
+            put(fourthRicketyDoor, Arrays.asList("Rickety door", "Open"));
+            put(thirdRicketyDoor, Arrays.asList("Rickety door", "Open"));
+            put(secondRicketyDoor, Arrays.asList("Rickety door", "Open"));
+            put(firstRicketyDoor, Arrays.asList("Rickety door", "Open"));
+            put(firstLadder, Arrays.asList("Ladder", "Climb-down"));
+            put(firstPortal, Arrays.asList("Portal", "Use"));
+            put(securityStrongholdEntrance, Arrays.asList("Entrance", "Climb-down"));
+        }
+    };
 
     private List<String> securityAnswers = Arrays.asList(
             "No.",
@@ -88,16 +90,16 @@ public class WalkToFleshCrawler extends LeafTask {
     public void execute() {
         warningInterface();
         boolean walkingToEntrance = true;
-        for (Map.Entry<Coordinate, String> destination : pathToFleshCrawlers().entrySet()) {
+        for (Map.Entry<Coordinate, List<String>> destination : pathToFleshCrawlers.entrySet()) {
             try {
                 if (destination.getKey().isReachable()) {
                     if (destination.getKey().isVisible()) {
                         answerSecurityQuestion();
                         if (!Players.getLocal().isMoving() && Players.getLocal().getAnimationId() != 4283 && Players.getLocal().getAnimationId() != 4282 && !ChatDialog.isOpen()) {
-                            GameObjects.newQuery().names(destination.getValue()).results().nearestTo(destination.getKey()).click();
+                            GameObjects.newQuery().names(destination.getValue().get(0)).results().nearestTo(destination.getKey().randomize(1, 0)).interact(destination.getValue().get(1));
                         }
                     } else if (!destination.getKey().isVisible()) {
-                        webPathToDestination(destination.getKey(), destination.getValue());
+                        webPathToDestination(destination.getKey(), destination.getValue().get(0));
                     }
                     walkingToEntrance = false;
                     break;
@@ -121,8 +123,8 @@ public class WalkToFleshCrawler extends LeafTask {
                     System.out.println("chatOption: " + chatOption.getText());
                     securityAnswers.forEach(answer -> {
                         if (chatOption.getText().equals(answer)) {
-                            //@todo make this a player sense var
-                            Execution.delay(0, 2000);
+                            final int executionDelayMax = CustomPlayerSense.Key.EXECUTION_DELAY_MAX.getAsInteger();
+                            Execution.delay(500, executionDelayMax);
                             chatOption.select();
                         }
                     });
