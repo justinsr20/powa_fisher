@@ -10,9 +10,8 @@ public class CustomPlayerSense {
         SPAM_CLICK_COUNT("thesmeg_spam_click_count_low", () -> Random.nextInt(1, 4)),
         MIN_RUN_ENERGY("thesmeg_min_run_energy", () -> Random.nextInt(1, 41)),
         MIN_HP("thesmeg_min_hp", () -> Random.nextInt(25, 40)),
-        EXECUTION_DELAY_MAX("thesmeg_execution_delay_max", () -> Random.nextInt(1000, 2500));
-//        CAMERA_PITCH("thesmeg_camera_pitch", () -> Random.nextDouble(0.5, 1.0)),
-//        CAMERA_YAW("thesmeg_camera_yaw", () -> Random.nextInt(0,360));
+        EXECUTION_DELAY_MAX("thesmeg_execution_delay_max", () -> Random.nextInt(1000, 2500)),
+        USE_DEPOSIT_ALL("thesmeg_use_deposit_all", () -> Random.nextBoolean());
 
         private final String name;
         private final Supplier supplier;
