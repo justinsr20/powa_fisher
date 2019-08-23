@@ -4,7 +4,7 @@ import com.runemate.game.api.hybrid.local.hud.interfaces.Health;
 import com.runemate.game.api.hybrid.util.calculations.Random;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
-import com.thesmeg.bots.fleshcrawler.CustomPlayerSense;
+import com.thesmeg.bots.fleshcrawler.playersense.CustomPlayerSense;
 import com.thesmeg.bots.fleshcrawler.FleshCrawler;
 
 public class HaveEnoughHp extends BranchTask {

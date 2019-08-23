@@ -8,6 +8,7 @@ import com.runemate.game.api.script.framework.tree.TreeBot;
 import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.thesmeg.bots.fleshcrawler.branch.*;
 import com.thesmeg.bots.fleshcrawler.leaf.*;
+import com.thesmeg.bots.fleshcrawler.playersense.CustomPlayerSense;
 import com.thesmeg.bots.fleshcrawler.ui.FleshCrawlerController;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

@@ -1,8 +1,8 @@
 <manifest>
     <main-class>com.thesmeg.bots.fleshcrawler.FleshCrawler</main-class>
     <name>FleshCrawler</name>
-    <tag-line>Kills Flesh Crawlers!</tag-line><!--Max of 50 chars-->
-    <description>Simply start the bot</description><!--Max of 110 chars-->
+    <tag-line>Kills Flesh Crawlers in Security Stronghold</tag-line><!--Max of 50 chars-->
+    <description>Requires Varrock teleport skill and food</description><!--Max of 110 chars-->
     <version>1.0.0</version>
     <compatibility>
         <game>OSRS</game>
@@ -14,9 +14,10 @@
     <internal-id>FleshCrawler</internal-id>
     <!--The rest are optional-->
     <open-source>false</open-source>
+    <price>0.06</price>
     <hidden>false</hidden> <!--If you need to hide it from the bot store for maintenance-->
     <access>private</access>
     <tags>
-        <tag>Combat, Pure</tag>
+        <tag>Combat, Pure, Flesh Crawler, Security Stronghold</tag>
     </tags>
 </manifest>

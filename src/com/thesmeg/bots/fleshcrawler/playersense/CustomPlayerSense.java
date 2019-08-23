@@ -1,4 +1,4 @@
-package com.thesmeg.bots.fleshcrawler;
+package com.thesmeg.bots.fleshcrawler.playersense;
 
 import com.runemate.game.api.hybrid.player_sense.PlayerSense;
 import com.runemate.game.api.hybrid.util.calculations.Random;

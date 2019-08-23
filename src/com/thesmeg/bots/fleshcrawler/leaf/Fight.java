@@ -12,7 +12,7 @@ import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.hybrid.util.calculations.Random;
 import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
-import com.thesmeg.bots.fleshcrawler.CustomPlayerSense;
+import com.thesmeg.bots.fleshcrawler.playersense.CustomPlayerSense;
 import com.thesmeg.bots.fleshcrawler.FleshCrawler;
 
 public class Fight extends LeafTask {
@@ -59,7 +59,7 @@ public class Fight extends LeafTask {
                         getLogger().info("Attacking Flesh Crawler targeting me");
                         if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
                             for (int i = 0; i < clicks; i++) {
-                                flesh.click();
+                                flesh.interact("Attack");
                             }
                             Execution.delayUntil(() -> p.getTarget().equals(flesh), () -> false, 50, 500, 1500);
                             return;
@@ -68,7 +68,7 @@ public class Fight extends LeafTask {
                         if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
                             getLogger().info("Attacking closest Flesh Crawler");
                             for (int i = 0; i < clicks; i++) {
-                                flesh.click();
+                                flesh.interact("Attack");
                             }
                             Execution.delayUntil(() -> p.getTarget().equals(flesh), () -> false, 50, 500, 1500);
                             return;
