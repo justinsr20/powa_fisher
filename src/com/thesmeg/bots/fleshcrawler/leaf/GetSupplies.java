@@ -5,8 +5,8 @@ import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.local.hud.interfaces.SpriteItem;
 import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
-import com.thesmeg.bots.fleshcrawler.playersense.CustomPlayerSense;
 import com.thesmeg.bots.fleshcrawler.FleshCrawler;
+import com.thesmeg.bots.fleshcrawler.playersense.CustomPlayerSense;
 
 import java.util.Map;
 import java.util.stream.Stream;
@@ -53,6 +53,7 @@ public class GetSupplies extends LeafTask {
                 if (useDepositAll) {
                     if (Bank.depositInventory()) {
                         Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, 1000, 2000);
+                        return;
                     } else {
                         return;
                     }
@@ -71,6 +72,7 @@ public class GetSupplies extends LeafTask {
                     getLogger().info("Withdrawing " + item);
                     if (Bank.withdraw(item.getKey(), item.getValue())) {
                         Execution.delayUntil(() -> Inventory.contains(item.getKey()), () -> false, 50, 500, 1500);
+                        return;
                     } else {
                         return;
                     }

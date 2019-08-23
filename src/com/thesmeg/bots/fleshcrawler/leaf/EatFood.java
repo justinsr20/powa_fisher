@@ -3,8 +3,8 @@ package com.thesmeg.bots.fleshcrawler.leaf;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.local.hud.interfaces.SpriteItem;
 import com.runemate.game.api.script.framework.tree.LeafTask;
-import com.thesmeg.bots.fleshcrawler.playersense.CustomPlayerSense;
 import com.thesmeg.bots.fleshcrawler.FleshCrawler;
+import com.thesmeg.bots.fleshcrawler.playersense.CustomPlayerSense;
 
 public class EatFood extends LeafTask {
     private FleshCrawler fleshCrawler;

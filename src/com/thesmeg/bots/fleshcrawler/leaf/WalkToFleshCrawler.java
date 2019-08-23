@@ -10,8 +10,8 @@ import com.runemate.game.api.hybrid.region.GameObjects;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
-import com.thesmeg.bots.fleshcrawler.playersense.CustomPlayerSense;
 import com.thesmeg.bots.fleshcrawler.FleshCrawler;
+import com.thesmeg.bots.fleshcrawler.playersense.CustomPlayerSense;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -97,6 +97,8 @@ public class WalkToFleshCrawler extends LeafTask {
                         answerSecurityQuestion();
                         if (!Players.getLocal().isMoving() && Players.getLocal().getAnimationId() != 4283 && Players.getLocal().getAnimationId() != 4282 && !ChatDialog.isOpen()) {
                             GameObjects.newQuery().names(destination.getValue().get(0)).results().nearestTo(destination.getKey().randomize(1, 0)).interact(destination.getValue().get(1));
+                            int executionDelayMax = CustomPlayerSense.Key.EXECUTION_DELAY_MAX.getAsInteger();
+                            Execution.delay(500, executionDelayMax);
                         }
                     } else if (!destination.getKey().isVisible()) {
                         webPathToDestination(destination.getKey(), destination.getValue().get(0));
@@ -150,7 +152,7 @@ public class WalkToFleshCrawler extends LeafTask {
         if (warningInterface != null) {
             if (warningInterface.getComponent(20).isVisible()) {
                 getLogger().info(warningInterface.getComponent(20).click());
-                Execution.delay(1000,3000);
+                Execution.delay(1000, 3000);
             }
             if (warningInterface.getComponent(17).isVisible()) {
                 warningInterface.getComponent(17).click();

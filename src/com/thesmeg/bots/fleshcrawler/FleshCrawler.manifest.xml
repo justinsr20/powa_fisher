@@ -3,7 +3,7 @@
     <name>FleshCrawler</name>
     <tag-line>Kills Flesh Crawlers in Security Stronghold</tag-line><!--Max of 50 chars-->
     <description>Requires Varrock teleport skill and food</description><!--Max of 110 chars-->
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <compatibility>
         <game>OSRS</game>
     </compatibility>

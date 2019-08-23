@@ -15,7 +15,7 @@ public class IsLoggedIn extends BranchTask {
         this.fleshCrawler = fleshCrawler;
     }
 
-    private final double cameraPitch = Random.nextDouble(0.5, 1.0);
+    private final double cameraPitch = Random.nextDouble(0.8, 1.0);
     private final int cameraYaw = Random.nextInt(0, 360);
 
     @Override
