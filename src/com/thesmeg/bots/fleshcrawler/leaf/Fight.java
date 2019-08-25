@@ -47,6 +47,8 @@ public class Fight extends LeafTask {
         }
 
         final int clicks = CustomPlayerSense.Key.SPAM_CLICK_COUNT.getAsInteger();
+        final int executionDelayMin = CustomPlayerSense.Key.EXECUTION_DELAY_MIN.getAsInteger();
+        final int executionDelayMax = CustomPlayerSense.Key.EXECUTION_DELAY_MAX.getAsInteger();
         LocatableEntityQueryResults<Npc> nearestFleshCrawler = Npcs.newQuery().names("Flesh Crawler").results().sortByDistance();
         Player p = Players.getLocal();
         try {
@@ -61,7 +63,7 @@ public class Fight extends LeafTask {
                             for (int i = 0; i < clicks; i++) {
                                 flesh.interact("Attack");
                             }
-                            Execution.delayUntil(() -> p.getTarget().equals(flesh), () -> false, 50, 500, 1500);
+                            Execution.delayUntil(() -> p.getTarget().equals(flesh), () -> false, 50, executionDelayMin, executionDelayMax);
                             return;
                         }
                     } else if (p.getTarget() == null) {
@@ -70,7 +72,7 @@ public class Fight extends LeafTask {
                             for (int i = 0; i < clicks; i++) {
                                 flesh.interact("Attack");
                             }
-                            Execution.delayUntil(() -> p.getTarget().equals(flesh), () -> false, 50, 500, 1500);
+                            Execution.delayUntil(() -> p.getTarget().equals(flesh), () -> false, 50, executionDelayMin, executionDelayMax);
                             return;
                         }
                     }

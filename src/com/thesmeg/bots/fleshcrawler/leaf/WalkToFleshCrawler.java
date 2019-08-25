@@ -86,6 +86,9 @@ public class WalkToFleshCrawler extends LeafTask {
             "Don't type in my password backwards and report the player.",
             "Report the player for phishing.");
 
+    private final int executionDelayMin = CustomPlayerSense.Key.EXECUTION_DELAY_MIN.getAsInteger();
+    private final int executionDelayMax = CustomPlayerSense.Key.EXECUTION_DELAY_MAX.getAsInteger();
+
     @Override
     public void execute() {
         warningInterface();
@@ -97,8 +100,7 @@ public class WalkToFleshCrawler extends LeafTask {
                         answerSecurityQuestion();
                         if (!Players.getLocal().isMoving() && Players.getLocal().getAnimationId() != 4283 && Players.getLocal().getAnimationId() != 4282 && !ChatDialog.isOpen()) {
                             GameObjects.newQuery().names(destination.getValue().get(0)).results().nearestTo(destination.getKey().randomize(1, 0)).interact(destination.getValue().get(1));
-                            int executionDelayMax = CustomPlayerSense.Key.EXECUTION_DELAY_MAX.getAsInteger();
-                            Execution.delay(500, executionDelayMax);
+                            Execution.delay(executionDelayMin, executionDelayMax);
                         }
                     } else if (!destination.getKey().isVisible()) {
                         webPathToDestination(destination.getKey(), destination.getValue().get(0));
@@ -125,8 +127,7 @@ public class WalkToFleshCrawler extends LeafTask {
                     System.out.println("chatOption: " + chatOption.getText());
                     securityAnswers.forEach(answer -> {
                         if (chatOption.getText().equals(answer)) {
-                            final int executionDelayMax = CustomPlayerSense.Key.EXECUTION_DELAY_MAX.getAsInteger();
-                            Execution.delay(500, executionDelayMax);
+                            Execution.delay(executionDelayMin, executionDelayMax);
                             chatOption.select();
                         }
                     });
@@ -152,7 +153,7 @@ public class WalkToFleshCrawler extends LeafTask {
         if (warningInterface != null) {
             if (warningInterface.getComponent(20).isVisible()) {
                 getLogger().info(warningInterface.getComponent(20).click());
-                Execution.delay(1000, 3000);
+                Execution.delay(executionDelayMin, executionDelayMax);
             }
             if (warningInterface.getComponent(17).isVisible()) {
                 warningInterface.getComponent(17).click();

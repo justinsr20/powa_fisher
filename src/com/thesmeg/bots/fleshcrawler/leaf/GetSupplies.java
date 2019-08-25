@@ -19,6 +19,9 @@ public class GetSupplies extends LeafTask {
         this.fleshCrawler = fleshCrawler;
     }
 
+    private final int executionDelayMin = CustomPlayerSense.Key.EXECUTION_DELAY_MIN.getAsInteger();
+    private final int executionDelayMax = CustomPlayerSense.Key.EXECUTION_DELAY_MAX.getAsInteger();
+
     @Override
     public void execute() {
         if (fleshCrawler.useRange) {
@@ -38,7 +41,7 @@ public class GetSupplies extends LeafTask {
                 if (Inventory.getItems(item.getKey()).size() != 0 && Inventory.getQuantity(item.getKey()) != item.getValue()) {
                     getLogger().info("Depositing overdrawn item " + item.getKey());
                     if (Bank.depositInventory()) {
-                        Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, 1000, 2000);
+                        Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, executionDelayMin, executionDelayMax);
                         return;
                     }
                 }
@@ -52,7 +55,7 @@ public class GetSupplies extends LeafTask {
                 final boolean useDepositAll = CustomPlayerSense.Key.USE_DEPOSIT_ALL.getAsBoolean();
                 if (useDepositAll) {
                     if (Bank.depositInventory()) {
-                        Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, 1000, 2000);
+                        Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, executionDelayMin, executionDelayMax);
                         return;
                     } else {
                         return;
@@ -60,7 +63,7 @@ public class GetSupplies extends LeafTask {
                 } else {
                     for (SpriteItem item : Inventory.getItems()) {
                         item.interact("Deposit-All");
-                        Execution.delayUntil(() -> !Inventory.contains(item.getDefinition().getName()), () -> false, 50, 1000, 2000);
+                        Execution.delayUntil(() -> !Inventory.contains(item.getDefinition().getName()), () -> false, 50, executionDelayMin, executionDelayMax);
                         return;
                     }
                 }
@@ -71,7 +74,7 @@ public class GetSupplies extends LeafTask {
                 if (Inventory.getQuantity(item.getKey()) != item.getValue()) {
                     getLogger().info("Withdrawing " + item);
                     if (Bank.withdraw(item.getKey(), item.getValue())) {
-                        Execution.delayUntil(() -> Inventory.contains(item.getKey()), () -> false, 50, 500, 1500);
+                        Execution.delayUntil(() -> Inventory.contains(item.getKey()), () -> false, 50, executionDelayMin, executionDelayMax);
                         return;
                     } else {
                         return;

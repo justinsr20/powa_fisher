@@ -20,6 +20,8 @@ public class Loot extends LeafTask {
     @Override
     public void execute() {
         final int clicks = CustomPlayerSense.Key.SPAM_CLICK_COUNT.getAsInteger();
+        final int executionDelayMin = CustomPlayerSense.Key.EXECUTION_DELAY_MIN.getAsInteger();
+        final int executionDelayMax = CustomPlayerSense.Key.EXECUTION_DELAY_MAX.getAsInteger();
         try {
             if (!Players.getLocal().isMoving() && Players.getLocal().getTarget() == null) {
                 LocatableEntityQueryResults<GroundItem> itemsOnGround = new GroundItemQueryBuilder().within(fleshCrawler.fleshCrawlerArea).results().sortByDistance();
@@ -29,13 +31,13 @@ public class Loot extends LeafTask {
                             for (int i = 0; i < clicks; i++) {
                                 item.interact("Take");
                             }
-                            Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, 1000, 2000);
+                            Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, executionDelayMin, executionDelayMax);
                             return;
                         } else if (!Inventory.isFull()) {
                             for (int i = 0; i < clicks; i++) {
                                 item.interact("Take");
                             }
-                            Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, 1000, 2000);
+                            Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, executionDelayMin, executionDelayMax);
                             return;
                         }
                     }
