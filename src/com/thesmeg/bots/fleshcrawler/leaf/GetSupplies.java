@@ -40,10 +40,9 @@ public class GetSupplies extends LeafTask {
             for (Map.Entry<String, Integer> item : fleshCrawler.requiredItems.entrySet()) {
                 if (Inventory.getItems(item.getKey()).size() != 0 && Inventory.getQuantity(item.getKey()) != item.getValue()) {
                     getLogger().info("Depositing overdrawn item " + item.getKey());
-                    if (Bank.depositInventory()) {
-                        Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, executionDelayMin, executionDelayMax);
-                        return;
-                    }
+                    Bank.depositInventory();
+                    Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, executionDelayMin, executionDelayMax);
+                    return;
                 }
             }
 
@@ -54,12 +53,9 @@ public class GetSupplies extends LeafTask {
                 getLogger().info("Depositing loot");
                 final boolean useDepositAll = CustomPlayerSense.Key.USE_DEPOSIT_ALL.getAsBoolean();
                 if (useDepositAll) {
-                    if (Bank.depositInventory()) {
-                        Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, executionDelayMin, executionDelayMax);
-                        return;
-                    } else {
-                        return;
-                    }
+                    Bank.depositInventory();
+                    Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, executionDelayMin, executionDelayMax);
+                    return;
                 } else {
                     for (SpriteItem item : Inventory.getItems()) {
                         item.interact("Deposit-All");
@@ -73,12 +69,9 @@ public class GetSupplies extends LeafTask {
             for (Map.Entry<String, Integer> item : fleshCrawler.requiredItems.entrySet()) {
                 if (Inventory.getQuantity(item.getKey()) != item.getValue()) {
                     getLogger().info("Withdrawing " + item);
-                    if (Bank.withdraw(item.getKey(), item.getValue())) {
-                        Execution.delayUntil(() -> Inventory.contains(item.getKey()), () -> false, 50, executionDelayMin, executionDelayMax);
-                        return;
-                    } else {
-                        return;
-                    }
+                    Bank.withdraw(item.getKey(), item.getValue());
+                    Execution.delayUntil(() -> Inventory.contains(item.getKey()), () -> false, 50, executionDelayMin, executionDelayMax);
+                    return;
                 }
             }
             Bank.close();
