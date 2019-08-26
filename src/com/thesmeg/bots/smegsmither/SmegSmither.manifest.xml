@@ -1,0 +1,22 @@
+<manifest>
+    <main-class>com.thesmeg.bots.smegsmither.SmegSmither</main-class>
+    <name>Smeg Smither</name>
+    <tag-line>Smith your troubles away</tag-line><!--Max of 50 chars-->
+    <description>Todo add this</description><!--Max of 110 chars-->
+    <version>1.0.0</version>
+    <compatibility>
+        <game>OSRS</game>
+    </compatibility>
+    <categories>
+        <category>SMITHING</category>
+    </categories>
+    <!--Required to publish on the bot store-->
+    <internal-id>SmegSmither</internal-id>
+    <!--The rest are optional-->
+    <open-source>false</open-source>
+    <hidden>false</hidden> <!--If you need to hide it from the bot store for maintenance-->
+    <access>public</access>
+    <tags>
+        <tag>Smithing</tag>
+    </tags>
+</manifest>
