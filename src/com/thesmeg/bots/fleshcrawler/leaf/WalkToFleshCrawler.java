@@ -76,7 +76,7 @@ public class WalkToFleshCrawler extends LeafTask {
             "Using the Account Recovery System.",
             "Don't give them the information and send an 'Abuse report'.",
             "Authenticator and two-step login on my registered email.",
-            "Through account settings on oldschool.runescape.com.",
+            "Through account config on oldschool.runescape.com.",
             "Don't give out your password to anyone. Not even close friends.",
             "No, you should never allow anyone to level your account.",
             "Report the incident and do not click any links.",

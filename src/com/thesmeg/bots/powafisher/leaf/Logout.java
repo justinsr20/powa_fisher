@@ -10,6 +10,6 @@ public class Logout extends LeafTask {
 
     @Override
     public void execute() {
-        Environment.getBot().stop("Could not find a fishing spot, please check settings and character location");
+        Environment.getBot().stop("Could not find a fishing spot, please check config and character location");
     }
 }

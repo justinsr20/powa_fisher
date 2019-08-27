@@ -15,7 +15,7 @@ public class Root extends BranchTask {
     @Override
     public boolean validate() {
         try {
-            return Players.getLocal().isVisible();
+            return (Players.getLocal().isVisible() && smegSmither.settings.getUserConfigSet());
         } catch (NullPointerException ignored) {
             return false;
         }
@@ -23,7 +23,7 @@ public class Root extends BranchTask {
 
     @Override
     public TreeTask successTask() {
-        return smegSmither.emptyLeaf;
+        return smegSmither.haveMaterials;
     }
 
     @Override
