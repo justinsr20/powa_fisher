@@ -6,8 +6,6 @@ import com.runemate.game.api.hybrid.location.Coordinate;
 import java.util.HashMap;
 
 public class Data {
-
-    //    private Coordinate edgevilleFurnace = new Coordinate(3110, 3499, 0);
     private Area edgevilleFurnace = new Area.Rectangular(new Coordinate(3105, 3496, 0), new Coordinate(3110, 3501, 0));
     private Area edgevilleBank = new Area.Rectangular(new Coordinate(3091, 3488, 0), new Coordinate(3098, 3499, 0));
     private static final HashMap<String, HashMap<String, Integer>> smeltingRecipes;

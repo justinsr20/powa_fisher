@@ -21,11 +21,11 @@ public class HaveMaterials extends BranchTask {
         for (HashMap.Entry<String, Integer> ore : requiredOres.entrySet()) {
             String oreName = ore.getKey();
             Integer oreAmount = ore.getValue();
-            if (Inventory.getQuantity(oreName) >= oreAmount) {
-                return true;
+            if (Inventory.getQuantity(oreName) <= oreAmount) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     @Override
