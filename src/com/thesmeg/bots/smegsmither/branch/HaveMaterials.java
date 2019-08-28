@@ -35,6 +35,6 @@ public class HaveMaterials extends BranchTask {
 
     @Override
     public TreeTask failureTask() {
-        return null;
+        return smegSmither.atBank;
     }
 }

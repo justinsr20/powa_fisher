@@ -7,8 +7,9 @@ import java.util.HashMap;
 
 public class Data {
 
-//    private Coordinate edgevilleFurnace = new Coordinate(3110, 3499, 0);
-    private Area edgevilleFurnace = new Area.Rectangular(new Coordinate(3105, 3496,0),new Coordinate(3110,3501,0));
+    //    private Coordinate edgevilleFurnace = new Coordinate(3110, 3499, 0);
+    private Area edgevilleFurnace = new Area.Rectangular(new Coordinate(3105, 3496, 0), new Coordinate(3110, 3501, 0));
+    private Area edgevilleBank = new Area.Rectangular(new Coordinate(3091, 3488, 0), new Coordinate(3098, 3499, 0));
     private static final HashMap<String, HashMap<String, Integer>> smeltingRecipes;
 
     static {
@@ -20,16 +21,16 @@ public class Data {
         smeltingRecipes.put("Bronze bar", bronzeBar);
     }
 
-    public HashMap getSmeltingRecipes() {
-        return smeltingRecipes;
-    }
-
     public HashMap<String, Integer> getSmeltingRecipe(String barName) {
         return smeltingRecipes.get(barName);
     }
 
     public Area getEdgevilleFurnace() {
         return edgevilleFurnace;
+    }
+
+    public Area getEdgevilleBank() {
+        return edgevilleBank;
     }
 }
 

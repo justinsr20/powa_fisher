@@ -5,19 +5,19 @@ import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.framework.tree.LeafTask;
 import com.thesmeg.bots.smegsmither.SmegSmither;
 
-public class RunToFurnace extends LeafTask {
+public class RunToBank extends LeafTask {
     private SmegSmither smegSmither;
 
-    public RunToFurnace(SmegSmither smegSmither) {
+    public RunToBank(SmegSmither smegSmither) {
         this.smegSmither = smegSmither;
     }
 
     @Override
     public void execute() {
-        Area furnace = smegSmither.data.getEdgevilleFurnace();
-        if (!furnace.contains(Players.getLocal())) {
+        Area bank = smegSmither.data.getEdgevilleBank();
+        if (!bank.contains(Players.getLocal())) {
             //@TODO make variable
-            smegSmither.lib.webPathToDestination(furnace.getRandomCoordinate(), "Edgeville Furnace", getLogger());
+            smegSmither.lib.webPathToDestination(bank.getRandomCoordinate(), "Edgeville bank", getLogger());
         }
     }
 }

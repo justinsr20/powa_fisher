@@ -6,23 +6,21 @@ import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.thesmeg.bots.smegsmither.SmegSmither;
 
-public class AtFurnace extends BranchTask {
+public class AtBank extends BranchTask {
     private SmegSmither smegSmither;
 
-    public AtFurnace(SmegSmither smegSmither) {
+    public AtBank(SmegSmither smegSmither) {
         this.smegSmither = smegSmither;
     }
 
     @Override
     public boolean validate() {
-        //TODO make location variable
-        Area furnaceArea = smegSmither.data.getEdgevilleFurnace();
-//        GameObject furnace = GameObjects.newQuery().names("Furnace").within(furnaceArea).results().first();
+        Area edgevilleBank = smegSmither.data.getEdgevilleBank();
         try {
-            if (furnaceArea.contains(Players.getLocal())) {
+            if (edgevilleBank.contains(Players.getLocal())) {
                 return true;
             }
-        } catch (NullPointerException ignored) {
+        } catch (NullPointerException ignore) {
 
         }
         return false;
@@ -30,11 +28,11 @@ public class AtFurnace extends BranchTask {
 
     @Override
     public TreeTask successTask() {
-        return smegSmither.smelt;
+        return smegSmither.withdrawMaterials;
     }
 
     @Override
     public TreeTask failureTask() {
-        return smegSmither.runToFurnace;
+        return smegSmither.runToBank;
     }
 }
