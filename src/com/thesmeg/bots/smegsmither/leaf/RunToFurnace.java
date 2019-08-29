@@ -1,7 +1,6 @@
 package com.thesmeg.bots.smegsmither.leaf;
 
 import com.runemate.game.api.hybrid.location.Area;
-import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.framework.tree.LeafTask;
 import com.thesmeg.bots.smegsmither.SmegSmither;
 
@@ -15,9 +14,7 @@ public class RunToFurnace extends LeafTask {
     @Override
     public void execute() {
         Area furnace = smegSmither.data.getEdgevilleFurnace();
-        if (!furnace.contains(Players.getLocal())) {
-            //@TODO make variable
-            smegSmither.lib.webPathToDestination(furnace.getRandomCoordinate(), "Edgeville Furnace", getLogger());
-        }
+        //@TODO make variable
+        smegSmither.lib.webPathToDestination(furnace.getRandomCoordinate(), "Edgeville Furnace", getLogger());
     }
 }
