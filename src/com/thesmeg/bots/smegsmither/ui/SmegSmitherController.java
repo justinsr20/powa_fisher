@@ -10,7 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class SmegSmitherController implements Initializable {
     private SmegSmither smegSmither;

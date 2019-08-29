@@ -20,6 +20,7 @@ public class WithdrawMaterials extends LeafTask {
 //        getLogger().info("WithdrawMaterials");
         if (!Bank.isOpen()) {
             Bank.open();
+            Execution.delayUntil(() -> Bank.isOpen(), () -> false, 50, 1000, 2000);
         }
 
         if (Bank.isOpen() && !Inventory.isEmpty()) {
@@ -33,10 +34,12 @@ public class WithdrawMaterials extends LeafTask {
             for (HashMap.Entry<String, Integer> ore : requiredOres.entrySet()) {
                 String oreName = ore.getKey();
                 Integer oreAmount = ore.getValue();
-                if (Bank.withdraw(oreName, oreAmount)) {
-                    Execution.delayUntil(() -> Inventory.contains(oreName), () -> false, 50, 1000, 2000);
-                } else {
-                    return;
+                if (!Inventory.contains(oreName)) {
+                    if (Bank.withdraw(oreName, oreAmount)) {
+                        Execution.delayUntil(() -> Inventory.contains(oreName), () -> false, 50, 1000, 2000);
+                    } else {
+                        return;
+                    }
                 }
             }
         }

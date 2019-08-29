@@ -14,7 +14,7 @@ import com.runemate.game.api.script.framework.tree.LeafTask;
 import com.thesmeg.bots.smegsmither.SmegSmither;
 
 public class Smelt extends LeafTask {
-    SmegSmither smegSmither;
+    private SmegSmither smegSmither;
 
     public Smelt(SmegSmither smegSmither) {
         this.smegSmither = smegSmither;
@@ -25,15 +25,16 @@ public class Smelt extends LeafTask {
 //        getLogger().info("Smelt");
         String barToSmelt = smegSmither.settings.getBarToSmelt();
         Area edgevilleFurnace = smegSmither.data.getEdgevilleFurnace();
-        Integer smeltingInterfaceContainer = smegSmither.data.getSmeltingInterfaceContainer();
-        Integer smeltingAnimation = smegSmither.data.getSmeltingAnimation();
+        Integer smeltingInterfaceContainerId = smegSmither.data.getSmeltingInterfaceContainer();
+        Integer smeltingAnimationId = smegSmither.data.getSmeltingAnimation();
         GameObject furnace = GameObjects.newQuery().names("Furnace").within(edgevilleFurnace).results().first();
-        InterfaceComponentQueryResults smeltingInterface = Interfaces.newQuery().containers(smeltingInterfaceContainer).results();
+        InterfaceComponentQueryResults smeltingInterfaceComponent = Interfaces.newQuery().containers(smeltingInterfaceContainerId).results();
+
         try {
             if (furnace.isVisible()) {
                 if (furnace.interact("Smelt")) {
-                    Execution.delayUntil(() -> InterfaceContainers.getAt(smeltingInterfaceContainer) != null, () -> false, 50, 1500, 2000);
-                    for (InterfaceComponent component : smeltingInterface) {
+                    Execution.delayUntil(() -> InterfaceContainers.getAt(smeltingInterfaceContainerId) != null, () -> false, 50, 1500, 2000);
+                    for (InterfaceComponent component : smeltingInterfaceComponent) {
                         if (component.getName() != null) {
                             if (component.getActions().contains("All")) {
                                 if (component.click()) {
@@ -42,7 +43,7 @@ public class Smelt extends LeafTask {
                             }
                             if (component.getName().equals(barToSmelt)) {
                                 if (component.interact("Smelt")) {
-                                    Execution.delayUntil(() -> Inventory.containsOnly(barToSmelt), () -> Players.getLocal().getAnimationId() == smeltingAnimation, 50, 1000, 2000);
+                                    Execution.delayUntil(() -> Inventory.containsOnly(barToSmelt), () -> Players.getLocal().getAnimationId() == smeltingAnimationId, 50, 1000, 2000);
                                     return;
                                 }
                             }

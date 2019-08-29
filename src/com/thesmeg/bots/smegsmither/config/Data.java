@@ -25,7 +25,7 @@ public class Data {
 
     public ArrayList<String> getAllSmeltingOptions() {
         ArrayList<String> smeltingOptions = new ArrayList<>();
-        for(Map.Entry<String, HashMap<String, Integer>> recipe: smeltingRecipes.entrySet()){
+        for (Map.Entry<String, HashMap<String, Integer>> recipe : smeltingRecipes.entrySet()) {
             smeltingOptions.add(recipe.getKey());
         }
         return smeltingOptions;
