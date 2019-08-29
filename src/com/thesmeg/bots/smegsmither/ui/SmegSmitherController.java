@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class SmegSmitherController implements Initializable {
     private SmegSmither smegSmither;
@@ -26,7 +26,8 @@ public class SmegSmitherController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        comboBoxChooseBar.setItems(FXCollections.observableArrayList("Bronze bar", "Iron bar"));
+        ArrayList<String> smeltingOptions = smegSmither.data.getAllSmeltingOptions();
+        comboBoxChooseBar.setItems(FXCollections.observableArrayList(smeltingOptions));
         comboBoxChooseBar.setOnAction(comboBoxChooseBarAction());
         btnSetConfig.setOnAction(btnSetConfigAction());
     }

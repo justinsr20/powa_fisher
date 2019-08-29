@@ -3,7 +3,9 @@ package com.thesmeg.bots.smegsmither.config;
 import com.runemate.game.api.hybrid.location.Area;
 import com.runemate.game.api.hybrid.location.Coordinate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Data {
     private Area edgevilleFurnace = new Area.Rectangular(new Coordinate(3105, 3496, 0), new Coordinate(3110, 3501, 0));
@@ -19,6 +21,14 @@ public class Data {
             put("Tin ore", 14);
         }};
         smeltingRecipes.put("Bronze bar", bronzeBar);
+    }
+
+    public ArrayList<String> getAllSmeltingOptions() {
+        ArrayList<String> smeltingOptions = new ArrayList<>();
+        for(Map.Entry<String, HashMap<String, Integer>> recipe: smeltingRecipes.entrySet()){
+            smeltingOptions.add(recipe.getKey());
+        }
+        return smeltingOptions;
     }
 
     public HashMap<String, Integer> getSmeltingRecipe(String barName) {
