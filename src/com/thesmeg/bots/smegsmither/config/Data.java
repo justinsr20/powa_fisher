@@ -10,8 +10,8 @@ import java.util.Map;
 public class Data {
     private Area edgevilleFurnace = new Area.Rectangular(new Coordinate(3105, 3496, 0), new Coordinate(3110, 3501, 0));
     private Area edgevilleBank = new Area.Rectangular(new Coordinate(3091, 3488, 0), new Coordinate(3098, 3499, 0));
-    Integer smeltingInterfaceContainer = 270;
-    Integer smeltingAnimation = 899;
+    private Integer smeltingInterfaceContainer = 270;
+    private Integer smeltingAnimation = 899;
     private static final HashMap<String, HashMap<String, Integer>> smeltingRecipes;
 
     static {
