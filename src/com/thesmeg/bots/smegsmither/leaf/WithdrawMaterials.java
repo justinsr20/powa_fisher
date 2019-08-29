@@ -17,6 +17,7 @@ public class WithdrawMaterials extends LeafTask {
 
     @Override
     public void execute() {
+//        getLogger().info("WithdrawMaterials");
         if (!Bank.isOpen()) {
             Bank.open();
         }
@@ -29,31 +30,20 @@ public class WithdrawMaterials extends LeafTask {
         if (Bank.isOpen() && Inventory.isEmpty()) {
             String barToSmelt = smegSmither.settings.getBarToSmelt();
             HashMap<String, Integer> requiredOres = smegSmither.data.getSmeltingRecipe(barToSmelt);
-            Integer oreWithdrawAmount = getOreWithdrawAmount(barToSmelt);
             for (HashMap.Entry<String, Integer> ore : requiredOres.entrySet()) {
                 String oreName = ore.getKey();
                 Integer oreAmount = ore.getValue();
-                if (Bank.withdraw(oreName, oreAmount * oreWithdrawAmount)) {
+                if (Bank.withdraw(oreName, oreAmount)) {
                     Execution.delayUntil(() -> Inventory.contains(oreName), () -> false, 50, 1000, 2000);
                 } else {
                     return;
                 }
             }
         }
+
         if (Bank.isOpen()) {
             Bank.close();
+            Execution.delayUntil(() -> !Bank.isOpen(), () -> false, 50, 1000, 2000);
         }
-    }
-
-    private Integer getOreWithdrawAmount(String barToSmelt) {
-        Integer inventorySize = 28;
-        Integer totalOreCount = 0;
-        HashMap<String, Integer> requiredOres = smegSmither.data.getSmeltingRecipe(barToSmelt);
-        for (HashMap.Entry<String, Integer> ore : requiredOres.entrySet()) {
-            System.out.println(ore.getKey());
-            Integer oreAmount = ore.getValue();
-            totalOreCount += oreAmount;
-        }
-        return inventorySize / totalOreCount;
     }
 }

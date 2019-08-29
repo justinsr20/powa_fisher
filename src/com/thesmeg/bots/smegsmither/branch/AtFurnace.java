@@ -1,6 +1,8 @@
 package com.thesmeg.bots.smegsmither.branch;
 
+import com.runemate.game.api.hybrid.entities.GameObject;
 import com.runemate.game.api.hybrid.location.Area;
+import com.runemate.game.api.hybrid.region.GameObjects;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
@@ -15,11 +17,12 @@ public class AtFurnace extends BranchTask {
 
     @Override
     public boolean validate() {
+//        getLogger().info("AtFurnace");
         //TODO make location variable
         Area furnaceArea = smegSmither.data.getEdgevilleFurnace();
-//        GameObject furnace = GameObjects.newQuery().names("Furnace").within(furnaceArea).results().first();
+        GameObject furnace = GameObjects.newQuery().names("Furnace").results().first();
         try {
-            if (furnaceArea.contains(Players.getLocal())) {
+            if (furnaceArea.contains(Players.getLocal()) && furnace.isVisible()) {
                 return true;
             }
         } catch (NullPointerException ignored) {

@@ -16,12 +16,12 @@ public class HaveMaterials extends BranchTask {
 
     @Override
     public boolean validate() {
+//        getLogger().info("HaveMaterials");
         String barToSmelt = smegSmither.settings.getBarToSmelt();
         HashMap<String, Integer> requiredOres = smegSmither.data.getSmeltingRecipe(barToSmelt);
         for (HashMap.Entry<String, Integer> ore : requiredOres.entrySet()) {
             String oreName = ore.getKey();
-            Integer oreAmount = ore.getValue();
-            if (Inventory.getQuantity(oreName) <= oreAmount) {
+            if (!Inventory.contains(oreName)) {
                 return false;
             }
         }

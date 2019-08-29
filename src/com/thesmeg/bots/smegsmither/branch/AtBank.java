@@ -15,6 +15,7 @@ public class AtBank extends BranchTask {
 
     @Override
     public boolean validate() {
+//        getLogger().info("AtBank");
         Area edgevilleBank = smegSmither.data.getEdgevilleBank();
         try {
             if (edgevilleBank.contains(Players.getLocal())) {
