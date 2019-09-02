@@ -1,5 +1,6 @@
 package com.thesmeg.bots.smegsmither.leaf;
 
+import com.runemate.game.api.hybrid.Environment;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Bank;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.local.hud.interfaces.SpriteItem;
@@ -50,6 +51,9 @@ public class WithdrawMaterials extends LeafTask {
                         return;
                     }
                 } else if (Inventory.getQuantity(oreName) == 0) {
+                    if (!Bank.contains(oreName)) {
+                        Environment.getBot().stop("Ran out of " + oreName);
+                    }
                     if (Bank.withdraw(oreName, oreAmount)) {
                         Execution.delayUntil(() -> Inventory.contains(oreName), () -> false, 50, 1000, 2000);
                     } else {

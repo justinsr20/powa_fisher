@@ -41,7 +41,7 @@ public class FleshCrawler extends TreeBot implements EmbeddableUI {
     String foodToEat = null;
     public boolean useRange = false;
     private String ammunitionName = null;
-    private Coordinate bottomLeftFleshCrawler = new Coordinate(2035, 5185, 0);
+    private Coordinate bottomLeftFleshCrawler = new Coordinate(2038, 5185, 0);
     private Coordinate topRightFleshCrawler = new Coordinate(2046, 5194, 0);
     public Area fleshCrawlerArea = new Area.Rectangular(bottomLeftFleshCrawler, topRightFleshCrawler);
     private Coordinate bottomLeftBank = new Coordinate(3180, 3433, 0);

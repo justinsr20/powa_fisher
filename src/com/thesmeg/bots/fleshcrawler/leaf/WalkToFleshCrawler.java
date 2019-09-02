@@ -35,9 +35,11 @@ public class WalkToFleshCrawler extends LeafTask {
     private Coordinate fourthRicketyDoor = new Coordinate(2036, 5201, 0);
     private Coordinate fifthRicketyDoor = new Coordinate(2046, 5198, 0);
     private Coordinate sixthRicketyDoor = new Coordinate(2045, 5195, 0);
+    private Coordinate fleshAreaCentre = new Coordinate(2042, 5189, 0);
 
     private Map<Coordinate, List<String>> pathToFleshCrawlers = new HashMap<Coordinate, List<String>>() {
         {
+            put(fleshAreaCentre, Arrays.asList("Flesh Crawler", "Attack"));
             put(sixthRicketyDoor, Arrays.asList("Rickety door", "Open"));
             put(fifthRicketyDoor, Arrays.asList("Rickety door", "Open"));
             put(fourthRicketyDoor, Arrays.asList("Rickety door", "Open"));

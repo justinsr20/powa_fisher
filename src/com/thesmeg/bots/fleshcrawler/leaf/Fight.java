@@ -49,7 +49,7 @@ public class Fight extends LeafTask {
         final int clicks = CustomPlayerSense.Key.SPAM_CLICK_COUNT.getAsInteger();
         final int executionDelayMin = CustomPlayerSense.Key.EXECUTION_DELAY_MIN.getAsInteger();
         final int executionDelayMax = CustomPlayerSense.Key.EXECUTION_DELAY_MAX.getAsInteger();
-        LocatableEntityQueryResults<Npc> nearestFleshCrawler = Npcs.newQuery().names("Flesh Crawler").results().sortByDistance();
+        LocatableEntityQueryResults<Npc> nearestFleshCrawler = Npcs.newQuery().names("Flesh Crawler").within(fleshCrawler.fleshCrawlerArea).results().sortByDistance();
         Player p = Players.getLocal();
         try {
             for (Npc flesh : nearestFleshCrawler) {
