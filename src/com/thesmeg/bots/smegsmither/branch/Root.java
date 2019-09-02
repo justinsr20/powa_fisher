@@ -1,6 +1,8 @@
 package com.thesmeg.bots.smegsmither.branch;
 
+import com.runemate.game.api.hybrid.local.Camera;
 import com.runemate.game.api.hybrid.region.Players;
+import com.runemate.game.api.hybrid.util.calculations.Random;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.thesmeg.bots.smegsmither.SmegSmither;
@@ -12,10 +14,18 @@ public class Root extends BranchTask {
         this.smegSmither = smegSmither;
     }
 
+    private final double cameraPitch = Random.nextDouble(0.4, 1.0);
+    private final int cameraYaw = Random.nextInt(0, 360);
+
     @Override
     public boolean validate() {
         try {
-            return (Players.getLocal().isVisible() && smegSmither.settings.getUserConfigSet());
+            if (Players.getLocal().isVisible()) {
+                if (Camera.getPitch() < 0.1) {
+                    Camera.concurrentlyTurnTo(cameraYaw, cameraPitch);
+                }
+            }
+            return smegSmither.settings.getUserConfigSet();
         } catch (NullPointerException ignored) {
             return false;
         }
