@@ -16,7 +16,7 @@
     <open-source>false</open-source>
     <price>0.06</price>
     <hidden>false</hidden> <!--If you need to hide it from the bot store for maintenance-->
-    <access>private</access>
+    <access>public</access>
     <tags>
         <tag>Combat, Pure, Flesh Crawler, Security Stronghold</tag>
     </tags>
