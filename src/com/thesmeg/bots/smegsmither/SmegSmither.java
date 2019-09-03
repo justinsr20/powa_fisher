@@ -4,6 +4,7 @@ import com.runemate.game.api.client.embeddable.EmbeddableUI;
 import com.runemate.game.api.hybrid.util.Resources;
 import com.runemate.game.api.script.framework.tree.TreeBot;
 import com.runemate.game.api.script.framework.tree.TreeTask;
+import com.thesmeg.bots.smegsmither.playersense.CustomPlayerSense;
 import com.thesmeg.bots.smegsmither.branch.AtBank;
 import com.thesmeg.bots.smegsmither.branch.AtFurnace;
 import com.thesmeg.bots.smegsmither.branch.HaveMaterials;
@@ -39,6 +40,11 @@ public class SmegSmither extends TreeBot implements EmbeddableUI {
 
     public SmegSmither() {
         setEmbeddableUI(this);
+    }
+
+    @Override
+    public void onStart(String... strings) {
+        CustomPlayerSense.initializeKeys();
     }
 
     @Override
