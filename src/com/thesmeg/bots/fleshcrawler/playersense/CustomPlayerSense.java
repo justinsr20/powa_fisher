@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 
 public class CustomPlayerSense {
     public enum Key {
-        SPAM_CLICK_COUNT("thesmeg_spam_click_count_low", () -> Random.nextInt(1, 4)),
+        SPAM_CLICK_COUNT("thesmeg_spam_click_count", () -> Random.nextInt(1, 4)),
         MIN_RUN_ENERGY("thesmeg_min_run_energy", () -> Random.nextInt(1, 41)),
         MIN_HP("thesmeg_min_hp", () -> Random.nextInt(25, 40)),
         EXECUTION_DELAY_MAX("thesmeg_execution_delay_max", () -> Random.nextInt(1200, 2000)),
