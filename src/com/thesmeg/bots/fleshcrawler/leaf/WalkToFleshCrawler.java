@@ -86,7 +86,8 @@ public class WalkToFleshCrawler extends LeafTask {
             "Report the stream as a scam. Real Jagex streams have a 'verified' mark.",
             "Use the Account Recovery System.",
             "Don't type in my password backwards and report the player.",
-            "Report the player for phishing.");
+            "Report the player for phishing.",
+            "Through account settings on oldschool.runescape.com.");
 
     private final int executionDelayMin = CustomPlayerSense.Key.EXECUTION_DELAY_MIN.getAsInteger();
     private final int executionDelayMax = CustomPlayerSense.Key.EXECUTION_DELAY_MAX.getAsInteger();
