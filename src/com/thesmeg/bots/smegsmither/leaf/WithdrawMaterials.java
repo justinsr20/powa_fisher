@@ -51,7 +51,7 @@ public class WithdrawMaterials extends LeafTask {
                         return;
                     }
                 } else if (Inventory.getQuantity(oreName) == 0) {
-                    if (Bank.getQuantity(oreName) != oreAmount) {
+                    if (Bank.getQuantity(oreName) < oreAmount) {
                         Environment.getBot().stop("Not enough " + oreName);
                     }
                     if (Bank.withdraw(oreName, oreAmount)) {
