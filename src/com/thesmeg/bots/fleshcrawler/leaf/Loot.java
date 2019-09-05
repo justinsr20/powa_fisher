@@ -3,7 +3,6 @@ package com.thesmeg.bots.fleshcrawler.leaf;
 import com.runemate.game.api.hybrid.entities.GroundItem;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.queries.GroundItemQueryBuilder;
-import com.runemate.game.api.hybrid.queries.results.LocatableEntityQueryResults;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.Execution;
 import com.runemate.game.api.script.framework.tree.LeafTask;
@@ -24,22 +23,19 @@ public class Loot extends LeafTask {
         final int executionDelayMax = CustomPlayerSense.Key.EXECUTION_DELAY_MAX.getAsInteger();
         try {
             if (!Players.getLocal().isMoving() && Players.getLocal().getTarget() == null) {
-                LocatableEntityQueryResults<GroundItem> itemsOnGround = new GroundItemQueryBuilder().within(fleshCrawler.fleshCrawlerArea).results().sortByDistance();
-                for (GroundItem item : itemsOnGround) {
-                    if (fleshCrawler.itemsToLoot.contains(item.getDefinition().getName()) && item.getPosition().isReachable()) {
-                        if (item.getQuantity() > 1 && Inventory.contains(item.getDefinition().getName())) {
-                            for (int i = 0; i < clicks; i++) {
-                                item.interact("Take");
-                            }
-                            Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, executionDelayMin, executionDelayMax);
-                            return;
-                        } else if (!Inventory.isFull()) {
-                            for (int i = 0; i < clicks; i++) {
-                                item.interact("Take");
-                            }
-                            Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, executionDelayMin, executionDelayMax);
-                            return;
+                GroundItem itemToLoot = new GroundItemQueryBuilder().within(fleshCrawler.fleshCrawlerArea).filter(
+                        item -> fleshCrawler.itemsToLoot.contains(item.getDefinition().getName())).results().sortByDistance().first();
+                if (fleshCrawler.itemsToLoot.contains(itemToLoot.getDefinition().getName()) && itemToLoot.getPosition().isReachable()) {
+                    if (itemToLoot.getQuantity() > 1 && Inventory.contains(itemToLoot.getDefinition().getName())) {
+                        for (int i = 0; i < clicks; i++) {
+                            itemToLoot.interact("Take");
                         }
+                        Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, executionDelayMin, executionDelayMax);
+                    } else if (!Inventory.isFull()) {
+                        for (int i = 0; i < clicks; i++) {
+                            itemToLoot.interact("Take");
+                        }
+                        Execution.delayUntil(() -> Players.getLocal().isMoving(), () -> false, 50, executionDelayMin, executionDelayMax);
                     }
                 }
             }
