@@ -57,17 +57,17 @@ public class Fight extends LeafTask {
                     if (flesh.getTarget() != null && p.getTarget() != null && p.getTarget().equals(flesh) && flesh.getTarget().equals(p)) {
                         getLogger().info("In combat");
                         return;
-                    } else if (flesh.getTarget() != null && flesh.getTarget().equals(p)) {
+                    } else if (p.getAnimationId() != 426 && flesh.getTarget() != null && flesh.getTarget().equals(p)) {
                         getLogger().info("Attacking Flesh Crawler targeting me");
-                        if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
+                        if (flesh.getAnimationId() != 1190) {
                             for (int i = 0; i < clicks; i++) {
                                 flesh.interact("Attack");
                             }
                             Execution.delayUntil(() -> p.getTarget().equals(flesh), () -> false, 50, executionDelayMin, executionDelayMax);
                             return;
                         }
-                    } else if (p.getTarget() == null) {
-                        if (flesh.getAnimationId() != 1190 && flesh.getAnimationId() != 1184 && flesh.getAnimationId() != 1186) {
+                    } else if (p.getAnimationId() != 426 && p.getTarget() == null) {
+                        if (flesh.getAnimationId() != 1190) {
                             getLogger().info("Attacking closest Flesh Crawler");
                             for (int i = 0; i < clicks; i++) {
                                 flesh.interact("Attack");
@@ -78,9 +78,7 @@ public class Fight extends LeafTask {
                     }
                 }
             }
-
         } catch (NullPointerException ignore) {
-
         }
     }
 }
