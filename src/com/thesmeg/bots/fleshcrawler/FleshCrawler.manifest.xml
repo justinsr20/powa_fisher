@@ -1,9 +1,10 @@
 <manifest>
     <main-class>com.thesmeg.bots.fleshcrawler.FleshCrawler</main-class>
-    <name>Flesh Crawler Fighter</name>
-    <tag-line>Build the PK pure you've always wanted!</tag-line><!--Max of 50 chars-->
+    <name>Flesh Crawler Fighter (Beta)</name>
+    <tag-line>Make bank and build the pure you've always wanted!</tag-line><!--Max of 50 chars-->
     <description>Kills Flesh Crawlers in Security Stronghold and banks.
-        Requires Varrock teleport skill/runes and food</description><!--Max of 110 chars-->
+        20-40k xp P/hour | 150k+ GP P/hour (members)
+    </description><!--Max of 110 chars-->
     <version>1.1.0</version>
     <compatibility>
         <game>OSRS</game>
@@ -15,7 +16,6 @@
     <internal-id>FleshCrawlerFighter</internal-id>
     <!--The rest are optional-->
     <open-source>false</open-source>
-    <price>0.06</price>
     <hidden>false</hidden> <!--If you need to hide it from the bot store for maintenance-->
     <access>public</access>
     <tags>

@@ -35,11 +35,9 @@ public class WalkToFleshCrawler extends LeafTask {
     private Coordinate fourthRicketyDoor = new Coordinate(2036, 5201, 0);
     private Coordinate fifthRicketyDoor = new Coordinate(2046, 5198, 0);
     private Coordinate sixthRicketyDoor = new Coordinate(2045, 5195, 0);
-    private Coordinate fleshAreaCentre = new Coordinate(2042, 5189, 0);
 
     private Map<Coordinate, List<String>> pathToFleshCrawlers = new HashMap<Coordinate, List<String>>() {
         {
-            put(fleshAreaCentre, Arrays.asList("Flesh Crawler", "Attack"));
             put(sixthRicketyDoor, Arrays.asList("Rickety door", "Open"));
             put(fifthRicketyDoor, Arrays.asList("Rickety door", "Open"));
             put(fourthRicketyDoor, Arrays.asList("Rickety door", "Open"));
@@ -97,22 +95,18 @@ public class WalkToFleshCrawler extends LeafTask {
         warningInterface();
         boolean walkingToEntrance = true;
         for (Map.Entry<Coordinate, List<String>> destination : pathToFleshCrawlers.entrySet()) {
-            try {
-                if (destination.getKey().isReachable()) {
-                    if (destination.getKey().isVisible()) {
-                        answerSecurityQuestion();
-                        if (!Players.getLocal().isMoving() && Players.getLocal().getAnimationId() != 4283 && Players.getLocal().getAnimationId() != 4282 && !ChatDialog.isOpen()) {
-                            GameObjects.newQuery().names(destination.getValue().get(0)).results().nearestTo(destination.getKey().randomize(1, 0)).interact(destination.getValue().get(1));
-                            Execution.delay(executionDelayMin, executionDelayMax);
-                        }
-                    } else if (!destination.getKey().isVisible()) {
-                        webPathToDestination(destination.getKey(), destination.getValue().get(0));
+            if (destination.getKey().isReachable()) {
+                if (destination.getKey().isVisible()) {
+                    answerSecurityQuestion();
+                    if (!Players.getLocal().isMoving() && Players.getLocal().getAnimationId() != 4283 && Players.getLocal().getAnimationId() != 4282 && !ChatDialog.isOpen()) {
+                        GameObjects.newQuery().names(destination.getValue().get(0)).results().nearestTo(destination.getKey().randomize(1, 0)).interact(destination.getValue().get(1));
+                        Execution.delay(executionDelayMin, executionDelayMax);
                     }
-                    walkingToEntrance = false;
-                    break;
+                } else if (!destination.getKey().isVisible()) {
+                    webPathToDestination(destination.getKey(), destination.getValue().get(0));
                 }
-            } catch (NullPointerException e) {
-                getLogger().warn("NullPointerException thrown during walk");
+                walkingToEntrance = false;
+                break;
             }
         }
         if (walkingToEntrance) {
@@ -121,23 +115,19 @@ public class WalkToFleshCrawler extends LeafTask {
     }
 
     private void answerSecurityQuestion() {
-        try {
-            if (ChatDialog.isOpen()) {
-                if (!ChatDialog.hasTitle("Select an Option")) {
-                    ChatDialog.getContinue().select();
-                }
-                ChatDialog.getOptions().forEach(chatOption -> {
-                    System.out.println("chatOption: " + chatOption.getText());
-                    securityAnswers.forEach(answer -> {
-                        if (chatOption.getText().equals(answer)) {
-                            Execution.delay(executionDelayMin, executionDelayMax);
-                            chatOption.select();
-                        }
-                    });
-                });
+        if (ChatDialog.isOpen()) {
+            if (!ChatDialog.hasTitle("Select an Option")) {
+                ChatDialog.getContinue().select();
             }
-        } catch (NullPointerException e) {
-            getLogger().warn("Answering security questions threw a null pointer");
+            ChatDialog.getOptions().forEach(chatOption -> {
+                System.out.println("chatOption: " + chatOption.getText());
+                securityAnswers.forEach(answer -> {
+                    if (chatOption.getText().equals(answer)) {
+                        Execution.delay(executionDelayMin, executionDelayMax);
+                        chatOption.select();
+                    }
+                });
+            });
         }
     }
 

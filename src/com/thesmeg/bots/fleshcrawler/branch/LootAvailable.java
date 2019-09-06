@@ -19,21 +19,18 @@ public class LootAvailable extends BranchTask {
     @Override
     public boolean validate() {
         LocatableEntityQueryResults<GroundItem> itemsOnGround = GroundItems.getLoadedWithin(fleshCrawler.fleshCrawlerArea);
-        try {
-            for (GroundItem item : itemsOnGround) {
-                if (fleshCrawler.itemsToLoot.contains(item.getDefinition().getName())) {
-                    if (item.getPosition() != null && item.getPosition().isReachable()) {
-                        if (Inventory.contains(item.getDefinition().getName()) && item.getQuantity() > 1) {
-                            getLogger().info("Stackable item " + item + " found on ground, attempting to loot");
-                            return true;
-                        } else if (!Inventory.isFull()) {
-                            getLogger().info("Unstackable item " + item + " found on ground, attempting to loot");
-                            return true;
-                        }
+        for (GroundItem item : itemsOnGround) {
+            if (item != null && fleshCrawler.itemsToLoot.contains(item.getDefinition().getName())) {
+                if (item.getPosition() != null && item.getPosition().isReachable()) {
+                    if (Inventory.contains(item.getDefinition().getName()) && item.getQuantity() > 1) {
+                        getLogger().info("Stackable item " + item + " found on ground, attempting to loot");
+                        return true;
+                    } else if (!Inventory.isFull()) {
+                        getLogger().info("Unstackable item " + item + " found on ground, attempting to loot");
+                        return true;
                     }
                 }
             }
-        } catch (NullPointerException ignored) {
         }
         return false;
     }

@@ -1,7 +1,5 @@
 package com.thesmeg.bots.getanimations;
 
-import com.runemate.game.api.hybrid.entities.Npc;
-import com.runemate.game.api.hybrid.region.Npcs;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.framework.LoopingBot;
 
