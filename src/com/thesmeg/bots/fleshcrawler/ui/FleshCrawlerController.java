@@ -17,12 +17,9 @@ import java.util.ResourceBundle;
 
 public class FleshCrawlerController implements Initializable {
 
+    @FXML
+    GridPane lootGridPane;
     private FleshCrawler fleshCrawler;
-
-    public FleshCrawlerController(FleshCrawler fleshCrawler) {
-        this.fleshCrawler = fleshCrawler;
-    }
-
     @FXML
     private TextField foodName;
 
@@ -36,8 +33,9 @@ public class FleshCrawlerController implements Initializable {
     @FXML
     private TextField ammunitionName;
 
-    @FXML
-    GridPane lootGridPane;
+    public FleshCrawlerController(FleshCrawler fleshCrawler) {
+        this.fleshCrawler = fleshCrawler;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

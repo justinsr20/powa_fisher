@@ -15,15 +15,13 @@ import java.util.ResourceBundle;
 
 public class SmegSmitherController implements Initializable {
     private SmegSmither smegSmither;
-
-    public SmegSmitherController(SmegSmither smegSmither) {
-        this.smegSmither = smegSmither;
-    }
-
     @FXML
     private ComboBox<String> comboBoxChooseBar = new ComboBox<>();
     @FXML
     private Button btnSetConfig;
+    public SmegSmitherController(SmegSmither smegSmither) {
+        this.smegSmither = smegSmither;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

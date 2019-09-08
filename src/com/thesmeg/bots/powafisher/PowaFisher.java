@@ -14,11 +14,11 @@ import java.io.IOException;
 
 public class PowaFisher extends TreeBot implements EmbeddableUI {
 
+    private ObjectProperty<Node> botInterfaceProperty;
+
     public PowaFisher() {
         setEmbeddableUI(this);
     }
-
-    private ObjectProperty<Node> botInterfaceProperty;
 
     @Override
     public ObjectProperty<? extends Node> botInterfaceProperty() {

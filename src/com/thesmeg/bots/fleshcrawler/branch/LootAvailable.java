@@ -1,7 +1,9 @@
 package com.thesmeg.bots.fleshcrawler.branch;
 
 import com.runemate.game.api.hybrid.entities.GroundItem;
+import com.runemate.game.api.hybrid.entities.definitions.ItemDefinition;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
+import com.runemate.game.api.hybrid.location.Coordinate;
 import com.runemate.game.api.hybrid.queries.results.LocatableEntityQueryResults;
 import com.runemate.game.api.hybrid.region.GroundItems;
 import com.runemate.game.api.script.framework.tree.BranchTask;
@@ -20,14 +22,20 @@ public class LootAvailable extends BranchTask {
     public boolean validate() {
         LocatableEntityQueryResults<GroundItem> itemsOnGround = GroundItems.getLoadedWithin(fleshCrawler.fleshCrawlerArea);
         for (GroundItem item : itemsOnGround) {
-            if (item != null && fleshCrawler.itemsToLoot.contains(item.getDefinition().getName())) {
-                if (item.getPosition() != null && item.getPosition().isReachable()) {
-                    if (Inventory.contains(item.getDefinition().getName()) && item.getQuantity() > 1) {
-                        getLogger().info("Stackable item " + item + " found on ground, attempting to loot");
-                        return true;
-                    } else if (!Inventory.isFull()) {
-                        getLogger().info("Unstackable item " + item + " found on ground, attempting to loot");
-                        return true;
+            if (item != null) {
+                ItemDefinition itemDefinition = item.getDefinition();
+                Coordinate itemPosition = item.getPosition();
+                if (itemDefinition != null && itemPosition != null) {
+                    if (fleshCrawler.itemsToLoot.contains(itemDefinition.getName())) {
+                        if (itemPosition.isReachable()) {
+                            if (Inventory.contains(itemDefinition.getName()) && item.getQuantity() > 1) {
+                                getLogger().info("Stackable item " + item + " found on ground, attempting to loot");
+                                return true;
+                            } else if (!Inventory.isFull()) {
+                                getLogger().info("Unstackable item " + item + " found on ground, attempting to loot");
+                                return true;
+                            }
+                        }
                     }
                 }
             }

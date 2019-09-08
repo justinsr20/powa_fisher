@@ -1,6 +1,7 @@
 package com.thesmeg.bots.fleshcrawler.leaf;
 
 import com.runemate.game.api.hybrid.Environment;
+import com.runemate.game.api.hybrid.entities.definitions.ItemDefinition;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Bank;
 import com.runemate.game.api.hybrid.local.hud.interfaces.Inventory;
 import com.runemate.game.api.hybrid.local.hud.interfaces.SpriteItem;
@@ -14,21 +15,24 @@ import java.util.stream.Stream;
 
 public class GetSupplies extends LeafTask {
 
+    private final int executionDelayMin = CustomPlayerSense.Key.EXECUTION_DELAY_MIN.getAsInteger();
+    private final int executionDelayMax = CustomPlayerSense.Key.EXECUTION_DELAY_MAX.getAsInteger();
     private FleshCrawler fleshCrawler;
 
     public GetSupplies(FleshCrawler fleshCrawler) {
         this.fleshCrawler = fleshCrawler;
     }
 
-    private final int executionDelayMin = CustomPlayerSense.Key.EXECUTION_DELAY_MIN.getAsInteger();
-    private final int executionDelayMax = CustomPlayerSense.Key.EXECUTION_DELAY_MAX.getAsInteger();
-
     @Override
     public void execute() {
+        String ammunitionName = fleshCrawler.getAmmunitionName();
         if (fleshCrawler.useRange) {
-            if (Inventory.contains(fleshCrawler.getAmmunitionName())) {
-                if (Inventory.getItems(fleshCrawler.getAmmunitionName()).first().click()) {
-                    Execution.delayUntil(() -> !Inventory.contains(fleshCrawler.getAmmunitionName()), () -> false, 50, executionDelayMin, executionDelayMax);
+            if (Inventory.contains(ammunitionName)) {
+                SpriteItem ammunition = Inventory.getItems(fleshCrawler.getAmmunitionName()).first();
+                if (ammunition != null) {
+                    if (ammunition.click()) {
+                        Execution.delayUntil(() -> !Inventory.contains(fleshCrawler.getAmmunitionName()), () -> false, 50, executionDelayMin, executionDelayMax);
+                    }
                 } else {
                     return;
                 }
@@ -70,10 +74,13 @@ public class GetSupplies extends LeafTask {
                     }
                 } else {
                     for (SpriteItem item : Inventory.getItems()) {
-                        if (item.interact("Deposit-All")) {
-                            Execution.delayUntil(() -> !Inventory.contains(item.getDefinition().getName()), () -> false, 50, executionDelayMin, executionDelayMax);
-                        } else {
-                            return;
+                        ItemDefinition itemDefinition = item.getDefinition();
+                        if (itemDefinition != null) {
+                            if (item.interact("Deposit-All")) {
+                                Execution.delayUntil(() -> !Inventory.contains(itemDefinition.getName()), () -> false, 50, executionDelayMin, executionDelayMax);
+                            } else {
+                                return;
+                            }
                         }
                     }
                 }

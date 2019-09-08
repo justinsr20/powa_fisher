@@ -14,10 +14,9 @@ import com.thesmeg.bots.powafisher.leaf.WaitUntilLoggedIn;
 
 public class IsLoggedIn extends BranchTask {
 
+    Player p;
     private Fish fish = new Fish();
     private WaitUntilLoggedIn waitUntilLoggedIn = new WaitUntilLoggedIn();
-
-    Player p;
 
     @Override
     public boolean validate() {

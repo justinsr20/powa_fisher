@@ -24,22 +24,26 @@ public class FleshCrawler extends TreeBot implements EmbeddableUI {
 
     public HaveEnoughHp haveEnoughHp = new HaveEnoughHp(this);
     public HaveFood haveFood = new HaveFood(this);
-    HaveSupplies haveSupplies = new HaveSupplies(this);
     public InBankArea inBankArea = new InBankArea(this);
     public InFleshCrawlerArea inFleshCrawlerArea = new InFleshCrawlerArea(this);
     public LootAvailable lootAvailable = new LootAvailable(this);
-
     public EatFood eatFood = new EatFood(this);
     public Fight fight = new Fight(this);
     public GetSupplies getSupplies = new GetSupplies(this);
     public Loot loot = new Loot(this);
     public TeleportToVarrock teleportToVarrock = new TeleportToVarrock(this);
-    WaitUntilLoggedIn waitUntilLoggedIn = new WaitUntilLoggedIn(this);
     public WalkToBank walkToBank = new WalkToBank(this);
     public WalkToFleshCrawler walkToFleshCrawler = new WalkToFleshCrawler(this);
-
-    String foodToEat = null;
     public boolean useRange = false;
+    public ArrayList<String> itemsToLoot = new ArrayList<>();
+    public Map<String, Integer> requiredItems = new HashMap<String, Integer>() {{
+        put("Fire rune", 1);
+        put("Air rune", 3);
+        put("Law rune", 1);
+    }};
+    HaveSupplies haveSupplies = new HaveSupplies(this);
+    WaitUntilLoggedIn waitUntilLoggedIn = new WaitUntilLoggedIn(this);
+    String foodToEat = null;
     private String ammunitionName = null;
     private Coordinate bottomLeftFleshCrawler = new Coordinate(2038, 5185, 0);
     private Coordinate topRightFleshCrawler = new Coordinate(2046, 5194, 0);
@@ -47,13 +51,6 @@ public class FleshCrawler extends TreeBot implements EmbeddableUI {
     private Coordinate bottomLeftBank = new Coordinate(3180, 3433, 0);
     private Coordinate topRightBank = new Coordinate(3185, 3447, 0);
     public Area bankArea = new Area.Rectangular(bottomLeftBank, topRightBank);
-    public ArrayList<String> itemsToLoot = new ArrayList<>();
-    public Map<String, Integer> requiredItems = new HashMap<String, Integer>() {{
-        put("Fire rune", 1);
-        put("Air rune", 3);
-        put("Law rune", 1);
-    }};
-
     private ObjectProperty<Node> botInterfaceProperty;
 
     public FleshCrawler() {
@@ -86,23 +83,23 @@ public class FleshCrawler extends TreeBot implements EmbeddableUI {
         return botInterfaceProperty;
     }
 
-    public void setFoodToEat(String foodToEat) {
-        this.foodToEat = foodToEat;
-    }
-
     public String getFoodToEat() {
         return foodToEat;
+    }
+
+    public void setFoodToEat(String foodToEat) {
+        this.foodToEat = foodToEat;
     }
 
     public void setUseRange(Boolean useRange) {
         this.useRange = useRange;
     }
 
-    public void setAmmunitionName(String ammunitionName) {
-        this.ammunitionName = ammunitionName;
-    }
-
     public String getAmmunitionName() {
         return ammunitionName;
+    }
+
+    public void setAmmunitionName(String ammunitionName) {
+        this.ammunitionName = ammunitionName;
     }
 }

@@ -18,10 +18,8 @@ public class HaveEnoughHp extends BranchTask {
     public boolean validate() {
         final int minHp = CustomPlayerSense.Key.MIN_HP.getAsInteger();
         int randomHpCheck = Random.nextInt(minHp, 80);
-        if (Health.getCurrentPercent() > randomHpCheck) {
-            return true;
-        }
-        return false;
+
+        return Health.getCurrentPercent() > randomHpCheck;
     }
 
     @Override

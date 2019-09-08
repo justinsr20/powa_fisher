@@ -8,10 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Data {
-    private Area edgevilleFurnace = new Area.Rectangular(new Coordinate(3105, 3496, 0), new Coordinate(3109, 3501, 0));
-    private Area edgevilleBank = new Area.Rectangular(new Coordinate(3092, 3491, 0), new Coordinate(3098, 3497, 0));
-    private Integer smeltingInterfaceContainer = 270;
-    private Integer smeltingAnimation = 899;
     private static final HashMap<String, HashMap<String, Integer>> smeltingRecipes;
 
     static {
@@ -22,6 +18,11 @@ public class Data {
         }};
         smeltingRecipes.put("Bronze bar", bronzeBar);
     }
+
+    private Area edgevilleFurnace = new Area.Rectangular(new Coordinate(3105, 3496, 0), new Coordinate(3109, 3501, 0));
+    private Area edgevilleBank = new Area.Rectangular(new Coordinate(3092, 3491, 0), new Coordinate(3098, 3497, 0));
+    private Integer smeltingInterfaceContainer = 270;
+    private Integer smeltingAnimation = 899;
 
     public ArrayList<String> getAllSmeltingOptions() {
         ArrayList<String> smeltingOptions = new ArrayList<>();

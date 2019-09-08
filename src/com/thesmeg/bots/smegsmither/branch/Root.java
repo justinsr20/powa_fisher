@@ -8,14 +8,12 @@ import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.thesmeg.bots.smegsmither.SmegSmither;
 
 public class Root extends BranchTask {
+    private final double cameraPitch = Random.nextDouble(0.4, 1.0);
+    private final int cameraYaw = Random.nextInt(0, 360);
     private SmegSmither smegSmither;
-
     public Root(SmegSmither smegSmither) {
         this.smegSmither = smegSmither;
     }
-
-    private final double cameraPitch = Random.nextDouble(0.4, 1.0);
-    private final int cameraYaw = Random.nextInt(0, 360);
 
     @Override
     public boolean validate() {

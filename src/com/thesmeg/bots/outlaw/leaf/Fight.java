@@ -12,10 +12,9 @@ import com.runemate.game.api.script.framework.tree.LeafTask;
 
 public class Fight extends LeafTask {
 
+    private static Integer baseXp;
     Npc nearestOutlaw;
     Player player;
-    private static Integer baseXp;
-
 
     @Override
     public void execute() {

@@ -9,19 +9,17 @@ import com.runemate.game.api.script.framework.tree.TreeTask;
 
 
 public class IsLoggedIn extends BranchTask {
+    private final double cameraPitch = Random.nextDouble(0.8, 1.0);
+    private final int cameraYaw = Random.nextInt(0, 360);
     private FleshCrawler fleshCrawler;
-
     IsLoggedIn(FleshCrawler fleshCrawler) {
         this.fleshCrawler = fleshCrawler;
     }
 
-    private final double cameraPitch = Random.nextDouble(0.8, 1.0);
-    private final int cameraYaw = Random.nextInt(0, 360);
-
     @Override
     public boolean validate() {
         Player p = Players.getLocal();
-        if (p != null && fleshCrawler.foodToEat != null) {
+        if (p != null && fleshCrawler.getFoodToEat() != null) {
             if (p.isVisible()) {
                 if (Camera.getPitch() < 0.1) {
                     Camera.concurrentlyTurnTo(cameraYaw, cameraPitch);

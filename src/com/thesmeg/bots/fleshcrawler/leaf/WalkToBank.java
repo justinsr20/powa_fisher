@@ -9,12 +9,11 @@ import com.thesmeg.bots.fleshcrawler.FleshCrawler;
 
 public class WalkToBank extends LeafTask {
     private FleshCrawler fleshCrawler;
+    private Coordinate destination = new Coordinate(3183, 3437, 0);
 
     public WalkToBank(FleshCrawler fleshCrawler) {
         this.fleshCrawler = fleshCrawler;
     }
-
-    private Coordinate destination = new Coordinate(3183, 3437, 0);
 
     @Override
     public void execute() {

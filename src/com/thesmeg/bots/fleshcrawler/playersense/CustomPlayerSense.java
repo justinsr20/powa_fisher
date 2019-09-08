@@ -6,6 +6,14 @@ import com.runemate.game.api.hybrid.util.calculations.Random;
 import java.util.function.Supplier;
 
 public class CustomPlayerSense {
+    public static void initializeKeys() {
+        for (Key key : Key.values()) {
+            if (PlayerSense.get(key.name) == null) {
+                PlayerSense.put(key.name, key.supplier.get());
+            }
+        }
+    }
+
     public enum Key {
         SPAM_CLICK_COUNT("thesmeg_spam_click_count", () -> Random.nextInt(1, 4)),
         MIN_RUN_ENERGY("thesmeg_min_run_energy", () -> Random.nextInt(1, 41)),
@@ -40,14 +48,6 @@ public class CustomPlayerSense {
 
         public Boolean getAsBoolean() {
             return PlayerSense.getAsBoolean(name);
-        }
-    }
-
-    public static void initializeKeys() {
-        for (Key key : Key.values()) {
-            if (PlayerSense.get(key.name) == null) {
-                PlayerSense.put(key.name, key.supplier.get());
-            }
         }
     }
 }

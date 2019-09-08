@@ -2,7 +2,8 @@
     <main-class>com.thesmeg.bots.fleshcrawler.FleshCrawler</main-class>
     <name>Flesh Crawler Fighter (Beta)</name>
     <tag-line>Make bank and build the pure you've always wanted!</tag-line><!--Max of 50 chars-->
-    <description>Kills Flesh Crawlers in Security Stronghold and banks. 20-40k xp P/hour | 150k+ GP P/hour (members)</description><!--Max of 110 chars-->
+    <description>Kills Flesh Crawlers in Security Stronghold and banks. 20-40k xp P/hour | 150k+ GP P/hour (members)
+    </description><!--Max of 110 chars-->
     <version>1.1.0</version>
     <compatibility>
         <game>OSRS</game>

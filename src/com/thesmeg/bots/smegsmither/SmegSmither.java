@@ -22,10 +22,6 @@ import javafx.scene.Node;
 import java.io.IOException;
 
 public class SmegSmither extends TreeBot implements EmbeddableUI {
-    private ObjectProperty<Node> botInterfaceProperty;
-
-    private SmegSmitherController smegSmitherController = new SmegSmitherController(this);
-    private Root root = new Root(this);
     public HaveMaterials haveMaterials = new HaveMaterials(this);
     public AtFurnace atFurnace = new AtFurnace(this);
     public AtBank atBank = new AtBank(this);
@@ -37,6 +33,9 @@ public class SmegSmither extends TreeBot implements EmbeddableUI {
     public Settings settings = new Settings();
     public Data data = new Data();
     public Lib lib = new Lib();
+    private ObjectProperty<Node> botInterfaceProperty;
+    private SmegSmitherController smegSmitherController = new SmegSmitherController(this);
+    private Root root = new Root(this);
 
     public SmegSmither() {
         setEmbeddableUI(this);

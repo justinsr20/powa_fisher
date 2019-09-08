@@ -1,5 +1,7 @@
 package com.thesmeg.bots.fleshcrawler.leaf;
 
+import com.runemate.game.api.hybrid.entities.GameObject;
+import com.runemate.game.api.hybrid.entities.Player;
 import com.runemate.game.api.hybrid.local.hud.interfaces.ChatDialog;
 import com.runemate.game.api.hybrid.local.hud.interfaces.InterfaceContainer;
 import com.runemate.game.api.hybrid.local.hud.interfaces.InterfaceContainers;
@@ -20,12 +22,9 @@ import java.util.Map;
 
 public class WalkToFleshCrawler extends LeafTask {
 
+    private final int executionDelayMin = CustomPlayerSense.Key.EXECUTION_DELAY_MIN.getAsInteger();
+    private final int executionDelayMax = CustomPlayerSense.Key.EXECUTION_DELAY_MAX.getAsInteger();
     private FleshCrawler fleshCrawler;
-
-    public WalkToFleshCrawler(FleshCrawler fleshCrawler) {
-        this.fleshCrawler = fleshCrawler;
-    }
-
     private Coordinate securityStrongholdEntrance = new Coordinate(3081, 3420, 0);
     private Coordinate firstPortal = new Coordinate(1863, 5238, 0);
     private Coordinate firstLadder = new Coordinate(1902, 5222, 0);
@@ -35,7 +34,6 @@ public class WalkToFleshCrawler extends LeafTask {
     private Coordinate fourthRicketyDoor = new Coordinate(2036, 5201, 0);
     private Coordinate fifthRicketyDoor = new Coordinate(2046, 5198, 0);
     private Coordinate sixthRicketyDoor = new Coordinate(2045, 5195, 0);
-
     private Map<Coordinate, List<String>> pathToFleshCrawlers = new HashMap<Coordinate, List<String>>() {
         {
             put(sixthRicketyDoor, Arrays.asList("Rickety door", "Open"));
@@ -49,7 +47,6 @@ public class WalkToFleshCrawler extends LeafTask {
             put(securityStrongholdEntrance, Arrays.asList("Entrance", "Climb-down"));
         }
     };
-
     private List<String> securityAnswers = Arrays.asList(
             "No.",
             "Secure my device and reset my password.",
@@ -86,41 +83,50 @@ public class WalkToFleshCrawler extends LeafTask {
             "Don't type in my password backwards and report the player.",
             "Report the player for phishing.",
             "Through account settings on oldschool.runescape.com.");
-
-    private final int executionDelayMin = CustomPlayerSense.Key.EXECUTION_DELAY_MIN.getAsInteger();
-    private final int executionDelayMax = CustomPlayerSense.Key.EXECUTION_DELAY_MAX.getAsInteger();
+    public WalkToFleshCrawler(FleshCrawler fleshCrawler) {
+        this.fleshCrawler = fleshCrawler;
+    }
 
     @Override
     public void execute() {
         warningInterface();
         boolean walkingToEntrance = true;
-        for (Map.Entry<Coordinate, List<String>> destination : pathToFleshCrawlers.entrySet()) {
-            if (destination.getKey().isReachable()) {
-                if (destination.getKey().isVisible()) {
-                    answerSecurityQuestion();
-                    if (!Players.getLocal().isMoving() && Players.getLocal().getAnimationId() != 4283 && Players.getLocal().getAnimationId() != 4282 && !ChatDialog.isOpen()) {
-                        GameObjects.newQuery().names(destination.getValue().get(0)).results().nearestTo(destination.getKey().randomize(1, 0)).interact(destination.getValue().get(1));
-                        Execution.delay(executionDelayMin, executionDelayMax);
+        Player player = Players.getLocal();
+        if (player != null) {
+            for (Map.Entry<Coordinate, List<String>> destination : pathToFleshCrawlers.entrySet()) {
+                if (destination.getKey().isReachable()) {
+                    if (destination.getKey().isVisible()) {
+                        answerSecurityQuestion();
+                        if (!player.isMoving() && player.getAnimationId() != 4283 && player.getAnimationId() != 4282 && !ChatDialog.isOpen()) {
+                            GameObject walkingObject = GameObjects.newQuery().names(destination.getValue().get(0)).results().nearestTo(destination.getKey().randomize(1, 0));
+                            if (walkingObject != null) {
+                                walkingObject.interact(destination.getValue().get(1));
+                                Execution.delay(executionDelayMin, executionDelayMax);
+                            }
+                        }
+                    } else if (!destination.getKey().isVisible()) {
+                        webPathToDestination(destination.getKey(), destination.getValue().get(0));
                     }
-                } else if (!destination.getKey().isVisible()) {
-                    webPathToDestination(destination.getKey(), destination.getValue().get(0));
+                    walkingToEntrance = false;
+                    break;
                 }
-                walkingToEntrance = false;
-                break;
             }
-        }
-        if (walkingToEntrance) {
-            webPathToDestination(securityStrongholdEntrance, "Security Stronghold entrance");
+            if (walkingToEntrance) {
+                webPathToDestination(securityStrongholdEntrance, "Security Stronghold entrance");
+            }
         }
     }
 
     private void answerSecurityQuestion() {
         if (ChatDialog.isOpen()) {
             if (!ChatDialog.hasTitle("Select an Option")) {
-                ChatDialog.getContinue().select();
+                ChatDialog.Continue getContinue = ChatDialog.getContinue();
+                if (getContinue != null) {
+                    getContinue.select();
+                }
             }
             ChatDialog.getOptions().forEach(chatOption -> {
-                System.out.println("chatOption: " + chatOption.getText());
+                getLogger().info("chatOption: " + chatOption.getText());
                 securityAnswers.forEach(answer -> {
                     if (chatOption.getText().equals(answer)) {
                         Execution.delay(executionDelayMin, executionDelayMax);

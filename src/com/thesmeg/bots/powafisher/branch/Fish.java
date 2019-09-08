@@ -16,13 +16,11 @@ import com.thesmeg.bots.powafisher.leaf.Logout;
  */
 public class Fish extends BranchTask {
 
-    private DropFish dropFish = new DropFish();
-    private Logout logout = new Logout();
-
+    public static String selectedFish;
     Player player;
     Npc fishingSpot;
-
-    public static String selectedFish;
+    private DropFish dropFish = new DropFish();
+    private Logout logout = new Logout();
     private String fishingAction;
     private String fishingSpotType;
 
