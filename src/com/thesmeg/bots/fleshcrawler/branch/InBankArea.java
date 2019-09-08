@@ -1,5 +1,6 @@
 package com.thesmeg.bots.fleshcrawler.branch;
 
+import com.runemate.game.api.hybrid.entities.Player;
 import com.runemate.game.api.hybrid.region.Players;
 import com.runemate.game.api.script.framework.tree.BranchTask;
 import com.runemate.game.api.script.framework.tree.TreeTask;
@@ -15,7 +16,11 @@ public class InBankArea extends BranchTask {
 
     @Override
     public boolean validate() {
-        return fleshCrawler.bankArea.contains(Players.getLocal());
+        Player player = Players.getLocal();
+        if (player != null) {
+            return fleshCrawler.bankArea.contains(player);
+        }
+        return false;
     }
 
     @Override
