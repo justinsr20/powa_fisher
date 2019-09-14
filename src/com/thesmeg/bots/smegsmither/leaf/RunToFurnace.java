@@ -13,8 +13,8 @@ public class RunToFurnace extends LeafTask {
 
     @Override
     public void execute() {
-        Area furnace = smegSmither.data.getEdgevilleFurnace();
-        //@TODO make variable
-        smegSmither.lib.webPathToDestination(furnace.getRandomCoordinate(), "Edgeville Furnace", getLogger());
+        String locationToSmelt = smegSmither.settings.getLocationToSmelt();
+        Area furnaceArea = smegSmither.data.getLocationArea(locationToSmelt, "Furnace");
+        smegSmither.lib.webPathToDestination(furnaceArea.getRandomCoordinate(), locationToSmelt + " Furnace", getLogger());
     }
 }

@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class Data {
     private static final HashMap<String, HashMap<String, Integer>> smeltingRecipes;
+    private static final HashMap<String, HashMap<String, Area>> smeltingLocations;
 
     static {
         smeltingRecipes = new HashMap<>();
@@ -17,10 +18,15 @@ public class Data {
             put("Tin ore", 14);
         }};
         smeltingRecipes.put("Bronze bar", bronzeBar);
+
+        smeltingLocations = new HashMap<>();
+        HashMap<String, Area> edgeville = new HashMap<String, Area>() {{
+            put("Furnace", new Area.Rectangular(new Coordinate(3105, 3496, 0), new Coordinate(3109, 3501, 0)));
+            put("Bank", new Area.Rectangular(new Coordinate(3092, 3491, 0), new Coordinate(3098, 3497, 0)));
+        }};
+        smeltingLocations.put("Edgeville", edgeville);
     }
 
-    private Area edgevilleFurnace = new Area.Rectangular(new Coordinate(3105, 3496, 0), new Coordinate(3109, 3501, 0));
-    private Area edgevilleBank = new Area.Rectangular(new Coordinate(3092, 3491, 0), new Coordinate(3098, 3497, 0));
     private Integer smeltingInterfaceContainer = 270;
     private Integer smeltingAnimation = 899;
 
@@ -36,12 +42,21 @@ public class Data {
         return smeltingRecipes.get(barName);
     }
 
-    public Area getEdgevilleFurnace() {
-        return edgevilleFurnace;
+    public ArrayList<String> getAllLocationOptions() {
+        ArrayList<String> smeltingLocations = new ArrayList<>();
+        for (Map.Entry<String, HashMap<String, Area>> recipe : Data.smeltingLocations.entrySet()) {
+            smeltingLocations.add(recipe.getKey());
+        }
+        return smeltingLocations;
     }
 
-    public Area getEdgevilleBank() {
-        return edgevilleBank;
+    public HashMap<String, Area> getLocation(String locationName) {
+        return smeltingLocations.get(locationName);
+    }
+
+    public Area getLocationArea(String locationName, String locationAreaName) {
+        HashMap<String, Area> location = getLocation(locationName);
+        return location.get(locationAreaName);
     }
 
     public Integer getSmeltingInterfaceContainer() {

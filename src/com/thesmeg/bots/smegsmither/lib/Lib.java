@@ -16,5 +16,4 @@ public class Lib {
             botLogger.warn("Could not generate webPath to " + nameOfDestination);
         }
     }
-
 }

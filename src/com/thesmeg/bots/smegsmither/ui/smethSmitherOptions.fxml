@@ -2,7 +2,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<TabPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+<TabPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+         minWidth="-Infinity"
          prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE"
          xmlns="http://javafx.com/javafx/8">
     <tabs>
@@ -21,9 +22,11 @@
                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                     <children>
                         <ComboBox fx:id="comboBoxChooseBar" layoutX="38.0" layoutY="34.0" prefWidth="150.0"
-                                  promptText="Pick bar to smelt" visibleRowCount="5"/>
-                        <Button fx:id="btnSetConfig" layoutX="38.0" layoutY="293.0" mnemonicParsing="false"
+                                  promptText="Bar to Smelt" visibleRowCount="5"/>
+                        <Button fx:id="btnSetConfig" layoutX="38.0" layoutY="112.0" mnemonicParsing="false"
                                 text="Set Configuration"/>
+                        <ComboBox fx:id="comboBoxChooseLocation" layoutX="206.0" layoutY="34.0" prefHeight="25.0"
+                                  prefWidth="155.0" promptText="Smelting Location" visibleRowCount="5"/>
                     </children>
                 </AnchorPane>
             </content>

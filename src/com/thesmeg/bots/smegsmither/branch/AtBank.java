@@ -1,6 +1,7 @@
 package com.thesmeg.bots.smegsmither.branch;
 
 import com.runemate.game.api.hybrid.entities.Npc;
+import com.runemate.game.api.hybrid.entities.Player;
 import com.runemate.game.api.hybrid.location.Area;
 import com.runemate.game.api.hybrid.region.Npcs;
 import com.runemate.game.api.hybrid.region.Players;
@@ -18,11 +19,13 @@ public class AtBank extends BranchTask {
     @Override
     public boolean validate() {
 //        getLogger().info("AtBank");
-        Area edgevilleBank = smegSmither.data.getEdgevilleBank();
+        String locationToSmelt = smegSmither.settings.getLocationToSmelt();
+        Area bankArea = smegSmither.data.getLocationArea(locationToSmelt, "Bank");
         Npc banker = Npcs.newQuery().names("Banker").results().first();
+        Player player = Players.getLocal();
 
-        if (banker != null) {
-            return edgevilleBank.contains(Players.getLocal()) && banker.isVisible();
+        if (banker != null && player != null) {
+            return bankArea.contains(player) && banker.isVisible();
         }
         return false;
     }

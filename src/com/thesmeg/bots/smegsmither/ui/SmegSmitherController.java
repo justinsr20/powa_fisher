@@ -18,7 +18,10 @@ public class SmegSmitherController implements Initializable {
     @FXML
     private ComboBox<String> comboBoxChooseBar = new ComboBox<>();
     @FXML
+    private ComboBox<String> comboBoxChooseLocation = new ComboBox<>();
+    @FXML
     private Button btnSetConfig;
+
     public SmegSmitherController(SmegSmither smegSmither) {
         this.smegSmither = smegSmither;
     }
@@ -28,6 +31,11 @@ public class SmegSmitherController implements Initializable {
         ArrayList<String> smeltingOptions = smegSmither.data.getAllSmeltingOptions();
         comboBoxChooseBar.setItems(FXCollections.observableArrayList(smeltingOptions));
         comboBoxChooseBar.setOnAction(comboBoxChooseBarAction());
+
+        ArrayList<String> locationOptions = smegSmither.data.getAllLocationOptions();
+        comboBoxChooseLocation.setItems(FXCollections.observableArrayList(locationOptions));
+        comboBoxChooseLocation.setOnAction(comboBoxChooseLocationAction());
+
         btnSetConfig.setOnAction(btnSetConfigAction());
     }
 
@@ -40,6 +48,12 @@ public class SmegSmitherController implements Initializable {
     private EventHandler<ActionEvent> comboBoxChooseBarAction() {
         return event -> {
             smegSmither.settings.setBarToSmelt(comboBoxChooseBar.getSelectionModel().getSelectedItem());
+        };
+    }
+
+    private EventHandler<ActionEvent> comboBoxChooseLocationAction() {
+        return event -> {
+            smegSmither.settings.setLocationToSmelt(comboBoxChooseLocation.getSelectionModel().getSelectedItem());
         };
     }
 }

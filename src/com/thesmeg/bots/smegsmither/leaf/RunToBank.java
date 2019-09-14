@@ -13,8 +13,8 @@ public class RunToBank extends LeafTask {
 
     @Override
     public void execute() {
-        Area bank = smegSmither.data.getEdgevilleBank();
-        //@TODO make variable
-        smegSmither.lib.webPathToDestination(bank.getRandomCoordinate(), "Edgeville bank", getLogger());
+        String locationToSmelt = smegSmither.settings.getLocationToSmelt();
+        Area bankArea = smegSmither.data.getLocationArea(locationToSmelt, "Bank");
+        smegSmither.lib.webPathToDestination(bankArea.getRandomCoordinate(), locationToSmelt + " Bank", getLogger());
     }
 }
