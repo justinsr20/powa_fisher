@@ -21,12 +21,9 @@ public class AtFurnace extends BranchTask {
         //TODO make location variable
         Area furnaceArea = smegSmither.data.getEdgevilleFurnace();
         GameObject furnace = GameObjects.newQuery().names("Furnace").results().first();
-        try {
-            if (furnaceArea.contains(Players.getLocal()) && furnace.isVisible()) {
-                return true;
-            }
-        } catch (NullPointerException ignored) {
 
+        if (furnace != null) {
+            return furnaceArea.contains(Players.getLocal()) && furnace.isVisible();
         }
         return false;
     }

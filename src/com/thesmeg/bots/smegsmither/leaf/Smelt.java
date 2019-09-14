@@ -28,7 +28,7 @@ public class Smelt extends LeafTask {
         InterfaceComponentQueryResults smeltingInterfaceComponent = Interfaces.newQuery().containers(smeltingInterfaceContainerId).results();
         GameObject furnace = GameObjects.newQuery().names("Furnace").results().nearest();
 
-        try {
+        if (furnace != null) {
             if (furnace.isVisible()) {
                 if (InterfaceContainers.getAt(smeltingInterfaceContainerId) != null) {
                     smelt(smeltingInterfaceComponent);
@@ -40,8 +40,6 @@ public class Smelt extends LeafTask {
                     smelt(smeltingInterfaceComponent);
                 }
             }
-        } catch (NullPointerException ignored) {
-            ignored.printStackTrace();
         }
     }
 
@@ -51,7 +49,8 @@ public class Smelt extends LeafTask {
         final int clicks = CustomPlayerSense.Key.SPAM_CLICK_COUNT.getAsInteger();
 
         for (InterfaceComponent component : smeltingInterfaceComponent) {
-            if (component.getName() != null) {
+            String componentName = component.getName();
+            if (componentName != null) {
                 if (component.getActions().contains("All")) {
                     if (component.click()) {
                         return;

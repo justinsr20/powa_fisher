@@ -20,12 +20,9 @@ public class AtBank extends BranchTask {
 //        getLogger().info("AtBank");
         Area edgevilleBank = smegSmither.data.getEdgevilleBank();
         Npc banker = Npcs.newQuery().names("Banker").results().first();
-        try {
-            if (edgevilleBank.contains(Players.getLocal()) && banker.isVisible()) {
-                return true;
-            }
-        } catch (NullPointerException ignore) {
 
+        if (banker != null) {
+            return edgevilleBank.contains(Players.getLocal()) && banker.isVisible();
         }
         return false;
     }
