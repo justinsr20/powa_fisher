@@ -2,6 +2,7 @@ package com.thesmeg.bots.smegsmither;
 
 import com.runemate.game.api.client.embeddable.EmbeddableUI;
 import com.runemate.game.api.hybrid.util.Resources;
+import com.runemate.game.api.hybrid.util.Timer;
 import com.runemate.game.api.script.framework.tree.TreeBot;
 import com.runemate.game.api.script.framework.tree.TreeTask;
 import com.thesmeg.bots.smegsmither.branch.AtBank;
@@ -44,6 +45,9 @@ public class SmegSmither extends TreeBot implements EmbeddableUI {
     @Override
     public void onStart(String... strings) {
         CustomPlayerSense.initializeKeys();
+        settings.setTimer(new Timer(settings.getRandomPlayTime()));
+        settings.startTimer();
+        getLogger().info("starting bot run timer for " + settings.getTimer().getRemainingTimeAsString());
     }
 
     @Override

@@ -19,6 +19,11 @@ public class Data {
         }};
         smeltingRecipes.put("Bronze bar", bronzeBar);
 
+        HashMap<String, Integer> silverBar = new HashMap<String, Integer>() {{
+            put("Silver ore", 28);
+        }};
+        smeltingRecipes.put("Silver bar", silverBar);
+
         smeltingLocations = new HashMap<>();
         HashMap<String, Area> edgeville = new HashMap<String, Area>() {{
             put("Furnace", new Area.Rectangular(new Coordinate(3105, 3496, 0), new Coordinate(3109, 3501, 0)));

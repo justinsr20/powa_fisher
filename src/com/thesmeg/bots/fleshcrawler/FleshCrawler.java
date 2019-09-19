@@ -74,7 +74,7 @@ public class FleshCrawler extends TreeBot implements EmbeddableUI {
 
         if (botInterfaceProperty == null) {
             try {
-                Node node = loader.load(Resources.getAsStream("com/thesmeg/bots/fleshcrawler/ui/FleshCrawlerOptions.fxml"));
+                Node node = loader.load(Resources.getAsStream("ui/FleshCrawlerOptions.fxml"));
                 botInterfaceProperty = new SimpleObjectProperty<>(node);
             } catch (IOException e) {
                 e.printStackTrace();
