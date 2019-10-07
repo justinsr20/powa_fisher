@@ -22,6 +22,6 @@
         <tag>Range</tag>
     </tags>
     <resources>
-        <resource>com/thesmeg/bots/fleshcrawler/ui/FleshCrawlerOptions.fxml</resource>
+        <resource>com/thesmeg/bots/fleshcrawler/ui/</resource>
     </resources>
 </manifest>

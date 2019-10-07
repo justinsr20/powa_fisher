@@ -24,19 +24,20 @@ public class Smelt extends LeafTask {
     public void execute() {
 //        getLogger().info("Smelt");
         final int clicks = CustomPlayerSense.Key.SPAM_CLICK_COUNT.getAsInteger();
-        Integer smeltingInterfaceContainerId = smegSmither.data.getSmeltingInterfaceContainer();
-        InterfaceComponentQueryResults smeltingInterfaceComponent = Interfaces.newQuery().containers(smeltingInterfaceContainerId).results();
+//        Integer smeltingInterfaceContainerId = smegSmither.data.getSmeltingInterfaceContainer();
+        Integer craftingInterfaceContainerId = smegSmither.data.getCraftingInterfaceContainer();
+        InterfaceComponentQueryResults smeltingInterfaceComponent = Interfaces.newQuery().containers(craftingInterfaceContainerId).results();
         GameObject furnace = GameObjects.newQuery().names("Furnace").results().nearest();
 
         if (furnace != null) {
             if (furnace.isVisible()) {
-                if (InterfaceContainers.getAt(smeltingInterfaceContainerId) != null) {
+                if (InterfaceContainers.getAt(craftingInterfaceContainerId) != null) {
                     smelt(smeltingInterfaceComponent);
                 } else {
                     for (int i = 0; i < clicks; i++) {
                         furnace.interact("Smelt");
                     }
-                    Execution.delayUntil(() -> InterfaceContainers.getAt(smeltingInterfaceContainerId) != null, () -> false, 50, 1500, 2000);
+                    Execution.delayUntil(() -> InterfaceContainers.getAt(craftingInterfaceContainerId) != null, () -> false, 50, 1500, 2000);
                     smelt(smeltingInterfaceComponent);
                 }
             }
@@ -49,21 +50,35 @@ public class Smelt extends LeafTask {
         final int clicks = CustomPlayerSense.Key.SPAM_CLICK_COUNT.getAsInteger();
 
         for (InterfaceComponent component : smeltingInterfaceComponent) {
-            String componentName = component.getName();
-            if (componentName != null) {
-                if (component.getActions().contains("All")) {
-                    if (component.click()) {
+//            String componentName = component.getName();
+//            if (componentName != null) {
+//                if (component.getActions().contains("All")) {
+//                    if (component.click()) {
+//                        return;
+//                    }
+//                }
+
+            if (component.getActions() != null) {
+                for (String action : component.getActions()) {
+                    if (action.contains(barToSmelt)) {
+                        for (int i = 0; i < clicks; i++) {
+//                                component.interact("Smelt");
+                            component.interact("Make " + barToSmelt);
+
+                        }
+                        Execution.delayUntil(() -> Inventory.containsOnly(barToSmelt), () -> Players.getLocal().getAnimationId() == smeltingAnimationId, 50, 1000, 2000);
                         return;
                     }
                 }
-                if (component.getName().equals(barToSmelt)) {
-                    for (int i = 0; i < clicks; i++) {
-                        component.interact("Smelt");
-                    }
-                    Execution.delayUntil(() -> Inventory.containsOnly(barToSmelt), () -> Players.getLocal().getAnimationId() == smeltingAnimationId, 50, 1000, 2000);
-                    return;
-                }
             }
+//                if (component.getName().equals(barToSmelt)) {
+//                    for (int i = 0; i < clicks; i++) {
+//                        component.interact("Smelt");
+//                    }
+//                    Execution.delayUntil(() -> Inventory.containsOnly(barToSmelt), () -> Players.getLocal().getAnimationId() == smeltingAnimationId, 50, 1000, 2000);
+//                    return;
+//                }
+//            }
         }
     }
 }

@@ -24,6 +24,12 @@ public class Data {
         }};
         smeltingRecipes.put("Silver bar", silverBar);
 
+        HashMap<String, Integer> goldAmuletU = new HashMap<String, Integer>() {{
+            put("Amulet mould", 1);
+            put("Gold bar", 27);
+        }};
+        smeltingRecipes.put("Gold amulet (u)", goldAmuletU);
+
         smeltingLocations = new HashMap<>();
         HashMap<String, Area> edgeville = new HashMap<String, Area>() {{
             put("Furnace", new Area.Rectangular(new Coordinate(3105, 3496, 0), new Coordinate(3109, 3501, 0)));
@@ -32,6 +38,7 @@ public class Data {
         smeltingLocations.put("Edgeville", edgeville);
     }
 
+    private Integer craftingInterfaceContainer = 446;
     private Integer smeltingInterfaceContainer = 270;
     private Integer smeltingAnimation = 899;
 
@@ -70,6 +77,10 @@ public class Data {
 
     public Integer getSmeltingAnimation() {
         return smeltingAnimation;
+    }
+
+    public Integer getCraftingInterfaceContainer() {
+        return craftingInterfaceContainer;
     }
 }
 

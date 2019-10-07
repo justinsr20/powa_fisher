@@ -45,9 +45,10 @@ public class SmegSmither extends TreeBot implements EmbeddableUI {
     @Override
     public void onStart(String... strings) {
         CustomPlayerSense.initializeKeys();
+
         settings.setTimer(new Timer(settings.getRandomPlayTime()));
         settings.startTimer();
-        getLogger().info("starting bot run timer for " + settings.getTimer().getRemainingTimeAsString());
+        getLogger().info("Timer " + settings.getTimer().getRemainingTimeAsString());
     }
 
     @Override

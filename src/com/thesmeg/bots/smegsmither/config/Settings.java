@@ -12,7 +12,7 @@ public class Settings {
     private Timer timer;
 
     public long getRandomPlayTime() {
-        return Random.nextLong(900000, 3600000);
+        return Random.nextLong(1800000, 4500000);
     }
 
     public long getRandomBreakTime() {

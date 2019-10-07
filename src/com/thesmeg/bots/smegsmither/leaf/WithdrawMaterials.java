@@ -21,7 +21,8 @@ public class WithdrawMaterials extends LeafTask {
     @Override
     public void execute() {
 //        getLogger().info("WithdrawMaterials");
-        String barToSmelt = smegSmither.settings.getBarToSmelt();
+        String itemToSmelt = smegSmither.settings.getBarToSmelt();
+        int amountToSmelt = Inventory.getQuantity(itemToSmelt);
 
         if (!Bank.isOpen()) {
             if (Bank.open()) {
@@ -32,15 +33,15 @@ public class WithdrawMaterials extends LeafTask {
         }
 
         if (Bank.isOpen()) {
-            if (Inventory.contains(barToSmelt)) {
-                if (Bank.depositInventory()) {
-                    Execution.delayUntil(() -> Inventory.isEmpty(), () -> false, 50, 1000, 2000);
+            if (Inventory.contains(itemToSmelt)) {
+                if (Bank.deposit(itemToSmelt, amountToSmelt)) {
+                    Execution.delayUntil(() -> !Inventory.contains(itemToSmelt), () -> false, 50, 1000, 2000);
                 } else {
                     return;
                 }
             }
 
-            HashMap<String, Integer> requiredOres = smegSmither.data.getSmeltingRecipe(barToSmelt);
+            HashMap<String, Integer> requiredOres = smegSmither.data.getSmeltingRecipe(itemToSmelt);
             for (HashMap.Entry<String, Integer> ore : requiredOres.entrySet()) {
                 String oreName = ore.getKey();
                 Integer oreAmount = ore.getValue();
@@ -62,7 +63,7 @@ public class WithdrawMaterials extends LeafTask {
                 }
             }
 
-            Set<String> oreNames = smegSmither.data.getSmeltingRecipe(barToSmelt).keySet();
+            Set<String> oreNames = smegSmither.data.getSmeltingRecipe(itemToSmelt).keySet();
             for (SpriteItem inventoryItem : Inventory.getItems()) {
                 String itemName = inventoryItem.getDefinition().getName();
                 if (!oreNames.contains(itemName)) {

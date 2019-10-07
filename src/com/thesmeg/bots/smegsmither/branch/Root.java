@@ -50,7 +50,7 @@ public class Root extends BranchTask {
                 smegSmither.settings.setTimer(new Timer(smegSmither.settings.getRandomPlayTime()));
             }
             smegSmither.settings.startTimer();
-            getLogger().info("Remaining time " + smegSmither.settings.getTimer().getRemainingTimeAsString());
+            getLogger().info("Timer " + smegSmither.settings.getTimer().getRemainingTimeAsString());
         }
     }
 

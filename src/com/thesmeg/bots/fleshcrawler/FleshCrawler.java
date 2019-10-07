@@ -43,7 +43,7 @@ public class FleshCrawler extends TreeBot implements EmbeddableUI {
     }};
     HaveSupplies haveSupplies = new HaveSupplies(this);
     WaitUntilLoggedIn waitUntilLoggedIn = new WaitUntilLoggedIn(this);
-    String foodToEat = null;
+    private String foodToEat = null;
     private String ammunitionName = null;
     private Coordinate bottomLeftFleshCrawler = new Coordinate(2038, 5185, 0);
     private Coordinate topRightFleshCrawler = new Coordinate(2046, 5194, 0);
@@ -74,7 +74,7 @@ public class FleshCrawler extends TreeBot implements EmbeddableUI {
 
         if (botInterfaceProperty == null) {
             try {
-                Node node = loader.load(Resources.getAsStream("ui/FleshCrawlerOptions.fxml"));
+                Node node = loader.load(Resources.getAsStream("com/thesmeg/bots/fleshcrawler/ui/FleshCrawlerOptions.fxml"));
                 botInterfaceProperty = new SimpleObjectProperty<>(node);
             } catch (IOException e) {
                 e.printStackTrace();
